@@ -4,6 +4,7 @@ services:
   client:
     build:
       context: ./client
+      dockerfile: ../Dockerfile
     environment:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=3000
@@ -14,6 +15,7 @@ services:
   server:
     build:
       context: ./server
+      dockerfile: ../Dockerfile
     environment:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=8000
