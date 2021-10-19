@@ -1,15 +1,23 @@
 import { useState } from 'react'
+import { useQuery, gql } from '@apollo/client'
 import logo from './logo.svg'
 import './App.css'
 
+const HELLO = gql`
+  {
+    hello
+  }
+`
+
 function App() {
   const [count, setCount] = useState(0)
+  const { data, loading } = useQuery(HELLO)
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
+        <p>{loading ? 'Loading...' : data.hello}</p>
         <p>
           <button type="button" onClick={() => setCount((count) => count + 1)}>
             count is: {count}

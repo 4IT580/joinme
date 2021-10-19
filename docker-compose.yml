@@ -11,3 +11,13 @@ services:
       - 3000:3000
     volumes:
       - ./client:/app
+  server:
+    build:
+      context: ./server
+    environment:
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=8000
+    ports:
+      - 8000:8000
+    volumes:
+      - ./server:/app
