@@ -1,6 +1,8 @@
 FROM node:14-alpine
 
-WORKDIR /app
+ARG dir=/app
+
+WORKDIR $dir
 
 COPY package.json yarn.lock ./
 
@@ -8,6 +10,6 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
-RUN if [ "$NODE_ENV" = "production" ]; then yarn build; fi
+RUN yarn build
 
 CMD yarn install --frozen-lockfile && yarn dev
