@@ -8,4 +8,6 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
+RUN if [ "$NODE_ENV" = "production" ]; then yarn build; fi
+
 CMD yarn install --frozen-lockfile && yarn dev
