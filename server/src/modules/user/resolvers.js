@@ -1,28 +1,21 @@
+import { db } from '../../lib/db.js'
+
 export default {
   Query: {
-    users: async () => users,
+    users: async () => await db().select('*').from('users'),
   },
   Mutation: {
-    register: (_, params) => {
-      users.push({
-        id: users.length + 1,
-        userName: params.userName,
-        firstName: params.firstName,
-        lastName: params.lastName,
-        email: params.email,
-      })
+    register: async (_, params) => {
+      const [id] = await db()
+        .insert({
+          userName: params.userName,
+          firstName: params.firstName,
+          lastName: params.lastName,
+          email: params.email,
+        })
+        .into('users')
 
-      return users[users.length - 1]
+      return await db().select('*').from('users').where('id', id).first()
     },
   },
 }
-
-const users = [
-  {
-    id: 1,
-    userName: 'Sádlič666',
-    firstName: 'Franta',
-    lastName: 'Sádlo',
-    email: 'franta.sadlo@volny.cz',
-  },
-]
