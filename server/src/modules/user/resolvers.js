@@ -6,14 +6,7 @@ export default {
   },
   Mutation: {
     register: async (_, params) => {
-      const [id] = await db()
-        .insert({
-          userName: params.userName,
-          firstName: params.firstName,
-          lastName: params.lastName,
-          email: params.email,
-        })
-        .into('users')
+      const [id] = await db().insert(params).into('users')
 
       return await db().select('*').from('users').where('id', id).first()
     },

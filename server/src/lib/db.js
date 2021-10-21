@@ -2,6 +2,9 @@ import Knex from 'knex'
 import config from '../../knexfile.js'
 import { knexSnakeCaseMappers } from './mappers.js'
 
+/**
+ * @type {import('knex').Knex}
+ */
 let connection = null
 
 /**
