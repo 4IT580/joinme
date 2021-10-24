@@ -34,9 +34,6 @@ jobs:
             branch=${BRANCH##*/}
             echo $branch
 
-            eval $(ssh-agent)
-            ssh-add ~/.ssh/ed25519
-
             ppref="$branch"
             ppref+="."
             cpref="$branch"
