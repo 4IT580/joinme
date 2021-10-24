@@ -7,10 +7,17 @@ echo $branch
 eval $(ssh-agent)
 ssh-add ~/.ssh/ed25519
 
-        export PATHPREFIX="$branch."
-        export CONTAINERPREFIX="$branch_"
-        echo $PATHPREFIX
-        echo $CONTAINERPREFIX
+ppref="$branch"
+ppref+="."
+cpref="$branch"
+cpref+="_"
+
+export PATHPREFIX="$ppref"
+export CONTAINERPREFIX="$cpref"
+export COMPOSE_FILE=docker-compose.caddy.yml
+echo $PATHPREFIX
+echo $CONTAINERPREFIX
+echo $COMPOSE_FILE
 
 if [ -d "git/$branch" ]; then
         echo "going to git/$branch"
@@ -28,7 +35,7 @@ if [ "$branch" = "master" ]; then
         export PATHPREFIX=""
         echo $PATHPREFIX
         echo "I AM MASTER"
-        sudo -E -f docker-compose.caddy.yml docker-compose up -d
+        sudo -E docker-compose up -d
 else
         sudo -E docker-compose up -d
 fi
