@@ -11,7 +11,7 @@ export default function LandingHeader({ greet }) {
       </div>
       <div className="flex self-end md:self-start">
         <div className="flex flex-col justify-center">
-          <Link>Login</Link>
+          <Link>Log in</Link>
         </div>
         <VerticalLine />
         <Button className="btn-primary uppercase">Create account</Button>
