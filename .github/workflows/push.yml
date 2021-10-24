@@ -57,8 +57,6 @@ jobs:
                     cd git/$branch
             fi
 
-            cp /var/www/docker-compose.override.yml docker-compose.override.yml
-
             if [ "$branch" = "master" ]; then
                     export PATHPREFIX=""
                     echo $PATHPREFIX
