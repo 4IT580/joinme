@@ -22,10 +22,12 @@ jobs:
         run: echo running on branch ${GITHUB_REF##*/}
       - name: executing remote ssh commands using key
         uses: appleboy/ssh-action@master
+        env:
+          BRANCH: ${GITHUB_REF##*/}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /var/www
-            ./setupBranch ${GITHUB_REF##*/}
+            ./setupBranch $BRANCH
