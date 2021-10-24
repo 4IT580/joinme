@@ -11,4 +11,5 @@ const greets = [
   'Lorem ipsum...',
   'The future is here!',
   'Better than the other one!',
+  'WOOP WOOP!!!',
 ]
