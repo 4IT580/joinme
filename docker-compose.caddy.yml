@@ -6,6 +6,10 @@ services:
     build:
       context: ./client
       dockerfile: ../Dockerfile
+      args:
+        production: true
+        dir: /prod
+    command: yarn start --port 3000
     environment:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=3000
@@ -21,6 +25,10 @@ services:
     build:
       context: ./server
       dockerfile: ../Dockerfile
+      args:
+        production: true
+        dir: /prod
+    command: yarn start
     environment:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=8000
