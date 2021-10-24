@@ -4,12 +4,17 @@
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "knex migrate:up && nodemon src/index.js",
+    "build": "true",
+    "start": "knex migrate:up && node src/index.js"
   },
   "dependencies": {
     "apollo-server": "^3.4.0",
     "apollo-server-core": "^3.4.0",
-    "graphql": "^15.6.1"
+    "glob": "^7.2.0",
+    "graphql": "^15.6.1",
+    "knex": "^0.95.11",
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.13"
