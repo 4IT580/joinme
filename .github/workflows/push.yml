@@ -18,7 +18,6 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Branch name
       - name: executing remote ssh commands using key
         uses: appleboy/ssh-action@master
         env:
