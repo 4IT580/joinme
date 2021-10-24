@@ -9,6 +9,6 @@ export default defineConfig({
     port: process.env.SERVER_PORT || 3000,
   },
   define: {
-    'process.env.APOLLO_URL': JSON.stringify(process.env.APOLO_URL || 'http://localhost:8000'),
+    'process.env.APOLLO_URL': JSON.stringify(process.env.APOLLO_URL || 'http://localhost:8000'),
   },
 })
