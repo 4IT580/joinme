@@ -11,7 +11,7 @@ export default function LandingHeader() {
           <Link>Log in</Link>
         </div>
         <VerticalLine />
-        <Button className="uppercase">Create account</Button>
+        <Button className="btn-primary uppercase">Create account</Button>
       </div>
     </div>
   )

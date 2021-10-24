@@ -1,0 +1,13 @@
+services:
+  client:
+    build:
+      args:
+        production: true
+        dir: /prod
+    command: yarn start --port 3000
+  server:
+    build:
+      args:
+        production: true
+        dir: /prod
+    command: yarn start
