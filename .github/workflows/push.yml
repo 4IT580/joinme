@@ -21,7 +21,7 @@ jobs:
       - name: executing remote ssh commands using key
         uses: appleboy/ssh-action@master
         env:
-          BRANCH: '${GITHUB_REF##*/}'
+          BRANCH: ${{ github.ref }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
@@ -29,4 +29,4 @@ jobs:
           envs: BRANCH
           script: |
             cd /var/www
-            ./setupBranch $BRANCH
+            ./setupBranch ${BRANCH##*/}
