@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+console.log('APOLLO_URL', process.env.APOLLO_URL)
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
