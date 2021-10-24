@@ -8,7 +8,7 @@ export default function LandingHeader() {
       <h1 className="px-4 mt-8 text-6xl font-extrabold">Join.me!</h1>
       <div className="flex self-end md:self-start">
         <div className="flex flex-col justify-center">
-          <Link>Log in</Link>
+          <Link>Login</Link>
         </div>
         <VerticalLine />
         <Button className="btn-primary uppercase">Create account</Button>
