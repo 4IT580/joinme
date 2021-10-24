@@ -2,8 +2,9 @@ FROM node:14-alpine
 
 ARG production
 ARG dir=/app
+ARG apolloUrl
 
-ENV APOLLO_URL=http://localhost:8000
+ENV APOLLO_URL $apolloUrl
 
 WORKDIR $dir
 
