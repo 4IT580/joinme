@@ -11,7 +11,7 @@ export default function LandingContent() {
           <li>Meet people in group immediatelly</li>
           <li>Chat driven by interests</li>
         </ul>
-        <Button className="mt-16 uppercase">Let's start!</Button>
+        <Button className="btn-primary mt-16 uppercase">Let's start!</Button>
       </div>
       <div className="flex flex-grow justify-center">
         <img src={image} className="object-contain" />
