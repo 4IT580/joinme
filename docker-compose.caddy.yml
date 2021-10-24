@@ -9,7 +9,7 @@ services:
       args:
         production: true
         dir: /prod
-        apolloUrl: backend.${PATHPREFIX}joinme.cz
+        apolloUrl: https://backend.${PATHPREFIX}joinme.cz
     command: yarn start --port 3000
     environment:
       - SERVER_HOST=0.0.0.0
