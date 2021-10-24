@@ -20,7 +20,7 @@ const main = async () => {
 
     const imported = await import(file)
 
-    config[type] = imported.default
+    config[type].push(imported.default)
   }
 
   const server = new ApolloServer(config)

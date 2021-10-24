@@ -2,6 +2,9 @@ FROM node:14-alpine
 
 ARG production
 ARG dir=/app
+ARG apolloUrl
+
+ENV APOLLO_URL $apolloUrl
 
 WORKDIR $dir
 

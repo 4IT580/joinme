@@ -9,11 +9,11 @@ services:
       args:
         production: true
         dir: /prod
+        apolloUrl: https://backend.${PATHPREFIX}joinme.cz
     command: yarn start --port 3000
     environment:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=3000
-      - APOLO_URL=backend.${PATHPREFIX}joinme.cz
     volumes:
       - ./client:/app
     networks:
