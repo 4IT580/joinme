@@ -13,7 +13,7 @@ services:
     environment:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=3000
-      - APOLO_URL=backend.${PATHPREFIX}joinme.cz
+      - APOLLO_URL=backend.${PATHPREFIX}joinme.cz
     volumes:
       - ./client:/app
     networks:
