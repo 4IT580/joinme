@@ -2,24 +2,36 @@ version: '3'
 
 services:
   client:
+    container_name: ${CONTAINERPREFIX}client
     build:
       context: ./client
       dockerfile: ../Dockerfile
     environment:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=3000
-    ports:
-      - 3000:3000
     volumes:
       - ./client:/app
+    networks:
+      - caddy
+    labels:
+      caddy: ${PATHPREFIX}joinme.cz
+      caddy.reverse_proxy: '{{upstreams 3000}}'
   server:
+    container_name: ${CONTAINERPREFIX}server
     build:
       context: ./server
       dockerfile: ../Dockerfile
     environment:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=8000
-    ports:
-      - 8000:8000
     volumes:
       - ./server:/app
+    networks:
+      - caddy
+    labels:
+      caddy: backend.${PATHPREFIX}joinme.cz
+      caddy.reverse_proxy: '{{upstreams 8000}}'
+
+networks:
+  caddy:
+    external: true
