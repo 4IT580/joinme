@@ -23,7 +23,7 @@ jobs:
       - name: executing remote ssh commands using key
         uses: appleboy/ssh-action@master
         env:
-          BRANCH: ${GITHUB_REF##*/}
+          BRANCH: ${{ GITHUB_REF##*/ }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
