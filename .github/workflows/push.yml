@@ -18,14 +18,10 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Branch name
-        run: |
-          export BRANCH=${GITHUB_REF##*/}
-          echo "::set-env name=BRANCH::$BRANCH"
       - name: executing remote ssh commands using key
         uses: appleboy/ssh-action@master
         env:
-          BRANCH: $BRANCH
+          BRANCH: ${{ github.ref }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
