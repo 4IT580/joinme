@@ -1,21 +1,14 @@
-# This is a basic workflow to help you get started with Actions
+name: Push
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: ['**']
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    name: Build
+    name: Build & deploy
     runs-on: ubuntu-latest
     steps:
       - name: executing remote ssh commands using key
@@ -29,10 +22,8 @@ jobs:
           envs: BRANCH
           script: |
             cd /var/www
-            #./setupBranch ${BRANCH##*/}
 
             branch=${BRANCH##*/}
-            echo $branch
 
             ppref="$branch"
             ppref+="."
@@ -41,11 +32,8 @@ jobs:
 
             export PATHPREFIX="$ppref"
             export CONTAINERPREFIX="$cpref"
-            echo $PATHPREFIX
-            echo $CONTAINERPREFIX
 
             if [ -d "git/$branch" ]; then
-                    echo "going to git/$branch"
                     cd git/$branch
                     docker-compose down
                     git pull
@@ -56,8 +44,6 @@ jobs:
 
             if [ "$branch" = "master" ]; then
                     export PATHPREFIX=""
-                    echo $PATHPREFIX
-                    echo "I AM MASTER"       
             fi
 
             docker-compose -f docker-compose.caddy.yml up -d --build
