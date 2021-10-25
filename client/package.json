@@ -12,11 +12,14 @@
     "@vitejs/plugin-react": "^1.0.0",
     "autoprefixer": "^10.3.7",
     "classnames": "^2.3.1",
+    "daisyui": "^1.16.0",
+    "formik": "^2.2.9",
     "graphql": "^15.6.1",
     "postcss": "^8.3.10",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "tailwindcss": "^2.2.17",
-    "vite": "^2.6.4"
+    "vite": "^2.6.4",
+    "yup": "^0.32.11"
   }
 }

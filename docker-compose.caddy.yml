@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  client:
+    container_name: ${CONTAINERPREFIX}client
+    build:
+      context: ./client
+      dockerfile: ../Dockerfile
+      args:
+        production: true
+        dir: /prod
+        apolloUrl: https://backend.${PATHPREFIX}joinme.cz
+    command: yarn start --port 3000
+    environment:
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=3000
+    volumes:
+      - ./client:/app
+    networks:
+      - caddy
+    labels:
+      caddy: ${PATHPREFIX}joinme.cz
+      caddy.reverse_proxy: '{{upstreams 3000}}'
+  server:
+    container_name: ${CONTAINERPREFIX}server
+    build:
+      context: ./server
+      dockerfile: ../Dockerfile
+      args:
+        production: true
+        dir: /prod
+    command: yarn start
+    environment:
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=8000
+    volumes:
+      - ./server:/app
+    networks:
+      - caddy
+    labels:
+      caddy: backend.${PATHPREFIX}joinme.cz
+      caddy.reverse_proxy: '{{upstreams 8000}}'
+
+networks:
+  caddy:
+    external: true

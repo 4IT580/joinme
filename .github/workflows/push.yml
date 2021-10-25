@@ -1,0 +1,49 @@
+name: Push
+
+on:
+  push:
+    branches: ['**']
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build & deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using key
+        uses: appleboy/ssh-action@master
+        env:
+          BRANCH: ${{ github.ref }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          envs: BRANCH
+          script: |
+            cd /var/www
+
+            branch=${BRANCH##*/}
+
+            ppref="$branch"
+            ppref+="."
+            cpref="$branch"
+            cpref+="_"
+
+            export PATHPREFIX="$ppref"
+            export CONTAINERPREFIX="$cpref"
+
+            if [ -d "git/$branch" ]; then
+              cd git/$branch
+              docker-compose down
+              git pull
+            else
+              git clone -b $branch git@github.com:4IT580/joinme.git git/$branch
+              cd git/$branch
+            fi
+
+            if [ "$branch" = "master" ]; then
+              export PATHPREFIX=""
+            fi
+
+            docker-compose -f docker-compose.caddy.yml up -d --build

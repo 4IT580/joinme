@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+console.log('APOLLO_URL', process.env.APOLLO_URL)
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -9,6 +11,6 @@ export default defineConfig({
     port: process.env.SERVER_PORT || 3000,
   },
   define: {
-    'process.env.APOLLO_URL': JSON.stringify(process.env.APOLO_URL || 'http://localhost:8000'),
+    'process.env.APOLLO_URL': JSON.stringify(process.env.APOLLO_URL),
   },
 })

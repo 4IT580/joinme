@@ -3,9 +3,8 @@ import { gql } from 'apollo-server'
 export default gql`
   type User {
     id: Int!
-    userName: String!
-    firstName: String!
-    lastName: String!
+    handle: String!
+    name: String!
     email: String!
   }
 
@@ -14,6 +13,6 @@ export default gql`
   }
 
   type Mutation {
-    register(userName: String!, firstName: String!, lastName: String!, email: String!): User
+    register(handle: String!, name: String!, email: String!, password: String!): User
   }
 `
