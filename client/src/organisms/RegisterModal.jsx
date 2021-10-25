@@ -18,10 +18,14 @@ const REGISTER_MUTATION = gql`
 `
 
 const registerModalFormSchema = yup.object().shape({
-  handle: yup.string().min(3).max(6).required(),
-  name: yup.string().min(3).max(50).required(),
-  email: yup.string().email().required(),
-  password: yup.string().required(),
+  handle: yup.string().min(3).max(6).required('Handle is required'),
+  name: yup.string().min(3).max(50).required('Name is required'),
+  email: yup.string().email().required('Email is required'),
+  password: yup.string().required('Password is required'),
+  passwordConfirmation: yup
+    .string()
+    .required('Password confirmation is required')
+    .oneOf([yup.ref('password')], 'Passwords must match'),
 })
 
 export default function RegisterModal({ onClose }) {
@@ -36,6 +40,7 @@ export default function RegisterModal({ onClose }) {
           name: '',
           email: '',
           password: '',
+          passwordConfirmation: '',
         }}
         validationSchema={registerModalFormSchema}
         onSubmit={async (variables) => {
@@ -48,7 +53,13 @@ export default function RegisterModal({ onClose }) {
           <FormControl name="handle" label="Handle" placeholder="Your unique handle" />
           <FormControl name="name" label="Name" placeholder="Name you want other users to see" />
           <FormControl name="email" label="Email" type="email" placeholder="Email we can contact you on" />
-          <FormControl name="password" label="Password" type="password" placeholder="Don't tell it to anyone :)" />
+          <FormControl name="password" label="Password" type="password" placeholder="Don't tell it to anyone" />
+          <FormControl
+            name="passwordConfirmation"
+            label="Password confirmation"
+            type="password"
+            placeholder="Repeat password to make sure it is without a typo"
+          />
 
           <div className="modal-action">
             <Button onClick={onClose}>Cancel</Button>
