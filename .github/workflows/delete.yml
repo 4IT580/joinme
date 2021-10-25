@@ -1,0 +1,32 @@
+name: Delete
+
+on:
+  delete:
+    branches: ['**']
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Delete
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using key
+        uses: appleboy/ssh-action@master
+        env:
+          BRANCH: ${{ github.ref }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          envs: BRANCH
+          script: |
+            cd /var/www
+
+            branch=${BRANCH##*/}
+
+            cd git/$branch
+            docker-compose down
+
+            cd ..
+            rm -rf git/$branch
