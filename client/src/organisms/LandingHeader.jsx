@@ -2,7 +2,7 @@ import Button from '../atoms/Button'
 import Link from '../atoms/Link'
 import VerticalLine from '../atoms/VerticalLine'
 
-export default function LandingHeader({ greet }) {
+export default function LandingHeader({ greet, onCreateAccount }) {
   return (
     <div className="flex flex-col-reverse md:flex-row justify-between p-6">
       <div>
@@ -14,7 +14,9 @@ export default function LandingHeader({ greet }) {
           <Link>Log in</Link>
         </div>
         <VerticalLine />
-        <Button className="btn-primary uppercase">Create account</Button>
+        <Button className="btn-primary uppercase" onClick={onCreateAccount}>
+          Create account
+        </Button>
       </div>
     </div>
   )
