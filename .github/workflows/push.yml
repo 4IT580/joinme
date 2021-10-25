@@ -34,16 +34,16 @@ jobs:
             export CONTAINERPREFIX="$cpref"
 
             if [ -d "git/$branch" ]; then
-                    cd git/$branch
-                    docker-compose down
-                    git pull
+              cd git/$branch
+              docker-compose down
+              git pull
             else
-                    git clone -b $branch git@github.com:4IT580/joinme.git git/$branch
-                    cd git/$branch
+              git clone -b $branch git@github.com:4IT580/joinme.git git/$branch
+              cd git/$branch
             fi
 
             if [ "$branch" = "master" ]; then
-                    export PATHPREFIX=""
+              export PATHPREFIX=""
             fi
 
             docker-compose -f docker-compose.caddy.yml up -d --build

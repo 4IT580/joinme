@@ -25,8 +25,12 @@ jobs:
 
             branch=${BRANCH##*/}
 
+            if [ "$branch" = "master" ]; then
+              exit
+            fi
+
             cd git/$branch
             docker-compose down
 
             cd ..
-            rm -rf git/$branch
+            rm -rf $branch
