@@ -33,6 +33,7 @@ services:
     environment:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=8000
+      - JWT_SECRET=${JWT_SECRET}
     volumes:
       - ./server:/app
     networks:

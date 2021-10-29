@@ -9,10 +9,13 @@ import FormControl from '../molecules/FormControl'
 const REGISTER_MUTATION = gql`
   mutation ($handle: String!, $name: String!, $email: String!, $password: String!) {
     register(handle: $handle, name: $name, email: $email, password: $password) {
-      id
-      handle
-      name
-      email
+      user {
+        id
+        handle
+        name
+        email
+      }
+      token
     }
   }
 `
