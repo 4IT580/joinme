@@ -33,7 +33,7 @@ export default {
         return new Error(e)
       }
     },
-    loginByPassword: async (_, params) => {
+    login: async (_, params) => {
       const user = await db().select('*').from('users').where('email', params.email).first()
 
       if (!user) {
