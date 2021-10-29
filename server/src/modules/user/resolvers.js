@@ -9,51 +9,39 @@ export default {
   Mutation: {
     register: async (_, params) => {
       try {
-        var user = await db().select('*').from('users').where('handle', params.handle).first()
+        const isHandleTaken = await db().select('*').from('users').where('handle', params.handle).first()
 
-        if (user) {
+        if (isHandleTaken) {
           return new Error('Handle is taken')
         }
 
-        user = await db().select('*').from('users').where('email', params.email).first()
+        const isEmailTaken = await db().select('*').from('users').where('email', params.email).first()
 
-        if (user) {
+        if (isEmailTaken) {
           return new Error('Email is taken')
         }
 
-        params.password = await argon2.hash(params.password)
+        const user = {
+          ...params,
+          password: await argon2.hash(params.password),
+        }
 
-        const [id] = await db().insert(params).into('users')
+        const [id] = await db().insert(user).into('users')
 
         return { user: await db().select('*').from('users').where('id', id).first(), token: createToken({ id: id }) }
       } catch (e) {
         return new Error(e)
       }
     },
-    loginByToken: async (_, params) => {
-      try {
-        var id = verifyToken(params.token)
-
-        var user = await db().select('*').from('users').where('id', id.id).first()
-
-        if (!user) {
-          return new Error('Bad token')
-        }
-
-        return { user: user, token: params.token }
-      } catch (e) {
-        return new Error('Bad token')
-      }
-    },
     loginByPassword: async (_, params) => {
-      var user = await db().select('*').from('users').where('email', params.email).first()
+      const user = await db().select('*').from('users').where('email', params.email).first()
 
       if (!user) {
         //return generic message for login to hide which part is wrong
         return new Error('Wrong email or password')
       }
 
-      if (argon2.verify(user.password, params.password)) {
+      if (await argon2.verify(user.password, params.password)) {
         return { user: user, token: createToken({ id: user.id }) }
       } else {
         //return generic message for login to hide which part is wrong
