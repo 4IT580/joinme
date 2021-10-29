@@ -8,11 +8,17 @@ export default gql`
     email: String!
   }
 
+  type UserAndToken {
+    user: User!
+    token: String!
+  }
+
   type Query {
     users: [User!]!
   }
 
   type Mutation {
-    register(handle: String!, name: String!, email: String!, password: String!): User
+    register(handle: String!, name: String!, email: String!, password: String!): UserAndToken
+    login(email: String!, password: String!): UserAndToken
   }
 `
