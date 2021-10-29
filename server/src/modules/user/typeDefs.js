@@ -19,7 +19,6 @@ export default gql`
 
   type Mutation {
     register(handle: String!, name: String!, email: String!, password: String!): UserAndToken
-    loginByToken(token: String!): UserAndToken
     loginByPassword(email: String!, password: String!): UserAndToken
   }
 `
