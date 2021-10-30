@@ -10,5 +10,10 @@ export default {
 
       return await db().select('*').from('users').where('id', id).first()
     },
+    authenticate: async (_, params) => {
+      const result = await db().select('*').from('users').where('email', params.email).first()
+      return  (result?.password ?? '') === params.password
+    },
   },
+
 }
