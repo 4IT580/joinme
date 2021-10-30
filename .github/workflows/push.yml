@@ -15,11 +15,12 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           BRANCH: ${{ github.ref }}
+          JWTSECRET: ${{ secrets.JWT_SECRET }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          envs: BRANCH
+          envs: BRANCH,JWTSECRET
           script: |
             cd /var/www
 
@@ -32,6 +33,7 @@ jobs:
 
             export PATHPREFIX="$ppref"
             export CONTAINERPREFIX="$cpref"
+            export JWT_SECRET="$JWTSECRET"
 
             if [ -d "git/$branch" ]; then
               cd git/$branch
