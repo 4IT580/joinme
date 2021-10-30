@@ -8,7 +8,15 @@ import { gql, useMutation } from '@apollo/client'
 
 const LOGIN_MUTATION = gql`
   mutation ($email: String!, $password: String!) {
-    authenticate(email: $email, password: $password)
+    login(email: $email, password: $password){
+     user {
+        id
+        handle
+        name
+        email
+      }
+      token
+    }
   }
 `
 
@@ -30,7 +38,11 @@ export default function LoginModal({ onClose }) {
         }}
         validationSchema={loginModalFormSchema}
         onSubmit={async (variables) => {
-          await login({ variables })
+          try {
+            await login({ variables })
+          } catch (e) {
+            alert('Wrong email or password')
+          }
 
           onClose()
         }}

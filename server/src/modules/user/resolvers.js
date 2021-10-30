@@ -48,10 +48,6 @@ export default {
         return new Error('Wrong email or password')
       }
     },
-    authenticate: async (_, params) => {
-      const result = await db().select('*').from('users').where('email', params.email).first()
-      return  (result?.password ?? '') === params.password
-    },
   },
 
 }
