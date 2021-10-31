@@ -23,7 +23,11 @@ jobs:
           script: |
             cd /var/www
 
+            echo BRANCH $BRANCH
+
             branch=${BRANCH##*/}
+
+            echo branch $branch
 
             if [ "$branch" = "master" ]; then
               exit
