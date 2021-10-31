@@ -1,6 +1,7 @@
 import { db } from '../../lib/db.js'
 import * as argon2 from 'argon2'
 import { createToken, verifyToken } from '../../lib/token.js'
+import * as mail from '../../lib/mail.js'
 import * as yup from 'yup'
 import { randomBytes } from 'crypto'
 const PASSWORD_RESET_TIMEOUT_MINUTES = 10
@@ -19,7 +20,7 @@ export default {
           password: yup.string().required('Password is required'),
         })
 
-        //validation will throw error, we do not need to save the result
+        // validation will throw error, we do not need to save the result
         await loginSchema.validate(params)
 
         const isHandleTaken = await db().select('*').from('users').where('handle', params.handle).first()
@@ -41,6 +42,12 @@ export default {
 
         const [id] = await db().insert(user).into('users')
 
+        await mail.send({
+          to: params.email,
+          subject: 'Joinme registration',
+          html: `<p>Hello, ${params.name}!</p>`,
+        })
+
         return { user: await db().select('*').from('users').where('id', id).first(), token: createToken({ id: id }) }
       } catch (e) {
         return new Error(e)
@@ -61,7 +68,7 @@ export default {
         return new Error('Wrong email or password')
       }
     },
-    passwordResetRequest: async (_, params) => {
+    requestPasswordReset: async (_, params) => {
       try {
         const resetSchema = yup.object({
           email: yup.string().email().required('Email is required'),
@@ -83,7 +90,11 @@ export default {
 
         await db().insert(ticket).into('passwordResetTickets')
 
-        //TODO send email
+        await mail.send({
+          to: params.email,
+          subject: 'Password reset',
+          html: `<p>Reset password using this token: ${ticket.secret}</p>`,
+        })
 
         return 'OK'
       } catch (e) {

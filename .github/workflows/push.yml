@@ -15,12 +15,13 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           BRANCH: ${{ github.ref }}
-          JWTSECRET: ${{ secrets.JWT_SECRET }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          envs: BRANCH,JWTSECRET
+          envs: BRANCH,JWT_SECRET,SENDGRID_API_KEY
           script: |
             cd /var/www
 
@@ -33,7 +34,8 @@ jobs:
 
             export PATHPREFIX="$ppref"
             export CONTAINERPREFIX="$cpref"
-            export JWT_SECRET="$JWTSECRET"
+            export JWT_SECRET="$JWT_SECRET"
+            export SENDGRID_API_KEY="$SENDGRID_API_KEY"
 
             if [ -d "git/$branch" ]; then
               cd git/$branch

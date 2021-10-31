@@ -20,7 +20,7 @@ export default gql`
   type Mutation {
     register(handle: String!, name: String!, email: String!, password: String!): UserAndToken
     login(email: String!, password: String!): UserAndToken
-    passwordResetRequest(email: String!): String
+    requestPasswordReset(email: String!): String
     resetPassword(secret: String!, password: String!): UserAndToken
   }
 `
