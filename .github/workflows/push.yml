@@ -34,7 +34,7 @@ jobs:
 
             export PATHPREFIX="$ppref"
             export CONTAINERPREFIX="$cpref"
-            export JWT_SECRET="$JWTSECRET"
+            export JWT_SECRET="$JWT_SECRET"
             export SENDGRID_API_KEY="$SENDGRID_API_KEY"
 
             if [ -d "git/$branch" ]; then
