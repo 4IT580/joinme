@@ -8,8 +8,8 @@ import { gql, useMutation } from '@apollo/client'
 
 const LOGIN_MUTATION = gql`
   mutation ($email: String!, $password: String!) {
-    login(email: $email, password: $password){
-     user {
+    login(email: $email, password: $password) {
+      user {
         id
         handle
         name
@@ -30,7 +30,7 @@ export default function LoginModal({ onClose }) {
 
   return (
     <Modal>
-      <Title className='mb-4'>Log into your account</Title>
+      <Title className="mb-4">Log into your account</Title>
       <Formik
         initialValues={{
           email: '',
@@ -40,20 +40,19 @@ export default function LoginModal({ onClose }) {
         onSubmit={async (variables) => {
           try {
             await login({ variables })
+            onClose()
           } catch (e) {
             alert('Wrong email or password')
           }
-
-          onClose()
         }}
       >
         <Form>
-          <FormControl name='email' label='Email' type='email' placeholder='Enter your email' />
-          <FormControl name='password' label='Password' type='password' placeholder='Enter your password' />
+          <FormControl name="email" label="Email" type="email" placeholder="Enter your email" />
+          <FormControl name="password" label="Password" type="password" placeholder="Enter your password" />
 
-          <div className='modal-action'>
+          <div className="modal-action">
             <Button onClick={onClose}>Cancel</Button>
-            <Button type='submit' className='btn-primary' loading={loginState.loading}>
+            <Button type="submit" className="btn-primary" loading={loginState.loading}>
               Log in
             </Button>
           </div>
