@@ -36,7 +36,6 @@ services:
       - JWT_SECRET=${JWT_SECRET}
     volumes:
       - ./server:/app
-      - ./server:/prod
     networks:
       - caddy
     labels:
