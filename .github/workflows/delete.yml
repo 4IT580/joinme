@@ -23,29 +23,19 @@ jobs:
           script: |
             cd /var/www
 
-            echo BRANCH $BRANCH
-
             branch=${BRANCH##*/}
 
-            echo branch $branch
+            echo "Deleting branch $branch"
 
             if [ "$branch" = "master" ]; then
+              echo "Not deleting master ;)"
               exit
             fi
 
             cd git/$branch
 
-            pwd
-            ls
-
             docker-compose down
 
             cd ..
 
-            pwd
-            ls
-
             rm -rf $branch
-
-            pwd
-            ls
