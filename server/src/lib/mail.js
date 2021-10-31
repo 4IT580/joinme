@@ -3,8 +3,6 @@ import mail from '@sendgrid/mail'
 const apiKey = process.env.SENDGRID_API_KEY
 const enabled = !!apiKey
 
-console.log('SENDGRID_API_KEY', apiKey)
-
 if (enabled) mail.setApiKey(apiKey)
 
 export const send = async ({ to, subject, html }) => {
