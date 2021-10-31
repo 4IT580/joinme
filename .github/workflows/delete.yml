@@ -34,7 +34,13 @@ jobs:
             fi
 
             cd git/$branch
+
+            ls
+
             docker-compose down
 
             cd ..
+
+            ls
+
             rm -rf $branch
