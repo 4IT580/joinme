@@ -35,12 +35,17 @@ jobs:
 
             cd git/$branch
 
+            pwd
             ls
 
             docker-compose down
 
             cd ..
 
+            pwd
             ls
 
             rm -rf $branch
+
+            pwd
+            ls
