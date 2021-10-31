@@ -30,7 +30,7 @@ const main = async () => {
 
   await server.listen(PORT, HOST)
 
-  console.log(`Server ready at http://localhost:${PORT}`)
+  console.info(`Server ready at http://localhost:${PORT}`)
 }
 
 main()

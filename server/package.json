@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "build": "true",
-    "start": "node src/index.js"
+    "prod": "node src/index.js"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.5.0",
