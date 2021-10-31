@@ -1,3 +1,6 @@
+/**
+ * @param {import('knex').Knex} knex
+ */
 export const up = (knex) => {
   return knex.schema.createTable('users', (table) => {
     table.increments('id')
@@ -8,6 +11,9 @@ export const up = (knex) => {
   })
 }
 
+/**
+ * @param {import('knex').Knex} knex
+ */
 export const down = (knex) => {
   return knex.schema.dropTable('users')
 }
