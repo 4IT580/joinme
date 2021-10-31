@@ -14,10 +14,13 @@ export default {
     register: async (_, params) => {
       try {
         const loginSchema = yup.object({
-          handle: yup.string().min(3).max(6).required('Handle is required'),
+          handle: yup.string().min(3).max(20).required('Handle is required'),
           name: yup.string().min(3).max(50).required('Name is required'),
           email: yup.string().email().required('Email is required'),
-          password: yup.string().required('Password is required'),
+          password: yup
+            .string()
+            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!\-@#\$%\^&\*])(?=.{8,})/)
+            .required('Password is required'),
         })
 
         // validation will throw error, we do not need to save the result
