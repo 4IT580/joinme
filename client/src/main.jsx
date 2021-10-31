@@ -5,7 +5,7 @@ import 'tailwindcss/tailwind.css'
 import App from './App'
 
 const apolloClient = new ApolloClient({
-  uri: process.env.APOLLO_URL,
+  uri: process.env.BACKEND_URL,
   cache: new InMemoryCache(),
 })
 
