@@ -20,7 +20,7 @@ export default {
           password: yup.string().required('Password is required'),
         })
 
-        //validation will throw error, we do not need to save the result
+        // validation will throw error, we do not need to save the result
         await loginSchema.validate(params)
 
         const isHandleTaken = await db().select('*').from('users').where('handle', params.handle).first()
@@ -68,7 +68,7 @@ export default {
         return new Error('Wrong email or password')
       }
     },
-    passwordResetRequest: async (_, params) => {
+    requestPasswordReset: async (_, params) => {
       try {
         const resetSchema = yup.object({
           email: yup.string().email().required('Email is required'),
@@ -90,7 +90,11 @@ export default {
 
         await db().insert(ticket).into('passwordResetTickets')
 
-        //TODO send email
+        await mail.send({
+          to: params.email,
+          subject: 'Password reset',
+          html: `<p>Reset password using this token: ${ticket.secret}</p>`,
+        })
 
         return 'OK'
       } catch (e) {
