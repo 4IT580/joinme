@@ -51,3 +51,7 @@ jobs:
             fi
 
             docker-compose -f docker-compose.caddy.yml up -d --build
+
+            URL=https://"$PATHPREFIX"joinme.cz
+
+            timeout 300 sh -c 'while [[ "$(wget --spider -S "$URL" 2>&1 | grep "HTTP/" | awk "{print \$2}")" != "200" ]]; do sleep 5; done' || false
