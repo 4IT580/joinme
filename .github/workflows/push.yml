@@ -51,3 +51,9 @@ jobs:
             fi
 
             docker-compose -f docker-compose.caddy.yml up -d --build
+
+            export URL=https://"$PATHPREFIX"joinme.cz
+
+            echo Waiting for $URL to return 200
+
+            timeout 300 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' $URL)" != "200" ]]; do sleep 5; done' || false
