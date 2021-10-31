@@ -34,6 +34,7 @@ services:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=8000
       - JWT_SECRET=${JWT_SECRET}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
     volumes:
       - ./server:/app
     networks:

@@ -1,6 +1,7 @@
 import { db } from '../../lib/db.js'
 import * as argon2 from 'argon2'
 import { createToken, verifyToken } from '../../lib/token.js'
+import * as mail from '../../lib/mail.js'
 import * as yup from 'yup'
 import { randomBytes } from 'crypto'
 const PASSWORD_RESET_TIMEOUT_MINUTES = 10
@@ -40,6 +41,12 @@ export default {
         }
 
         const [id] = await db().insert(user).into('users')
+
+        await mail.send({
+          to: params.email,
+          subject: 'Joinme registration',
+          html: `<p>Hello, ${params.name}!</p>`,
+        })
 
         return { user: await db().select('*').from('users').where('id', id).first(), token: createToken({ id: id }) }
       } catch (e) {

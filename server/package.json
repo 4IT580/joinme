@@ -9,6 +9,7 @@
     "start": "node src/index.js"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.5.0",
     "apollo-server": "^3.4.0",
     "apollo-server-core": "^3.4.0",
     "argon2": "^0.28.2",
