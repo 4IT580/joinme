@@ -2,11 +2,14 @@ import glob from 'glob'
 import path from 'path'
 import { ApolloServer } from 'apollo-server'
 import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core'
+import { migrate } from './lib/db.js'
 
 const HOST = process.env.SERVER_HOST || 'localhost'
 const PORT = process.env.SERVER_PORT || 8000
 
 const main = async () => {
+  await migrate()
+
   const config = {
     typeDefs: [],
     resolvers: [],

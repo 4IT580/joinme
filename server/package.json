@@ -4,9 +4,9 @@
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
-    "dev": "knex migrate:up && nodemon src/index.js",
+    "dev": "nodemon src/index.js",
     "build": "true",
-    "start": "knex migrate:up && node src/index.js"
+    "start": "node src/index.js"
   },
   "dependencies": {
     "apollo-server": "^3.4.0",

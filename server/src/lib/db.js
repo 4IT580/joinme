@@ -20,3 +20,11 @@ export const db = () => {
 
   return connection
 }
+
+export const migrate = async () => {
+  const [_, migrations] = await db().migrate.latest()
+
+  for (const migration of migrations) {
+    console.info('Executing migration "%s"', migration)
+  }
+}

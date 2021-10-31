@@ -5,8 +5,8 @@ export default {
   connection: {
     filename: path.join(process.cwd(), 'db.sqlite3'),
   },
-
   migrations: {
     tableName: 'migrations',
   },
+  useNullAsDefault: true,
 }
