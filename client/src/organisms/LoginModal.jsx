@@ -1,10 +1,12 @@
 import * as yup from 'yup'
 import { Formik, Form } from 'formik'
+import Link from '../atoms/Link'
 import Button from '../atoms/Button'
 import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
 import { gql, useMutation } from '@apollo/client'
+import { useState } from 'react'
 
 const LOGIN_MUTATION = gql`
   mutation ($email: String!, $password: String!) {
@@ -25,7 +27,7 @@ const loginModalFormSchema = yup.object().shape({
   password: yup.string().required('Password is required'),
 })
 
-export default function LoginModal({ onClose }) {
+export default function LoginModal({ onClose, onRequestPasswordReset }) {
   const [login, loginState] = useMutation(LOGIN_MUTATION)
 
   return (
@@ -40,9 +42,10 @@ export default function LoginModal({ onClose }) {
         onSubmit={async (variables) => {
           try {
             await login({ variables })
+            alert('Logged in')
             onClose()
           } catch (e) {
-            alert('Wrong email or password')
+            alert(e.message)
           }
         }}
       >
@@ -51,6 +54,9 @@ export default function LoginModal({ onClose }) {
           <FormControl name="password" label="Password" type="password" placeholder="Enter your password" />
 
           <div className="modal-action">
+            <Link className="self-center mr-auto" onClick={onRequestPasswordReset}>
+              Reset password
+            </Link>
             <Button onClick={onClose}>Cancel</Button>
             <Button type="submit" className="btn-primary" loading={loginState.loading}>
               Log in

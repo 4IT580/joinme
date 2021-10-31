@@ -1,6 +1,6 @@
 import { db } from '../../lib/db.js'
 import * as argon2 from 'argon2'
-import { createToken, verifyToken } from '../../lib/token.js'
+import * as token from '../../lib/token.js'
 import * as mail from '../../lib/mail.js'
 import * as yup from 'yup'
 import { randomBytes } from 'crypto'
@@ -26,13 +26,13 @@ export default {
         const isHandleTaken = await db().select('*').from('users').where('handle', params.handle).first()
 
         if (isHandleTaken) {
-          return new Error('Handle is taken')
+          throw new Error('Handle is taken')
         }
 
         const isEmailTaken = await db().select('*').from('users').where('email', params.email).first()
 
         if (isEmailTaken) {
-          return new Error('Email is taken')
+          throw new Error('Email is taken')
         }
 
         const user = {
@@ -48,9 +48,9 @@ export default {
           html: `<p>Hello, ${params.name}!</p>`,
         })
 
-        return { user: await db().select('*').from('users').where('id', id).first(), token: createToken({ id: id }) }
+        return { user: await db().select('*').from('users').where('id', id).first(), token: token.create({ id: id }) }
       } catch (e) {
-        return new Error(e)
+        throw new Error(e)
       }
     },
     login: async (_, params) => {
@@ -58,48 +58,45 @@ export default {
 
       if (!user) {
         //return generic message for login to hide which part is wrong
-        return new Error('Wrong email or password')
+        throw new Error('Wrong email or password')
       }
 
       if (await argon2.verify(user.password, params.password)) {
-        return { user: user, token: createToken({ id: user.id }) }
+        return { user: user, token: token.create({ id: user.id }) }
       } else {
         //return generic message for login to hide which part is wrong
-        return new Error('Wrong email or password')
+        throw new Error('Wrong email or password')
       }
     },
     requestPasswordReset: async (_, params) => {
-      try {
-        const resetSchema = yup.object({
-          email: yup.string().email().required('Email is required'),
-        })
+      const resetSchema = yup.object({
+        email: yup.string().email().required('Email is required'),
+      })
 
-        //validation will throw error, we do not need to save the result
-        await resetSchema.validate(params)
+      await resetSchema.validate(params)
 
-        const user = await db().select('*').from('users').where('email', params.email).first()
+      const user = await db().select('*').from('users').where('email', params.email).first()
 
-        if (!user) {
-          return new Error('No such user')
-        }
-
-        const ticket = {
-          userId: user.id,
-          secret: randomBytes(64).toString('base64'),
-        }
-
-        await db().insert(ticket).into('passwordResetTickets')
-
-        await mail.send({
-          to: params.email,
-          subject: 'Password reset',
-          html: `<p>Reset password using this token: ${ticket.secret}</p>`,
-        })
-
-        return 'OK'
-      } catch (e) {
-        return new Error(e)
+      if (!user) {
+        throw new Error('No such user')
       }
+
+      const ticket = {
+        userId: user.id,
+        secret: randomBytes(64).toString('base64'),
+      }
+
+      await db().insert(ticket).into('passwordResetTickets')
+
+      await mail.send({
+        to: params.email,
+        subject: 'Password reset',
+        html: `<p>Click <a href="${process.env.FRONTEND_URL}/reset-password?secret=${encodeURIComponent(
+          ticket.secret,
+        )}">here</a> to reset your password.</p>`,
+      })
+
+      return true
     },
     resetPassword: async (_, params) => {
       const ticket = await db()
@@ -110,30 +107,30 @@ export default {
         .first()
 
       if (!ticket) {
-        return new Error('No such ticket')
+        throw new Error('No such ticket')
       }
 
       const ticketValidity = new Date(new Date(ticket.requested).getTime() + PASSWORD_RESET_TIMEOUT_MINUTES * 60000)
 
       if (Date.now() > ticketValidity.getTime()) {
-        await db().from('passwordResetTickets').where('id', ticket.id).update('used', true)
-        return new Error('Ticket timed out')
+        await db().table('passwordResetTickets').update('used', true).where('id', ticket.id)
+        throw new Error('Ticket timed out')
       }
 
       const user = await db().select('*').from('users').where('id', ticket.userId).first()
 
       if (!user) {
-        return new Error('Bad user')
+        throw new Error('Bad user')
       }
 
       await db()
-        .from('users')
-        .where('id', user.id)
+        .table('users')
         .update('password', await argon2.hash(params.password))
+        .where('id', user.id)
 
-      await db().from('passwordResetTickets').where('id', ticket.id).update('used', true)
+      await db().table('passwordResetTickets').update('used', true).where('id', ticket.id)
 
-      return { user: user, token: createToken({ id: user.id }) }
+      return true
     },
   },
 }

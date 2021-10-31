@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 
-export default function Link({ to = '#', children, ...attrs }) {
+export default function Link({ to, children, ...attrs }) {
   const { className, ...rest } = attrs
 
   return (

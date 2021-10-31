@@ -23,7 +23,7 @@ const REGISTER_MUTATION = gql`
 const registerModalFormSchema = yup.object().shape({
   handle: yup.string().min(3).max(6).required('Handle is required'),
   name: yup.string().min(3).max(50).required('Name is required'),
-  email: yup.string().email().required('Email is required'),
+  email: yup.string().email('Email must be a valid email').required('Email is required'),
   password: yup.string().required('Password is required'),
   passwordConfirmation: yup
     .string()
@@ -47,9 +47,13 @@ export default function RegisterModal({ onClose }) {
         }}
         validationSchema={registerModalFormSchema}
         onSubmit={async (variables) => {
-          await register({ variables })
-
-          onClose()
+          try {
+            await register({ variables })
+            alert('Registered')
+            onClose()
+          } catch (e) {
+            alert(e.message)
+          }
         }}
       >
         <Form>
