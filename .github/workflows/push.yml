@@ -21,7 +21,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          envs: BRANCH,JWTSECRET
+          envs: BRANCH,JWT_SECRET,SENDGRID_API_KEY
           script: |
             cd /var/www
 
