@@ -21,10 +21,16 @@ const REGISTER_MUTATION = gql`
 `
 
 const registerModalFormSchema = yup.object().shape({
-  handle: yup.string().min(3).max(6).required('Handle is required'),
+  handle: yup.string().min(3).max(20).required('Handle is required'),
   name: yup.string().min(3).max(50).required('Name is required'),
   email: yup.string().email('Email must be a valid email').required('Email is required'),
-  password: yup.string().required('Password is required'),
+  password: yup
+    .string()
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!\-@#\$%\^&\*])(?=.{8,})/,
+      'Password must contain at least 8 characters, a lowercase letter, an uppercase letter, a number and a special character',
+    )
+    .required('Password is required'),
   passwordConfirmation: yup
     .string()
     .required('Password confirmation is required')
