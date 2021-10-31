@@ -56,4 +56,4 @@ jobs:
 
             echo Waiting for $URL to return 200
 
-            timeout 300 sh -c 'while [[ "$(wget --spider -S "$URL" 2>&1 | grep "HTTP/" | awk "{print \$2}")" != "200" ]]; do sleep 5; done' || false
+            timeout 300 sh -c 'while [[ "$(wget --spider -S "$URL" 2>&1 | grep "HTTP/" | awk "{print \$2}")" != "200" ]]; do sleep 5; echo "$(wget --spider -S "$URL" 2>&1 | grep "HTTP/" | awk "{print \$2}")"; done' || false
