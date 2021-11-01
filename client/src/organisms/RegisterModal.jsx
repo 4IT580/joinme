@@ -5,6 +5,7 @@ import Button from '../atoms/Button'
 import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
+import React, {useState} from 'react'
 
 const REGISTER_MUTATION = gql`
   mutation ($handle: String!, $name: String!, $email: String!, $password: String!) {
@@ -38,7 +39,12 @@ const registerModalFormSchema = yup.object().shape({
 })
 
 export default function RegisterModal({ onClose }) {
+
+
+
+
   const [register, registerState] = useMutation(REGISTER_MUTATION)
+
 
   return (
     <Modal>

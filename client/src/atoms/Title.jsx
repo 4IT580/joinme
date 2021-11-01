@@ -7,11 +7,11 @@ const classes = {
 export default function Title({ level = 1, children, ...attrs }) {
   const { className, ...rest } = attrs
 
-  const Tag = `h${level}`
+  const Component = `h${level}`
 
   return (
-    <Tag className={classNames(classes[level], className)} {...rest}>
+    <Component className={classNames(classes[level], className)} {...rest}>
       {children}
-    </Tag>
+    </Component>
   )
 }
