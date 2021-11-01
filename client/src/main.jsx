@@ -1,13 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { ApolloProvider } from '@apollo/client'
 import 'tailwindcss/tailwind.css'
 import App from './App'
-
-const apolloClient = new ApolloClient({
-  uri: process.env.BACKEND_URL,
-  cache: new InMemoryCache(),
-})
+import { apolloClient } from './utils/apolloClient'
 
 ReactDOM.render(
   <React.StrictMode>

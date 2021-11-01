@@ -41,8 +41,12 @@ export default function LoginModal({ onClose, onRequestPasswordReset }) {
         validationSchema={loginModalFormSchema}
         onSubmit={async (variables) => {
           try {
-            await login({ variables })
-            alert('Logged in')
+            const loginResponse = await login({ variables })
+
+            window.localStorage.setItem('JWT', loginResponse.data.login.token)
+            window.location.reload()
+
+            window.alert('Logged in')
             onClose()
           } catch (e) {
             alert(e.message)

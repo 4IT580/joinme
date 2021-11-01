@@ -14,6 +14,11 @@ const main = async () => {
     typeDefs: [],
     resolvers: [],
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+    context: ({ req }) => {
+      const token = req.headers.authorization ?? ''
+
+      console.log(token)
+    },
   }
 
   for (const file of glob.sync('src/modules/*/*.js', { absolute: true })) {
