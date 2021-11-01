@@ -21,8 +21,8 @@ services:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=8000
       - FRONTEND_URL=http://localhost:3000
-      - JWT_SECRET=eviBMvM62ASRaeVf445aoMLYuK49nVzbv7X7JEhXYuZMvfUwxx3kuKd2H7dnrrfw
-      - SENDGRID_API_KEY=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
+      - JWT_SECRET=${JWT_SECRET}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
     ports:
       - 8000:8000
     volumes:
