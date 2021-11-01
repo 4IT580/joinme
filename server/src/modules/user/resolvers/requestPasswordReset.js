@@ -1,5 +1,5 @@
-import { db } from '../../lib/db.js'
-import * as mail from '../../lib/mail.js'
+import { db } from '../../../lib/db.js'
+import * as mail from '../../../lib/mail.js'
 import * as yup from 'yup'
 import { randomBytes } from 'crypto'
 

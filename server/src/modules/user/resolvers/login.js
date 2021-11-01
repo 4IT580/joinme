@@ -1,6 +1,6 @@
-import { db } from '../../lib/db.js'
+import { db } from '../../../lib/db.js'
 import * as argon2 from 'argon2'
-import * as token from '../../lib/token.js'
+import * as token from '../../../lib/token.js'
 
 export default async (_, params) => {
   const user = await db().select('*').from('users').where('email', params.email).first()
