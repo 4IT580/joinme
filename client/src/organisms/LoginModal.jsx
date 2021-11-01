@@ -6,14 +6,13 @@ import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
 import { gql, useMutation } from '@apollo/client'
-import { useState } from 'react'
 
 const LOGIN_MUTATION = gql`
   mutation ($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       user {
         id
-        handle
+        username
         name
         email
       }
