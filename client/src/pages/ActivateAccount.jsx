@@ -3,8 +3,8 @@ import { useEffect } from 'react'
 import { useRouteQuery } from '../Hooks'
 
 const ACTIVATE_ACCOUNT_MUTATION = gql`
-  mutation ($secret: String!, $password: String!) {
-    resetPassword(secret: $secret, password: $password)
+  mutation ($secret: String!) {
+    activateAccount(secret: $secret)
   }
 `
 
