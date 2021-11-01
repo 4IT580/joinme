@@ -2,12 +2,21 @@ module.exports = {
   mode: 'jit',
   purge: ['./index.html', './src/**/*.jsx'],
   plugins: [require('daisyui')],
+  theme: {
+    extend: {
+      colors: {
+        'pinkgrad' : '#ffb9e4',
+        'orangegrad': '#ffb9b9',
+        'ourblack' : '#212121',
+      }
+    }
+  },
   daisyui: {
     themes: [
       {
         pink: {
-          'primary': '#F472B6',
-          'primary-focus': '#EC4899',
+          'primary': '#FD165E',
+          'primary-focus': '#F21459',
           'primary-content': '#ffffff',
           'secondary': '#5283DD',
           'secondary-focus': '#0084C6',
