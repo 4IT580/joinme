@@ -21,4 +21,6 @@ export default function ActivateAccount() {
 
     if (ok) alert('Account activated')
   }, [])
+
+  return <div>Activate account</div>
 }
