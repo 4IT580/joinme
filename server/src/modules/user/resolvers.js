@@ -45,10 +45,19 @@ export default {
 
         const [id] = await db().insert(user).into('users')
 
+        const ticket = {
+          userId: id,
+          secret: randomBytes(64).toString('base64'),
+        }
+
+        await db().insert(ticket).into('userActivationTickets')
+
         await mail.send({
           to: params.email,
           subject: 'Joinme registration',
-          html: `<p>Hello, ${params.name}!</p>`,
+          html: `<p>Hello, ${params.name}! Click <a href="${
+            process.env.FRONTEND_URL
+          }/activate-account?secret=${encodeURIComponent(ticket.secret)}">here</a> to activate your account.</p>`,
         })
 
         return { user: await db().select('*').from('users').where('id', id).first(), token: token.create({ id: id }) }
@@ -132,6 +141,37 @@ export default {
         .where('id', user.id)
 
       await db().table('passwordResetTickets').update('used', true).where('id', ticket.id)
+
+      return true
+    },
+    activateAccount: async (_, params) => {
+      const ticket = await db()
+        .select('*')
+        .from('userActivationTickets')
+        .where('used', false)
+        .where('secret', params.secret)
+        .first()
+
+      if (!ticket) {
+        throw new Error('Invalid link')
+      }
+
+      const ticketValidity = new Date(new Date(ticket.requested).getTime() + PASSWORD_RESET_TIMEOUT_MINUTES * 60000)
+
+      if (Date.now() > ticketValidity.getTime()) {
+        await db().table('userActivationTickets').update('used', true).where('id', ticket.id)
+        throw new Error('Invalid ticket')
+      }
+
+      const user = await db().select('*').from('users').where('id', ticket.userId).first()
+
+      if (!user) {
+        throw new Error('Invalid user')
+      }
+
+      await db().table('users').update('activated', true).where('id', user.id)
+
+      await db().table('userActivationTickets').update('used', true).where('id', ticket.id)
 
       return true
     },
