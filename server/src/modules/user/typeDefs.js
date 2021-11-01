@@ -22,5 +22,6 @@ export default gql`
     login(email: String!, password: String!): UserAndToken
     requestPasswordReset(email: String!): Boolean
     resetPassword(secret: String!, password: String!): Boolean
+    activateAccount(secret: String): Boolean
   }
 `
