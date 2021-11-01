@@ -6,3 +6,5 @@ dist-ssr
 yarn-error.log
 docker-compose.override.yml
 *.sqlite3
+.vscode
+.env

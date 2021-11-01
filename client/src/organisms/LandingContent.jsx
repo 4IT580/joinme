@@ -1,10 +1,10 @@
 import Button from '../atoms/Button'
-import image from '../assets/404_2.png'
+import image from '../assets/imglp.png'
 
 export default function LandingContent() {
   return (
     <div className="flex flex-col-reverse lg:flex-row py-16">
-      <div className="flex flex-col justify-end p-16 w-96">
+      <div className="flex flex-col p-16 w-96">
         <h2 className="text-4xl font-bold mt-16 uppercase">How to start making new friends</h2>
         <ul className="text-xl mt-16">
           <li>Ready for event?</li>
@@ -13,8 +13,8 @@ export default function LandingContent() {
         </ul>
         <Button className="btn-primary mt-16 uppercase">Let's start!</Button>
       </div>
-      <div className="flex flex-grow justify-center">
-        <img src={image} className="object-contain" />
+      <div className="flex flex-grow justify-center p-8 lg:-mt-48 pointer-events-none">
+        <img src={image} className="object-contain" width="1000" height="1000" />
       </div>
     </div>
   )

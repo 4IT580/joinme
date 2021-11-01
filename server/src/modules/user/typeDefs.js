@@ -3,7 +3,7 @@ import { gql } from 'apollo-server'
 export default gql`
   type User {
     id: Int!
-    handle: String!
+    username: String!
     name: String!
     email: String!
   }
@@ -13,14 +13,11 @@ export default gql`
     token: String!
   }
 
-  type Query {
-    users: [User!]!
-  }
-
   type Mutation {
-    register(handle: String!, name: String!, email: String!, password: String!): UserAndToken
+    register(username: String!, name: String!, email: String!, password: String!): UserAndToken
     login(email: String!, password: String!): UserAndToken
     requestPasswordReset(email: String!): Boolean
     resetPassword(secret: String!, password: String!): Boolean
+    activateAccount(secret: String): Boolean
   }
 `

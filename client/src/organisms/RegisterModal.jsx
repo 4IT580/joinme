@@ -9,11 +9,11 @@ import Alert, { TYPE_ERROR, TYPE_SUCCESS } from '../atoms/Alert'
 import { useState } from 'react'
 
 const REGISTER_MUTATION = gql`
-  mutation ($handle: String!, $name: String!, $email: String!, $password: String!) {
-    register(handle: $handle, name: $name, email: $email, password: $password) {
+  mutation ($username: String!, $name: String!, $email: String!, $password: String!) {
+    register(username: $username, name: $name, email: $email, password: $password) {
       user {
         id
-        handle
+        username
         name
         email
       }
@@ -23,7 +23,7 @@ const REGISTER_MUTATION = gql`
 `
 
 const registerModalFormSchema = yup.object().shape({
-  handle: yup.string().min(3).max(20).required('Handle is required'),
+  username: yup.string().min(3).max(20).required('Username is required'),
   name: yup.string().min(3).max(50).required('Name is required'),
   email: yup.string().email('Email must be a valid email').required('Email is required'),
   password: yup
@@ -52,7 +52,7 @@ export default function RegisterModal({ onClose }) {
 
       <Formik
         initialValues={{
-          handle: '',
+          username: '',
           name: '',
           email: '',
           password: '',
@@ -75,7 +75,7 @@ export default function RegisterModal({ onClose }) {
         }}
       >
         <Form>
-          <FormControl name="handle" label="Handle" placeholder="Your unique handle" />
+          <FormControl name="username" label="Username" placeholder="Your unique username" />
           <FormControl name="name" label="Name" placeholder="Name you want other users to see" />
           <FormControl name="email" label="Email" type="email" placeholder="Email we can contact you on" />
           <FormControl name="password" label="Password" type="password" placeholder="Don't tell it to anyone" />

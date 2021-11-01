@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 
-export default function Link({ to, children, ...attrs }) {
-  const { className, ...rest } = attrs
+export default function Link({ to, children, className, ...rest }) {
+  
 
   return (
     <a href={to} className={classNames('link', className)} {...rest}>
