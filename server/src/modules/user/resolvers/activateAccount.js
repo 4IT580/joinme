@@ -1,3 +1,5 @@
+import { db } from '../../lib/db.js'
+
 export default async (_, params) => {
   const ticket = await db()
     .select('*')

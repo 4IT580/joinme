@@ -1,3 +1,10 @@
+import { db } from '../../lib/db.js'
+import * as argon2 from 'argon2'
+import * as token from '../../lib/token.js'
+import * as mail from '../../lib/mail.js'
+import * as yup from 'yup'
+import { randomBytes } from 'crypto'
+
 export default async (_, params) => {
   try {
     const loginSchema = yup.object({
