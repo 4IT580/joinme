@@ -4,8 +4,8 @@ const classes = {
   1: 'text-4xl font-extrabold',
 }
 
-export default function Title({ level = 1, children, ...attrs }) {
-  const { className, ...rest } = attrs
+export default function Title({ level = 1, children, className, ...rest }) {
+
 
   const Component = `h${level}`
 

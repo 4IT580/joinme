@@ -20,12 +20,13 @@ export default function LandingPage() {
   const { data } = useQuery(GREET_QUERY)
 
   return (
-    <div className="flex flex-col justify-between min-h-screen">
+    <div className="flex flex-col justify-between min-h-screen bg-gradient-to-b from-pinkgrad to-orangegrad">
       <LandingHeader
         greet={data?.greet ?? ''}
         onCreateAccount={() => setIsRegisterModalOpen(true)}
         onLogin={() => setIsLoginModalOpen(true)}
       />
+
       <LandingContent />
 
       {isRegisterModalOpen && <RegisterModal onClose={() => setIsRegisterModalOpen(false)} />}

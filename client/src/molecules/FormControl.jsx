@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import { useField } from 'formik'
 import React, { useState } from 'react'
+import Error from '../atoms/Error'
 
 export default function FormControl({ name, label, placeholder, type, ...attrs }) {
   const [field, meta] = useField(name)
@@ -53,11 +54,7 @@ export default function FormControl({ name, label, placeholder, type, ...attrs }
         )}
       </div>
 
-      {error && (
-        <label className="label">
-          <span className="label-text-alt text-red-400">{error}</span>
-        </label>
-      )}
+      <Error error={error} />
     </div>
   )
 }

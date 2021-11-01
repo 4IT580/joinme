@@ -5,6 +5,8 @@ import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
 import { gql, useMutation } from '@apollo/client'
+import Alert, { TYPE_INFO, TYPE_ERROR } from '../atoms/Alert'
+import { useState } from 'react'
 
 const REQUEST_PASSWORD_RESET_MUTATION = gql`
   mutation ($email: String!) {
@@ -18,10 +20,15 @@ const requestPasswordResetModalFormSchema = yup.object().shape({
 
 export default function RequestPasswordResetModal({ onClose }) {
   const [requestPasswordReset, requestPasswordResetState] = useMutation(REQUEST_PASSWORD_RESET_MUTATION)
+  const [isInfoAlertVisible, setIsInfoAlertVisible] = useState(false)
+  const [isErrorAlertVisible, setIsErrorAlertVisible] = useState(false)
 
   return (
     <Modal>
       <Title className="mb-4">Reset your password</Title>
+      {isInfoAlertVisible && <Alert type={TYPE_INFO}>Password request sent to your email</Alert>}
+      {isErrorAlertVisible && <Alert type={TYPE_ERROR}>Password reset request was not successful</Alert>}
+
       <Formik
         initialValues={{
           email: '',
@@ -30,10 +37,15 @@ export default function RequestPasswordResetModal({ onClose }) {
         onSubmit={async (variables) => {
           try {
             await requestPasswordReset({ variables })
-            alert('Password request sent to your email')
-            onClose()
+            if (isErrorAlertVisible) {
+              setIsErrorAlertVisible(false)
+            }
+            setIsInfoAlertVisible(true)
           } catch (e) {
-            alert(e.message)
+            if (isInfoAlertVisible) {
+              setIsInfoAlertVisible(false)
+            }
+            setIsErrorAlertVisible(true)
           }
         }}
       >
