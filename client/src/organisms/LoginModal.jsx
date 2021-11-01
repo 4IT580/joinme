@@ -6,6 +6,8 @@ import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
 import { gql, useMutation } from '@apollo/client'
+import { useState } from 'react'
+import Alert, { TYPE_SUCCESS, TYPE_ERROR } from '../atoms/Alert'
 
 const LOGIN_MUTATION = gql`
   mutation ($email: String!, $password: String!) {
@@ -28,10 +30,14 @@ const loginModalFormSchema = yup.object().shape({
 
 export default function LoginModal({ onClose, onRequestPasswordReset }) {
   const [login, loginState] = useMutation(LOGIN_MUTATION)
+  const [isSuccessAlertVisible, setIsSuccessAlertVisible] = useState(false)
+  const [isErrorAlertVisible, setIsErrorAlertVisible] = useState(false)
 
   return (
     <Modal>
       <Title className="mb-4">Log into your account</Title>
+      {isSuccessAlertVisible && <Alert type={TYPE_SUCCESS}>Logged in</Alert>}
+      {isErrorAlertVisible && <Alert type={TYPE_ERROR}>Wrong email or password</Alert>}
       <Formik
         initialValues={{
           email: '',
@@ -41,10 +47,15 @@ export default function LoginModal({ onClose, onRequestPasswordReset }) {
         onSubmit={async (variables) => {
           try {
             await login({ variables })
-            alert('Logged in')
-            onClose()
+            if (isErrorAlertVisible) {
+              setIsErrorAlertVisible(false)
+            }
+            setIsSuccessAlertVisible(true)
           } catch (e) {
-            alert(e.message)
+            if (isSuccessAlertVisible) {
+              setIsSuccessAlertVisible(false)
+            }
+            setIsErrorAlertVisible(true)
           }
         }}
       >
