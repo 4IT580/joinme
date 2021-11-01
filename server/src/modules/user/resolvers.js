@@ -14,7 +14,7 @@ export default {
     register: async (_, params) => {
       try {
         const loginSchema = yup.object({
-          handle: yup.string().min(3).max(20).required('Handle is required'),
+          username: yup.string().min(3).max(20).required('Username is required'),
           name: yup.string().min(3).max(50).required('Name is required'),
           email: yup.string().email().required('Email is required'),
           password: yup
@@ -26,10 +26,10 @@ export default {
         // validation will throw error, we do not need to save the result
         await loginSchema.validate(params)
 
-        const isHandleTaken = await db().select('*').from('users').where('handle', params.handle).first()
+        const isUsernameTaken = await db().select('*').from('users').where('username', params.username).first()
 
-        if (isHandleTaken) {
-          throw new Error('Handle is taken')
+        if (isUsernameTaken) {
+          throw new Error('Username is taken')
         }
 
         const isEmailTaken = await db().select('*').from('users').where('email', params.email).first()
