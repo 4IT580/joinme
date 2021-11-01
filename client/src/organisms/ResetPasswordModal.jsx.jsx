@@ -1,11 +1,11 @@
 import * as yup from 'yup'
-import { useLocation } from 'react-router-dom'
 import { Formik, Form } from 'formik'
 import Button from '../atoms/Button'
 import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
 import { gql, useMutation } from '@apollo/client'
+import { useRouteQuery } from '../Hooks'
 
 const RESET_PASSWORD_MUTATION = gql`
   mutation ($secret: String!, $password: String!) {
@@ -21,12 +21,8 @@ const resetPasswordModalFormSchema = yup.object().shape({
     .oneOf([yup.ref('password')], 'Passwords must match'),
 })
 
-function useQuery() {
-  return Object.fromEntries(new URLSearchParams(useLocation().search))
-}
-
 export default function ResetPasswordModal({ onClose }) {
-  const { secret } = useQuery()
+  const { secret } = useRouteQuery()
   const [resetPassword, resetPasswordState] = useMutation(RESET_PASSWORD_MUTATION)
 
   return (
