@@ -7,7 +7,6 @@ import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
 import React, { useState } from 'react'
 import Alert, { TYPE_ERROR, TYPE_SUCCESS } from '../atoms/Alert'
-import { useState } from 'react'
 
 const REGISTER_MUTATION = gql`
   mutation ($username: String!, $name: String!, $email: String!, $password: String!) {
