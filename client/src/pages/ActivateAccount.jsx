@@ -1,5 +1,6 @@
 import { gql, useMutation } from '@apollo/client'
 import { useEffect } from 'react'
+import { useRouteQuery } from '../Hooks'
 
 const ACTIVATE_ACCOUNT_MUTATION = gql`
   mutation ($secret: String!, $password: String!) {
@@ -7,12 +8,8 @@ const ACTIVATE_ACCOUNT_MUTATION = gql`
   }
 `
 
-function useQuery() {
-  return Object.fromEntries(new URLSearchParams(useLocation().search))
-}
-
 export default function ActivateAccount() {
-  const { secret } = useQuery()
+  const { secret } = useRouteQuery()
   const [activateAccount, activateAccountState] = useMutation(ACTIVATE_ACCOUNT_MUTATION)
 
   useEffect(async () => {
