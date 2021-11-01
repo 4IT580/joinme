@@ -5,6 +5,7 @@ import LandingContent from '../organisms/LandingContent'
 import RegisterModal from '../organisms/RegisterModal'
 import LoginModal from '../organisms/LoginModal'
 import PasswordResetModal from '../organisms/RequestPasswordResetModal'
+import image from '../assets/imglp.png'
 
 const GREET_QUERY = gql`
   query {
@@ -20,7 +21,9 @@ export default function LandingPage() {
   const { data } = useQuery(GREET_QUERY)
 
   return (
-    <div className="flex flex-col justify-between min-h-screen">
+    <div className="flex flex-col justify-between min-h-screen bg-gradient-to-b from-pinkgrad to-orangegrad">
+       <img src={image} className="object-contain absolute top-0 right-0 m-8" width="700" height="700" />
+      
       <LandingHeader
         greet={data?.greet ?? ''}
         onCreateAccount={() => setIsRegisterModalOpen(true)}
@@ -36,6 +39,8 @@ export default function LandingPage() {
         />
       )}
       {isPasswordResetModalOpen && <PasswordResetModal onClose={() => setIsPasswordResetModalOpen(false)} />}
+      
     </div>
+    
   )
 }
