@@ -4,7 +4,7 @@ import image from '../assets/imglp.png'
 export default function LandingContent() {
   return (
     <div className="flex flex-col-reverse lg:flex-row py-16">
-      <div className="flex flex-col p-16 w-96">
+      <div className="flex flex-col p-16 w-96 text-white">
         <h2 className="text-4xl font-bold mt-16 uppercase">How to start making new friends</h2>
         <ul className="text-xl mt-16">
           <li>Ready for event?</li>
