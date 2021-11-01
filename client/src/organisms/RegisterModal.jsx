@@ -21,7 +21,12 @@ const REGISTER_MUTATION = gql`
 `
 
 const registerModalFormSchema = yup.object().shape({
-  username: yup.string().min(3).max(20).required('Username is required'),
+  username: yup
+    .string()
+    .min(3)
+    .max(20)
+    .required('Username is required')
+    .matches(/^[a-z]{3,20}$/, 'username must only use lowercase letters of english alphabet'),
   name: yup.string().min(3).max(50).required('Name is required'),
   email: yup.string().email('Email must be a valid email').required('Email is required'),
   password: yup
