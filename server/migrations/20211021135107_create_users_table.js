@@ -8,6 +8,7 @@ export const up = (knex) => {
     table.string('name').notNullable()
     table.string('email').notNullable()
     table.string('password').notNullable()
+    table.boolean('activated').notNullable().defaultTo(false)
   })
 }
 
