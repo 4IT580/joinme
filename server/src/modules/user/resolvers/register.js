@@ -55,8 +55,6 @@ export default async (_, params) => {
         }/activate-account?secret=${encodeURIComponent(ticket.secret)}">here</a> to activate your account.</p>`,
       })
 
-      console.log(id)
-
       return id
     })
 

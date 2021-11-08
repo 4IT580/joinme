@@ -22,13 +22,16 @@ export const db = () => {
 }
 
 export const transaction = async (callback) => {
-  try {
-    await db().transaction(async (trx) => {
+  return db()
+    .transaction(async (trx) => {
       return await callback(trx)
     })
-  } catch (e) {
-    throw e
-  }
+    .catch((e) => {
+      throw e
+    })
+    .then((res) => {
+      return res
+    })
 }
 
 export const migrate = async () => {
