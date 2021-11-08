@@ -1,12 +1,13 @@
+import { useState } from 'react'
 import * as yup from 'yup'
 import { Formik, Form } from 'formik'
+import { gql, useMutation } from '@apollo/client'
+import { useAuth } from '../utils/auth'
 import Link from '../atoms/Link'
 import Button from '../atoms/Button'
 import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
-import { gql, useMutation } from '@apollo/client'
-import { useState } from 'react'
 import Alert, { TYPE_SUCCESS, TYPE_ERROR } from '../atoms/Alert'
 
 const LOGIN_MUTATION = gql`
@@ -29,6 +30,7 @@ const loginModalFormSchema = yup.object().shape({
 })
 
 export default function LoginModal({ onClose, onRequestPasswordReset }) {
+  const auth = useAuth()
   const [login, loginState] = useMutation(LOGIN_MUTATION)
   const [isSuccessAlertVisible, setIsSuccessAlertVisible] = useState(false)
   const [isErrorAlertVisible, setIsErrorAlertVisible] = useState(false)
@@ -46,15 +48,11 @@ export default function LoginModal({ onClose, onRequestPasswordReset }) {
         validationSchema={loginModalFormSchema}
         onSubmit={async (variables) => {
           try {
-            await login({ variables })
-            if (isErrorAlertVisible) {
-              setIsErrorAlertVisible(false)
-            }
-            setIsSuccessAlertVisible(true)
+            const { data } = await login({ variables })
+
+            auth.signin(data.login)
           } catch (e) {
-            if (isSuccessAlertVisible) {
-              setIsSuccessAlertVisible(false)
-            }
+            setIsSuccessAlertVisible(false)
             setIsErrorAlertVisible(true)
           }
         }}
