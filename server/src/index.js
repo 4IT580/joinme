@@ -13,6 +13,15 @@ const main = async () => {
   const config = {
     typeDefs: [],
     resolvers: [],
+    context: async ({ req, res }) => {
+      const auth = req.headers.authorization || ''
+
+      return {
+        req,
+        res,
+        auth,
+      }
+    },
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
   }
 
