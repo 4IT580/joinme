@@ -5,6 +5,9 @@ import Button from '../atoms/Button'
 import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
+import React, { useState } from 'react'
+import Alert, { TYPE_ERROR, TYPE_SUCCESS } from '../atoms/Alert'
+import { useAuth } from '../utils/auth'
 
 const REGISTER_MUTATION = gql`
   mutation ($username: String!, $name: String!, $email: String!, $password: String!) {
@@ -43,11 +46,17 @@ const registerModalFormSchema = yup.object().shape({
 })
 
 export default function RegisterModal({ onClose }) {
+  const auth = useAuth()
   const [register, registerState] = useMutation(REGISTER_MUTATION)
+  const [isSuccessAlertVisible, setIsSuccessAlertVisible] = useState(false)
+  const [isErrorAlertVisible, setIsErrorAlertVisible] = useState(false)
 
   return (
     <Modal>
       <Title className="mb-4">Create NEW account</Title>
+      {isSuccessAlertVisible && <Alert type={TYPE_SUCCESS}>Registration successful</Alert>}
+      {isErrorAlertVisible && <Alert type={TYPE_ERROR}>Registration was not successful</Alert>}
+
       <Formik
         initialValues={{
           username: '',
@@ -59,11 +68,11 @@ export default function RegisterModal({ onClose }) {
         validationSchema={registerModalFormSchema}
         onSubmit={async (variables) => {
           try {
-            await register({ variables })
-            alert('Registered')
-            onClose()
+            const { data } = await register({ variables })
+            auth.signin(data.register)
           } catch (e) {
-            alert(e.message)
+            setIsSuccessAlertVisible(false)
+            setIsErrorAlertVisible(true)
           }
         }}
       >

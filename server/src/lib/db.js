@@ -21,6 +21,16 @@ export const db = () => {
   return connection
 }
 
+export const transaction = async (callback) => {
+  try {
+    await db().transaction(async (trx) => {
+      return await callback(trx)
+    })
+  } catch (e) {
+    throw e
+  }
+}
+
 export const migrate = async () => {
   const [_, migrations] = await db().migrate.latest()
 

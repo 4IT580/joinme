@@ -1,5 +1,7 @@
 import { db } from '../../../lib/db.js'
 
+const ACTIVATE_ACCOUNT_TIMEOUT_MINUTES = 10
+
 export default async (_, params) => {
   const ticket = await db()
     .select('*')
@@ -12,7 +14,7 @@ export default async (_, params) => {
     throw new Error('Invalid link')
   }
 
-  const ticketValidity = new Date(new Date(ticket.requested).getTime() + PASSWORD_RESET_TIMEOUT_MINUTES * 60000)
+  const ticketValidity = new Date(new Date(ticket.requested).getTime() + ACTIVATE_ACCOUNT_TIMEOUT_MINUTES * 60000)
 
   if (Date.now() > ticketValidity.getTime()) {
     await db().table('userActivationTickets').update('used', true).where('id', ticket.id)

@@ -1,6 +1,8 @@
 import { db } from '../../../lib/db.js'
 import * as argon2 from 'argon2'
 
+const PASSWORD_RESET_TIMEOUT_MINUTES = 10
+
 export default async (_, params) => {
   const ticket = await db()
     .select('*')

@@ -5,6 +5,8 @@ import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
 import { gql, useMutation } from '@apollo/client'
+import { useState } from 'react'
+import Alert, { TYPE_ERROR, TYPE_SUCCESS } from '../atoms/Alert'
 import { useRouteQuery } from '../Hooks'
 
 const RESET_PASSWORD_MUTATION = gql`
@@ -24,10 +26,15 @@ const resetPasswordModalFormSchema = yup.object().shape({
 export default function ResetPasswordModal({ onClose }) {
   const { secret } = useRouteQuery()
   const [resetPassword, resetPasswordState] = useMutation(RESET_PASSWORD_MUTATION)
+  const [isSuccessAlertVisible, setIsSuccessAlertVisible] = useState(false)
+  const [isErrorAlertVisible, setIsErrorAlertVisible] = useState(false)
 
   return (
     <Modal>
       <Title className="mb-4">Reset your password</Title>
+      {isSuccessAlertVisible && <Alert type={TYPE_SUCCESS}>Password changed</Alert>}
+      {isErrorAlertVisible && <Alert type={TYPE_ERROR}>Password change was not successful</Alert>}
+
       <Formik
         initialValues={{
           password: '',
@@ -42,10 +49,15 @@ export default function ResetPasswordModal({ onClose }) {
                 password,
               },
             })
-            alert('Password changed')
-            onClose()
+            if (isErrorAlertVisible) {
+              setIsErrorAlertVisible(false)
+            }
+            setIsSuccessAlertVisible(true)
           } catch (e) {
-            alert(e.message)
+            if (isSuccessAlertVisible) {
+              setIsSuccessAlertVisible(false)
+            }
+            setIsErrorAlertVisible(true)
           }
         }}
       >
