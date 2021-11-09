@@ -4,6 +4,7 @@ import login from './resolvers/login.js'
 import requestPasswordReset from './resolvers/requestPasswordReset.js'
 import resetPassword from './resolvers/resetPassword.js'
 import activateAccount from './resolvers/activateAccount.js'
+import changePassword from './resolvers/changePassword.js'
 
 export default {
   Query: {
@@ -15,5 +16,6 @@ export default {
     requestPasswordReset,
     resetPassword,
     activateAccount,
+    changePassword,
   },
 }
