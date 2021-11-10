@@ -4,6 +4,7 @@ import { randomBytes } from 'crypto'
 import { db } from '../../../lib/db.js'
 import * as token from '../../../lib/token.js'
 import * as mail from '../../../lib/mail.js'
+import { FRONTEND_URL } from '../../../config.js'
 
 export default async (_, params) => {
   return await db().transaction(async (t) => {
