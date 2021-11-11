@@ -1,7 +1,8 @@
-import { db } from '../../../lib/db.js'
-import * as mail from '../../../lib/mail.js'
 import * as yup from 'yup'
 import { randomBytes } from 'crypto'
+import { db } from '../../../lib/db.js'
+import * as mail from '../../../lib/mail.js'
+import { FRONTEND_URL } from '../../../config.js'
 
 export default async (_, params) => {
   const resetSchema = yup.object({
@@ -26,7 +27,7 @@ export default async (_, params) => {
   await mail.send({
     to: params.email,
     subject: 'Password reset',
-    html: `<p>Click <a href="${process.env.FRONTEND_URL}/reset-password?secret=${encodeURIComponent(
+    html: `<p>Click <a href="${FRONTEND_URL}/reset-password?secret=${encodeURIComponent(
       ticket.secret,
     )}">here</a> to reset your password.</p>`,
   })
