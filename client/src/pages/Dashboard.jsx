@@ -1,19 +1,10 @@
-import AccountDropdown from '../molecules/AccountDropdown'
-import Search from '../molecules/Search'
-import Sidebar from '../organisms/Sidebar'
+import DashboardLayout from '../organisms/DashboardLayout'
 
 export default function Dashboard() {
   return (
-    <div className="flex h-screen">
-      <div className="p-1">
-        <Sidebar />
-      </div>
-      <div className="flex flex-col flex-grow">
-        <div className="flex justify-between p-1">
-          <Search />
-          <AccountDropdown />
-        </div>
-      </div>
-    </div>
+    <DashboardLayout>
+      <h1 class="text-4xl font-bold mt-16 uppercase">There be lions</h1>
+      <div>use DashboardLayout to make indivisual pages...</div>
+    </DashboardLayout>
   )
 }
