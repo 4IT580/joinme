@@ -10,7 +10,7 @@ import { useAuth } from '../utils/auth'
 
 const CHANGE_PASSWORD_MUTATION = gql`
   mutation ($oldPassword: String!, $newPassword: String!) {
-    changePassword(oldPassword: $username, newPassword: $newPassword)
+    changePassword(oldPassword: $oldPassword, newPassword: $newPassword)
   }
 `
 
