@@ -9,9 +9,9 @@ export default function DashboardLayout({ children }) {
     <div className="flex flex-col h-screen">
       <div className="flex p-1 border-b">
         <a href="/" className="text-white font-extrabold text-3xl">
-          <img src={icon} className="h-12" />
+          <img src={icon} className="h-16" />
         </a>
-        <div className="flex flex-grow justify-end md:justify-between ml-4">
+        <div className="flex flex-grow justify-end md:justify-between ml-4 my-auto">
           <Search />
           <AccountDropdown />
         </div>
