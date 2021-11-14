@@ -1,19 +1,21 @@
+import { useState } from 'react'
 import * as yup from 'yup'
 import { Formik, Form } from 'formik'
+import { gql, useMutation } from '@apollo/client'
+import { useAuth } from '../utils/auth'
 import Link from '../atoms/Link'
 import Button from '../atoms/Button'
 import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
-import { gql, useMutation } from '@apollo/client'
-import { useState } from 'react'
+import Alert, { TYPE_SUCCESS, TYPE_ERROR } from '../atoms/Alert'
 
 const LOGIN_MUTATION = gql`
   mutation ($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       user {
         id
-        handle
+        username
         name
         email
       }
@@ -28,11 +30,16 @@ const loginModalFormSchema = yup.object().shape({
 })
 
 export default function LoginModal({ onClose, onRequestPasswordReset }) {
+  const auth = useAuth()
   const [login, loginState] = useMutation(LOGIN_MUTATION)
+  const [isSuccessAlertVisible, setIsSuccessAlertVisible] = useState(false)
+  const [isErrorAlertVisible, setIsErrorAlertVisible] = useState(false)
 
   return (
     <Modal>
       <Title className="mb-4">Log into your account</Title>
+      {isSuccessAlertVisible && <Alert type={TYPE_SUCCESS}>Logged in</Alert>}
+      {isErrorAlertVisible && <Alert type={TYPE_ERROR}>Wrong email or password</Alert>}
       <Formik
         initialValues={{
           email: '',
@@ -41,11 +48,12 @@ export default function LoginModal({ onClose, onRequestPasswordReset }) {
         validationSchema={loginModalFormSchema}
         onSubmit={async (variables) => {
           try {
-            await login({ variables })
-            alert('Logged in')
-            onClose()
+            const { data } = await login({ variables })
+
+            auth.signin(data.login)
           } catch (e) {
-            alert(e.message)
+            setIsSuccessAlertVisible(false)
+            setIsErrorAlertVisible(true)
           }
         }}
       >

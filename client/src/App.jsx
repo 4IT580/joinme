@@ -1,18 +1,16 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import LandingPage from './pages/LandingPage'
-import ResetPassword from './pages/ResetPassword'
+import { BrowserRouter } from 'react-router-dom'
+import { AuthProvider } from './utils/auth'
+import { EnhancedApolloProvider } from './utils/apollo'
+import Routes from './Routes'
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route path="/reset-password">
-          <ResetPassword />
-        </Route>
-        <Route path="/">
-          <LandingPage />
-        </Route>
-      </Switch>
+      <AuthProvider>
+        <EnhancedApolloProvider>
+          <Routes />
+        </EnhancedApolloProvider>
+      </AuthProvider>
     </BrowserRouter>
   )
 }
