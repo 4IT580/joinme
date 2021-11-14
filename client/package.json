@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.16",
+    "@heroicons/react": "^1.0.5",
     "@vitejs/plugin-react": "^1.0.0",
     "autoprefixer": "^10.3.7",
     "classnames": "^2.3.1",

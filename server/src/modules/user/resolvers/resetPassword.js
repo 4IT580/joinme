@@ -35,5 +35,8 @@ export default async (_, params) => {
 
   await db().table('passwordResetTickets').update('used', true).where('id', ticket.id)
 
-  return true
+  return {
+    user: await t.select('*').from('users').where('id', id).first(),
+    token: token.create({ id }),
+  }
 }
