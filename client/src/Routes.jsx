@@ -3,7 +3,7 @@ import { useAuth } from './utils/auth'
 import LandingPage from './pages/LandingPage'
 import ResetPassword from './pages/ResetPassword'
 import ActivateAccount from './pages/ActivateAccount'
-import Dashboard from './pages/Dashboard'
+import EmptyDashboard from './pages/EmptyDashboard'
 
 export default function Routes() {
   const auth = useAuth()
@@ -16,7 +16,7 @@ export default function Routes() {
       <Route path="/activate-account">
         <ActivateAccount />
       </Route>
-      <Route path="/">{auth.token ? <Dashboard /> : <LandingPage />}</Route>
+      <Route path="/">{auth.token ? <EmptyDashboard /> : <LandingPage />}</Route>
     </Switch>
   )
 }
