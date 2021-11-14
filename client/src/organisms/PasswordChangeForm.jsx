@@ -48,9 +48,9 @@ export default function PasswordChangeForm() {
         validationSchema={changePasswordFormSchema}
         onSubmit={async (variables) => {
           try {
-            const { success } = await changePassword({ variables })
+            const { data } = await changePassword({ variables })
 
-            if (success) {
+            if (data) {
               setIsSuccessAlertVisible(true)
               setIsErrorAlertVisible(false)
             } else {
