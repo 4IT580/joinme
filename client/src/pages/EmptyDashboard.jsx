@@ -8,7 +8,7 @@ export default function EmptyDashboard() {
     <DashboardLayout>
       <div className="grid grid-cols-5 gap-2 p-1">
         <div className="flex flex-col col-span-3 p-2">
-          <div className="flex flex-row items-center justify-between mb-4">
+          <div className="flex flex-row items-center justify-between mb-4 h-16">
             <h1 className="px-4 text-2xl font-extrabold">Events in your area</h1>
             <Button className="btn-primary uppercase">Create event</Button>
           </div>
