@@ -16,8 +16,6 @@ export default async (_, params, { auth }) => {
 
   const user = await getUser(auth)
 
-  console.log(user)
-
   if (!(await argon2.verify(user.password, params.oldPassword))) {
     return new Error('Old password is wrong')
   }

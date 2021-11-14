@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage'
 import ResetPassword from './pages/ResetPassword'
 import ActivateAccount from './pages/ActivateAccount'
 import EmptyDashboard from './pages/EmptyDashboard'
+import UserProfileDashboard from './pages/UserProfileDashboard'
 
 export default function Routes() {
   const auth = useAuth()
@@ -16,7 +17,7 @@ export default function Routes() {
       <Route path="/activate-account">
         <ActivateAccount />
       </Route>
-      <Route path="/dashboard">{auth.token ? <EmptyDashboard /> : <LandingPage />}</Route>
+      <Route path="/profile">{auth.token ? <UserProfileDashboard /> : <LandingPage />}</Route>
       <Route path="/">{auth.token ? <EmptyDashboard /> : <LandingPage />}</Route>
     </Switch>
   )

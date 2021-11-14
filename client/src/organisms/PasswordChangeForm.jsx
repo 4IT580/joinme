@@ -2,7 +2,6 @@ import * as yup from 'yup'
 import { Formik, Form } from 'formik'
 import { useMutation, gql } from '@apollo/client'
 import Button from '../atoms/Button'
-import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
 import React, { useState } from 'react'
 import Alert, { TYPE_ERROR, TYPE_SUCCESS } from '../atoms/Alert'
@@ -29,7 +28,7 @@ const changePasswordFormSchema = yup.object().shape({
     .oneOf([yup.ref('newPassword')], 'Passwords must match'),
 })
 
-export default function ChangePasswordForm() {
+export default function PasswordChangeForm() {
   const auth = useAuth()
   const [changePassword, changePasswordState] = useMutation(CHANGE_PASSWORD_MUTATION)
   const [isSuccessAlertVisible, setIsSuccessAlertVisible] = useState(false)
