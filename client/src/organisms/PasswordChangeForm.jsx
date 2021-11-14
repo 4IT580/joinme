@@ -48,6 +48,8 @@ export default function PasswordChangeForm() {
         validationSchema={changePasswordFormSchema}
         onSubmit={async (variables) => {
           try {
+            console.log(variables)
+
             const { success } = await changePassword({ variables })
 
             if (success) {

@@ -28,35 +28,40 @@ export default function UpdateProfileForm(name = '', city = '', description = ''
   const [isErrorAlertVisible, setIsErrorAlertVisible] = useState(false)
 
   return (
-    <Formik
-      initialValues={{
-        name: name,
-        city: city,
-        description: description,
-      }}
-      validationSchema={updateProfileFormSchema}
-      onSubmit={async (variables) => {
-        try {
-          const { data } = await updateProfile({ variables })
+    <div>
+      {isInfoAlertVisible && <Alert type={TYPE_INFO}>Password request sent to your email</Alert>}
+      {isErrorAlertVisible && <Alert type={TYPE_ERROR}>Password reset request was not successful</Alert>}
 
-          if (data.errors) {
+      <Formik
+        initialValues={{
+          name: name,
+          city: city,
+          description: description,
+        }}
+        validationSchema={updateProfileFormSchema}
+        onSubmit={async (variables) => {
+          try {
+            const { data } = await updateProfile({ variables })
+
+            if (data.errors) {
+              setIsSuccessAlertVisible(false)
+              setIsErrorAlertVisible(true)
+            } else {
+              setIsSuccessAlertVisible(true)
+              setIsErrorAlertVisible(false)
+            }
+          } catch (e) {
             setIsSuccessAlertVisible(false)
             setIsErrorAlertVisible(true)
-          } else {
-            setIsSuccessAlertVisible(true)
-            setIsErrorAlertVisible(false)
           }
-        } catch (e) {
-          setIsSuccessAlertVisible(false)
-          setIsErrorAlertVisible(true)
-        }
-      }}
-    >
-      <Form>
-        <FormControl name="name" label="Name" placeholder="Your name"></FormControl>
-        <FormControl name="city" label="City" placeholder="Your city"></FormControl>
-        <FormControl name="description" label="Description" placeholder="Tell everyone about yourself"></FormControl>
-      </Form>
-    </Formik>
+        }}
+      >
+        <Form>
+          <FormControl name="name" label="Name" placeholder="Your name"></FormControl>
+          <FormControl name="city" label="City" placeholder="Your city"></FormControl>
+          <FormControl name="description" label="Description" placeholder="Tell everyone about yourself"></FormControl>
+        </Form>
+      </Formik>
+    </div>
   )
 }

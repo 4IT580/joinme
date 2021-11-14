@@ -5,8 +5,6 @@ import { CogIcon } from '@heroicons/react/solid'
 import AccountModal from './AccountModal'
 
 export default function AccountInfo({ profileState }) {
-  console.log('profile in accountinfor ---', profileState)
-
   if (profileState.loading) {
     return <div>Loading...</div>
   }
@@ -14,7 +12,14 @@ export default function AccountInfo({ profileState }) {
   const name = profile.name ? profile.name : profile.username
   const city = profile.city ? profile.city : "Maybe gotham? I don't know..."
   const description = profile.description ? profile.description : 'They are an enigma...'
-  const interests = profile.interests ? JSON.parse(profile.interests) : ['Tech']
+  const interests = profile.interests ? JSON.parse(profile.interests) : []
+
+  const unpackedUser = {
+    ...profile,
+    interests: interests,
+    city: profile.city ? profile.city : '',
+    description: profile.description ? profile.description : '',
+  }
 
   const { auth } = useAuth()
   const statistics = [
@@ -54,16 +59,10 @@ export default function AccountInfo({ profileState }) {
       <div className="flex flex-col mt-6">
         <span className={'font-bold uppercase text-sm'}>Interests</span>
         <div className={'flex flex-row flex-wrap mt-2'}>
-          {tags.map((tag, index) => (
+          {interests.map((tag, index) => (
             <div key={index} className={'w-1/3 h-10'}>
               <div className={'mx-1'}>
-                <button
-                  className={`border-${tag.color}-900 border-2 rounded-xl uppercase text-xs p-2 py-1 w-full ${
-                    interests.includes(tag.label) ? `bg-${tag.color}-500` : ''
-                  }`}
-                >
-                  {tag.label}
-                </button>
+                <button className={`border-2 rounded-xl uppercase text-xs p-2 py-1 w-full}`}>{tag}</button>
               </div>
             </div>
           ))}
@@ -83,9 +82,15 @@ export default function AccountInfo({ profileState }) {
 
       {isModalOpen && (
         <div className={'fixed top-0 left-0 w-full h-full bg-opacity-50 bg-gray-300 py-12 '}>
-          <AccountModal closeModal={() => setIsModalOpen(false)} />
+          <AccountModal closeModal={() => saveModalAndReload(setIsModalOpen, profileState)} loadedUser={unpackedUser} />
         </div>
       )}
     </div>
   )
+}
+
+function saveModalAndReload(setModalIsOpen, userQuery) {
+  setModalIsOpen(false)
+
+  userQuery.refetch()
 }
