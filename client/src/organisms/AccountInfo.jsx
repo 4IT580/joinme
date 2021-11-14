@@ -32,7 +32,7 @@ export default function AccountInfo({ profileState }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
-    <div className="rounded-3xl relative flex flex-col justify-center shadow-md bg-white p-6 py-4 mt-4 w-96 h-full">
+    <div className="rounded-3xl relative flex flex-col justify-center shadow-md bg-white p-6 py-4 mt-4 w-96">
       <div className="flex flex-col justify-center items-center">
         <img src={image} alt="user" className="w-44 rounded-full" />
         <span className={'text-xl font-bold'}>Name</span> <span className={'text-lg'}>{name}</span>

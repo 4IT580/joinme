@@ -17,11 +17,11 @@ export default function DashboardLayout({ children }) {
         </div>
       </div>
 
-      <div className="flex flex-row overflow-y-hidden">
+      <div className="flex flex-row flex-grow overflow-y-hidden">
         <div className="p-1">
           <Sidebar />
         </div>
-        <div className="overflow-y-scroll">{children}</div>
+        <div className="flex-grow overflow-y-scroll">{children}</div>
       </div>
     </div>
   )
