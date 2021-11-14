@@ -11,7 +11,9 @@ import { useRouteQuery } from '../Hooks'
 
 const RESET_PASSWORD_MUTATION = gql`
   mutation ($secret: String!, $password: String!) {
-    resetPassword(secret: $secret, password: $password)
+    resetPassword(secret: $secret, password: $password) {
+      token
+    }
   }
 `
 
