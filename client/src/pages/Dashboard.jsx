@@ -1,6 +1,6 @@
 import Button from '../atoms/Button'
-import EventCard from '../atoms/EventCard'
-import PlacesOffersCard from '../atoms/PlacesOffersCard'
+import EventCard from '../molecules/EventCard'
+import PlacesOffersCard from '../molecules/PlacesOffersCard'
 import DashboardLayout from '../organisms/DashboardLayout'
 
 export default function EmptyDashboard() {
@@ -58,7 +58,7 @@ export default function EmptyDashboard() {
           </div>
         </div>
         <div className="flex flex-col col-span-2 p-2">
-          <div className="flex flex-row items-center mb-4">
+          <div className="flex flex-row items-center mb-4 h-16">
             <h1 className="px-4 text-2xl font-extrabold">Places & Offers</h1>
           </div>
           <div className="grid grid-cols-1 gap-4">

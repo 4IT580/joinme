@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 
-function PlacesOffersCard({ title, address, description, image, className }) {
+export default function PlacesOffersCard({ title, address, description, image, className }) {
   return (
     <div className={classNames('card lg:card-side shadow-lg text-sm', className)}>
       <figure className="p-4 flex items-center">
@@ -14,5 +14,3 @@ function PlacesOffersCard({ title, address, description, image, className }) {
     </div>
   )
 }
-
-export default PlacesOffersCard

@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 
-function EventCard({ title, venue, date, image, className }) {
+export default function EventCard({ title, venue, date, image, className }) {
   return (
     <div className={classNames('card shadow-lg text-sm', className)}>
       <figure>
@@ -14,5 +14,3 @@ function EventCard({ title, venue, date, image, className }) {
     </div>
   )
 }
-
-export default EventCard
