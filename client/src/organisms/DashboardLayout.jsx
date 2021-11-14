@@ -5,16 +5,16 @@ import Sidebar from '../organisms/Sidebar'
 
 export default function DashboardLayout({ children }) {
   return (
-    <div className="flex h-screen p-6 bg-gray-100">
-      <div className="">
+    <div className="flex h-screen">
+      <div className="p-1">
         <Sidebar />
       </div>
-      <div className="flex flex-col flex-grow p-4 py-0 h-full">
-        <div className="flex justify-between ">
+      <div className="flex flex-col flex-grow">
+        <div className="flex justify-between p-1">
           <Search />
           <AccountDropdown />
         </div>
-        {children}
+        <div>{children}</div>
       </div>
     </div>
   )
