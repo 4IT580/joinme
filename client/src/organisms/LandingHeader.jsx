@@ -1,13 +1,14 @@
 import Button from '../atoms/Button'
 import Link from '../atoms/Link'
 import VerticalLine from '../atoms/VerticalLine'
+import image from '../assets/w_p_logo.png'
 
 export default function LandingHeader({ greet, onCreateAccount, onLogin }) {
   return (
     <div className="flex flex-col-reverse md:flex-row justify-between p-6 text-white">
       <div>
-        <h1 className="px-4 mt-8 text-4xl font-extrabold ">Join.me!</h1>
-        <h2 className="px-4 mt-4 text-2xl font-bold">{greet}</h2>
+       <img src={image} className="object-contain ml-10 mt-1" width="200"  />
+        
       </div>
       <div className="flex self-end md:self-start">
         <div className="flex flex-col justify-center">

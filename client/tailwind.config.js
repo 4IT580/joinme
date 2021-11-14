@@ -8,6 +8,7 @@ module.exports = {
         'pinkgrad' : '#ffb9e4',
         'orangegrad': '#ffb9b9',
         'ourblack' : '#212121',
+        'graymenubutton' : '#2E2E2E',
       }
     }
   },

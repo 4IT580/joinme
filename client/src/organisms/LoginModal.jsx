@@ -63,7 +63,7 @@ export default function LoginModal({ onClose, onRequestPasswordReset }) {
 
           <div className="modal-action">
             <Link className="self-center mr-auto" onClick={onRequestPasswordReset}>
-              Reset password
+              Forgot password?
             </Link>
             <Button onClick={onClose}>Cancel</Button>
             <Button type="submit" className="btn-primary" loading={loginState.loading}>
