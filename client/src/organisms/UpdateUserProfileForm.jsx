@@ -5,7 +5,7 @@ import Button from '../atoms/Button'
 import MultiInput from '../atoms/MultiInput'
 
 const updateProfileFormSchema = yup.object().shape({
-  name: yup.string().min(3).max(50),
+  name: yup.string().min(3).max(50).required(),
   city: yup.string(),
   description: yup.string(),
 })
