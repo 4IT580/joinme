@@ -8,11 +8,9 @@ export default function AccountInfo() {
   const { profile } = useUser()
   const [isUpdateUserModalOpen, setIsUpdateUserModalOpen] = useState(false)
 
-  console.log(profile)
-
   return (
     <div className="flex">
-      <div className="rounded-3xl relative flex flex-col justify-center shadow-md bg-white p-6 py-4 mt-4">
+      <div className="rounded-3xl relative flex flex-col justify-center shadow-md bg-white p-6 py-4 mt-4 max-w-md">
         <div className="flex flex-col justify-center items-center">
           <img src={image} alt="user" className="w-44 rounded-full" />
           <span className="text-xl font-bold">Name</span> <span className="text-lg">{profile.name}</span>
@@ -20,22 +18,20 @@ export default function AccountInfo() {
         </div>
         <div className="flex flex-col mt-6">
           <span className="font-bold uppercase text-sm">About {profile.name}</span>
-          <span className="pl-6 pt-2">{profile.description}</span>
+          <span className="pt-2">{profile.description}</span>
         </div>
         <div className="flex flex-col mt-6">
           <span className="font-bold uppercase text-sm">Interests</span>
-          <div className="flex flex-row flex-wrap mt-2">
+          <div className="flex flex-row flex-wrap gap-2 mt-2">
             {profile.interests.filter(Boolean).map((tag, index) => (
-              <div key={index} className="w-1/3 h-10">
-                <div className="mx-1">
-                  <button className={`border-2 rounded-xl uppercase text-xs p-2 py-1 w-full}`}>{tag}</button>
-                </div>
-              </div>
+              <span key={index} className="border-2 rounded-xl uppercase text-xs p-2 py-1">
+                {tag}
+              </span>
             ))}
           </div>
         </div>
         <div className="flex-grow" />
-        <div className="text-center m-0">
+        <div className="text-center mt-2">
           <button className="px-20 py-2 bg-primary text-white rounded-xl uppercase font-bold">Create event</button>
         </div>
 
