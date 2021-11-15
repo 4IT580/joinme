@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Error from '../atoms/Error'
 import TogglePasswordVisibility from '../atoms/TogglePasswordVisibility'
 
-export default function FormControl({ Component = 'input', name, label, placeholder, type, className, ...attrs }) {
+export default function FormControl({ Component = 'input', name, label, placeholder, type, id = null, ...attrs }) {
   const [field, meta] = useField(name)
   const error = meta.touched && meta.error
   const [passwordShown, setPasswordShown] = useState(false)
