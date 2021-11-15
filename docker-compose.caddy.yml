@@ -33,6 +33,8 @@ services:
     labels:
       caddy: backend.${PATHPREFIX}joinme.cz
       caddy.reverse_proxy: '{{upstreams 8000}}'
+    volumes:
+      - ./server/data:/app/data
 
 networks:
   caddy:
