@@ -1,9 +1,12 @@
 import { useMutation, gql } from '@apollo/client'
+import { useState } from 'react'
+import Button from '../atoms/Button'
 import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
 import { useNotifications } from '../utils/notifications'
 import { useUser } from '../utils/user'
-import UserProfileForm from './UserProfileForm'
+import UpdateUserProfileForm from './UpdateUserProfileForm'
+import ChangePasswordForm from './ChangePasswordForm'
 
 const UPDATE_PROFILE_MUTATION = gql`
   mutation ($name: String, $city: String, $description: String, $interests: [String!]) {
@@ -17,6 +20,7 @@ export default function UpdateUserProfileModal({ profile, onClose }) {
   const user = useUser()
   const notifications = useNotifications()
   const [updateProfile] = useMutation(UPDATE_PROFILE_MUTATION)
+  const [isOnProfileTab, setIsOnProfileTab] = useState(true)
 
   const onSubmit = async (variables) => {
     try {
@@ -31,8 +35,26 @@ export default function UpdateUserProfileModal({ profile, onClose }) {
 
   return (
     <Modal>
-      <Title className="mb-4">Update user profile</Title>
-      <UserProfileForm {...profile} onSubmit={onSubmit} onClose={onClose} />
+      <div className="flex justify-between">
+        {isOnProfileTab ? (
+          <>
+            <Title level="2" className="my-auto">
+              Update profile
+            </Title>
+            <Button onClick={() => setIsOnProfileTab(false)}>Change password</Button>
+          </>
+        ) : (
+          <>
+            <Button onClick={() => setIsOnProfileTab(true)}>Update profile</Button>
+            <Title level="2" className="my-auto">
+              Change password
+            </Title>
+          </>
+        )}
+      </div>
+
+      {isOnProfileTab && <UpdateUserProfileForm {...profile} onSubmit={onSubmit} onClose={onClose} />}
+      {!isOnProfileTab && <ChangePasswordForm {...profile} onClose={onClose} />}
     </Modal>
   )
 }
