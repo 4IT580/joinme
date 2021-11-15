@@ -9,8 +9,16 @@ import UpdateUserProfileForm from './UpdateUserProfileForm'
 import ChangePasswordForm from './ChangePasswordForm'
 
 const UPDATE_PROFILE_MUTATION = gql`
-  mutation ($name: String, $city: String, $description: String, $interests: [String!]) {
-    updateProfile(name: $name, city: $city, description: $description, interests: $interests) {
+  mutation ($name: String, $city: String, $description: String, $interests: [String!], $photo: String) {
+    updateProfile(name: $name, city: $city, description: $description, interests: $interests, photo: $photo) {
+      id
+    }
+  }
+`
+
+const UPDATE_PHOTO_MUTATION = gql`
+  mutation ($photo: String) {
+    updateProfile(photo: $photo) {
       id
     }
   }
@@ -20,11 +28,22 @@ export default function UpdateUserProfileModal({ profile, onClose }) {
   const user = useUser()
   const notifications = useNotifications()
   const [updateProfile] = useMutation(UPDATE_PROFILE_MUTATION)
+  const [updatePhoto] = useMutation(UPDATE_PHOTO_MUTATION)
   const [isOnProfileTab, setIsOnProfileTab] = useState(true)
 
-  const onSubmit = async (variables) => {
+  const onSubmit = async (variables, isUser) => {
     try {
       await updateProfile({ variables })
+      await user.refetch()
+      notifications.pushSuccess({ text: 'Updated' })
+      onClose()
+    } catch (e) {
+      notifications.pushError({ text: e.message })
+    }
+  }
+  const onPictureSubmit = async (variables, isUser) => {
+    try {
+      await updatePhoto({ variables })
       await user.refetch()
       notifications.pushSuccess({ text: 'Updated' })
       onClose()
@@ -57,7 +76,9 @@ export default function UpdateUserProfileModal({ profile, onClose }) {
         )}
       </div>
 
-      {isOnProfileTab && <UpdateUserProfileForm {...profile} onSubmit={onSubmit} onClose={onClose} />}
+      {isOnProfileTab && (
+        <UpdateUserProfileForm {...profile} onSubmit={onSubmit} onPictureSubmit={onPictureSubmit} onClose={onClose} />
+      )}
       {!isOnProfileTab && <ChangePasswordForm {...profile} onClose={onClose} />}
     </Modal>
   )
