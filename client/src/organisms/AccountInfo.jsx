@@ -8,6 +8,8 @@ export default function AccountInfo() {
   const { profile } = useUser()
   const [isUpdateUserModalOpen, setIsUpdateUserModalOpen] = useState(false)
 
+  console.log(profile)
+
   return (
     <div className="flex">
       <div className="rounded-3xl relative flex flex-col justify-center shadow-md bg-white p-6 py-4 mt-4">
@@ -23,7 +25,7 @@ export default function AccountInfo() {
         <div className="flex flex-col mt-6">
           <span className="font-bold uppercase text-sm">Interests</span>
           <div className="flex flex-row flex-wrap mt-2">
-            {profile.interests.map((tag, index) => (
+            {profile.interests.filter(Boolean).map((tag, index) => (
               <div key={index} className="w-1/3 h-10">
                 <div className="mx-1">
                   <button className={`border-2 rounded-xl uppercase text-xs p-2 py-1 w-full}`}>{tag}</button>
