@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react'
 import { useQuery, gql } from '@apollo/client'
+import { useAuth } from './auth'
 
 const ME_QUERY = gql`
   query {
@@ -17,7 +18,10 @@ const ME_QUERY = gql`
 const UserContext = createContext()
 
 export function UserProvider({ children }) {
-  const { data, refetch } = useQuery(ME_QUERY)
+  const auth = useAuth()
+  const { data, refetch, error } = useQuery(ME_QUERY)
+
+  if (error) auth.signout()
 
   const value = {
     profile: data?.me,
