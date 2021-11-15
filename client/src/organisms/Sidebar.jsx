@@ -9,7 +9,7 @@ export default function Sidebar() {
 
   return (
     <div className="h-full flex flex-col w-16">
-      <div className="flex flex-col bg-gray-800 rounded-xl shadow-md flex-grow pt-1 text-white">
+      <div className="flex flex-col bg-gray-800 rounded-xl shadow-md flex-grow pt-1 text-white  overflow-y-auto">
         <Link to="#" className="block p-2 mb-1">
           <InboxIcon className="bg-gray-700 rounded-md p-2" />
         </Link>

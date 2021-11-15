@@ -9,8 +9,8 @@ export default function EmptyDashboard() {
       <div className="grid grid-cols-6 gap-2 p-1">
         <div className="flex flex-col col-span-6 lg:col-span-4 p-2">
           <div className="flex flex-row items-center justify-between mb-4 h-16">
-            <h1 className="px-4 text-2xl font-extrabold">Events in your area</h1>
-            <Button className="btn-primary uppercase">Create event</Button>
+            <h1 className="text-2xl font-extrabold">Events in your area</h1>
+            <Button className="ml-2 btn-primary uppercase">Create event</Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             <EventCard
