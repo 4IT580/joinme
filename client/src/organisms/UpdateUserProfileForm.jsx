@@ -2,6 +2,7 @@ import * as yup from 'yup'
 import { Formik, Form } from 'formik'
 import FormControl from '../molecules/FormControl'
 import Button from '../atoms/Button'
+import MultiInput from '../atoms/MultiInput'
 
 const updateProfileFormSchema = yup.object().shape({
   name: yup.string().min(3).max(50),

@@ -5,6 +5,14 @@ export default async (_, __, { auth }) => {
 
   return {
     ...user,
-    interests: JSON.parse(user.interests || '[]'),
+    interests: parseInterests(user),
+  }
+}
+
+const parseInterests = (user) => {
+  try {
+    return user.interests.split(',')
+  } catch {
+    return []
   }
 }

@@ -1,12 +1,17 @@
 import { CheckCircleIcon, ExclamationCircleIcon, InformationCircleIcon } from '@heroicons/react/outline'
 import { XIcon } from '@heroicons/react/solid'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNotifications } from '../utils/notifications'
 
 export default function Notification({ id, type, title, text }) {
   const notifications = useNotifications()
+  const notificationsRef = useRef()
 
-  const remove = () => notifications.remove({ id })
+  const remove = () => notificationsRef.current.remove({ id })
+
+  useEffect(() => {
+    notificationsRef.current = notifications
+  }, [notifications])
 
   useEffect(() => {
     const timeout = setTimeout(remove, 5000)
