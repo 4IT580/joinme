@@ -32,11 +32,14 @@ const fileCallback = async (onSubmit) => {
 export default function UserProfileForm({ name, city, description, onSubmit, onClose, onPictureSubmit }) {
   return (
     <div>
-      <input name="avatar" id="avatar" type="file" accept="image/png, image/jpeg" className="mb-2" />
-      <br />
-      <Button type="submit" className="btn-primary" onClick={() => fileCallback(onPictureSubmit)}>
-        Submit
-      </Button>
+      <div>
+        <div className="mb-1">Upload picture</div>
+        <input name="avatar" id="avatar" type="file" accept="image/png, image/jpeg" className="mb-2" />
+        <br />
+        <Button type="submit" className="btn-primary" onClick={() => fileCallback(onPictureSubmit)}>
+          Submit
+        </Button>
+      </div>
 
       <Formik
         initialValues={{
