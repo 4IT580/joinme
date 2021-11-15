@@ -20,6 +20,11 @@ const toBase64 = (file) =>
 
 const fileCallback = async (onSubmit) => {
   const file = document.getElementById('avatar').files[0]
+
+  if (!file) {
+    return
+  }
+
   const base64 = await toBase64(file)
   onSubmit({ photo: base64 })
 }
@@ -27,12 +32,11 @@ const fileCallback = async (onSubmit) => {
 export default function UserProfileForm({ name, city, description, onSubmit, onClose, onPictureSubmit }) {
   return (
     <div>
-      <label>Choose a profile picture:</label>
+      <input name="avatar" id="avatar" type="file" accept="image/png, image/jpeg" className="mb-2" />
       <br />
-
-      <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
-      <br />
-      <button onClick={() => fileCallback(onPictureSubmit)}>handleFile</button>
+      <Button type="submit" className="btn-primary" onClick={() => fileCallback(onPictureSubmit)}>
+        Submit
+      </Button>
 
       <Formik
         initialValues={{
