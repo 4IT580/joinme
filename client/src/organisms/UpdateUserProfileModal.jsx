@@ -38,15 +38,19 @@ export default function UpdateUserProfileModal({ profile, onClose }) {
       <div className="flex justify-between">
         {isOnProfileTab ? (
           <>
-            <Title level="2" className="my-auto">
+            <Title level="2" className="mr-2 my-auto">
               Update profile
             </Title>
-            <Button onClick={() => setIsOnProfileTab(false)}>Change password</Button>
+            <Button className="my-auto" onClick={() => setIsOnProfileTab(false)}>
+              Change password
+            </Button>
           </>
         ) : (
           <>
-            <Button onClick={() => setIsOnProfileTab(true)}>Update profile</Button>
-            <Title level="2" className="my-auto">
+            <Button className="my-auto" onClick={() => setIsOnProfileTab(true)}>
+              Update profile
+            </Button>
+            <Title level="2" className="ml-2 my-auto">
               Change password
             </Title>
           </>
