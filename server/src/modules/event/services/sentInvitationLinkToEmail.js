@@ -9,7 +9,7 @@ export default async (event, email) => {
 
   await send({
     to: email,
-    subject: 'Join.me!',
+    subject: `Invitation to the "${event.name}" event!`,
     html: getEmailContent({ user, event }),
   })
 
@@ -37,5 +37,5 @@ const getEmailContent = ({ user, event }) => {
   const encodedToken = encodeURIComponent(token.create({ id: user.id }))
   const link = `${FRONTEND_URL}/event/${event.id}?token=${encodedToken}`
 
-  return `<a href="${link}">Join.me!</a>`
+  return `You have been invited to the "${event.name}" event! Click <a href="${link}">here</a> to check it out!`
 }
