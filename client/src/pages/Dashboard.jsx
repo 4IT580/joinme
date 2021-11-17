@@ -1,60 +1,46 @@
+import { gql, useQuery } from '@apollo/client'
+import { useState } from 'react'
 import Button from '../atoms/Button'
 import EventCard from '../molecules/EventCard'
 import PlacesOffersCard from '../molecules/PlacesOffersCard'
+import CreateEventModal from '../organisms/CreateEventModal'
 import DashboardLayout from '../organisms/DashboardLayout'
 
-export default function EmptyDashboard() {
+const EVENTY_QUERY = gql`
+  query {
+    events {
+      id
+      name
+      place
+      description
+    }
+  }
+`
+
+export default function Dashboard() {
+  const { data, refetch } = useQuery(EVENTY_QUERY)
+  const [isCreateEventModalVisible, setIsCreateEventModalVisible] = useState(false)
+
   return (
     <DashboardLayout>
       <div className="grid grid-cols-6 gap-2 p-1">
         <div className="flex flex-col col-span-6 lg:col-span-4 p-2">
           <div className="flex flex-row items-center justify-between mb-4 h-16">
             <h1 className="text-2xl font-extrabold">Events in your area</h1>
-            <Button className="ml-2 btn-primary uppercase">Create event</Button>
+            <Button className="ml-2 btn-primary uppercase" onClick={() => setIsCreateEventModalVisible(true)}>
+              Create event
+            </Button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            <EventCard
-              title="COMIC-CON PRAGUE 2021"
-              venue="O2 universum"
-              date="17.10 from 10am till 11pm"
-              image="https://picsum.photos/id/1005/400/250"
-            />
-            <EventCard
-              title="COMIC-CON PRAGUE 2021"
-              venue="O2 universum"
-              date="17.10 from 10am till 11pm"
-              image="https://picsum.photos/id/1005/400/250"
-            />
-            <EventCard
-              title="COMIC-CON PRAGUE 2021"
-              venue="O2 universum"
-              date="17.10 from 10am till 11pm"
-              image="https://picsum.photos/id/1005/400/250"
-            />
-            <EventCard
-              title="COMIC-CON PRAGUE 2021"
-              venue="O2 universum"
-              date="17.10 from 10am till 11pm"
-              image="https://picsum.photos/id/1005/400/250"
-            />
-            <EventCard
-              title="COMIC-CON PRAGUE 2021"
-              venue="O2 universum"
-              date="17.10 from 10am till 11pm"
-              image="https://picsum.photos/id/1005/400/250"
-            />
-            <EventCard
-              title="COMIC-CON PRAGUE 2021"
-              venue="O2 universum"
-              date="17.10 from 10am till 11pm"
-              image="https://picsum.photos/id/1005/400/250"
-            />
-            <EventCard
-              title="COMIC-CON PRAGUE 2021"
-              venue="O2 universum"
-              date="17.10 from 10am till 11pm"
-              image="https://picsum.photos/id/1005/400/250"
-            />
+            {data?.events.map((event) => (
+              <EventCard
+                key={event.id}
+                title={event.name}
+                venue={event.place}
+                date="17.10 from 10am till 11pm"
+                image="https://picsum.photos/id/1005/400/250"
+              />
+            ))}
           </div>
         </div>
         <div className="flex flex-col col-span-6 lg:col-span-2 p-2">
@@ -83,6 +69,10 @@ export default function EmptyDashboard() {
           </div>
         </div>
       </div>
+
+      {isCreateEventModalVisible && (
+        <CreateEventModal refetch={refetch} onClose={() => setIsCreateEventModalVisible(false)} />
+      )}
     </DashboardLayout>
   )
 }
