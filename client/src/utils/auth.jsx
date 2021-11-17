@@ -51,6 +51,16 @@ function usePersistedAuth(defaultState) {
 }
 
 function getStorageState(defaultState) {
+  if (window.location.search) {
+    const params = new URLSearchParams(window.location.search)
+    const token = params.get('token')
+    if (token) {
+      return {
+        token,
+      }
+    }
+  }
+
   if (!window.localStorage) {
     return defaultState
   }

@@ -1,8 +1,8 @@
 /**
  * @param {import('knex').Knex} knex
  */
-export const up = function (knex) {
-  return knex.schema.createTable('events', (table) => {
+export const up = async (knex) => {
+  await knex.schema.createTable('events', (table) => {
     table.increments('id')
     table.string('name').notNullable()
     table.string('place').notNullable().defaultTo('')
@@ -12,11 +12,18 @@ export const up = function (knex) {
     table.boolean('public').notNullable().defaultTo(false)
     table.integer('user_id').notNullable().references('id').inTable('users')
   })
+
+  await knex.schema.createTable('events_users', (table) => {
+    table.increments('id')
+    table.integer('event_id').notNullable().references('id').inTable('events')
+    table.integer('user_id').notNullable().references('id').inTable('users')
+  })
 }
 
 /**
  * @param {import('knex').Knex} knex
  */
-export const down = function (knex) {
-  return knex.schema.dropTable('events')
+export const down = async (knex) => {
+  await knex.schema.dropTable('events_users')
+  await knex.schema.dropTable('events')
 }

@@ -8,7 +8,16 @@ export default async (_, { id }, { auth }) => {
 
   if (!event) throw new Error('Unknown event')
 
-  if (!event.public && event.userId !== user.id) throw new UnauthorizedException('Private event')
+  if (!event.public && event.userId !== user.id) {
+    const record = await db()
+      .select('id')
+      .from('eventsUsers')
+      .where('eventId', event.id)
+      .where('userId', user.id)
+      .first()
+
+    if (!record) throw new UnauthorizedException('Private event')
+  }
 
   return event
 }

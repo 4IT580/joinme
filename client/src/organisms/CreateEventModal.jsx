@@ -1,11 +1,12 @@
 import * as yup from 'yup'
 import { gql, useMutation } from '@apollo/client'
 import { Form, Formik } from 'formik'
+import { useNotifications } from '../utils/notifications'
 import Button from '../atoms/Button'
 import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
-import { useNotifications } from '../utils/notifications'
+import MultiInput from '../atoms/MultiInput'
 
 export default function CreateEventModal({ refetch, onClose }) {
   const notifications = useNotifications()
@@ -22,11 +23,12 @@ export default function CreateEventModal({ refetch, onClose }) {
           from: '',
           to: '',
           public: false,
+          invites: [],
         }}
         validationSchema={schema}
         onSubmit={async (input) => {
           try {
-            await createEvent({ variables: { input } })
+            await createEvent({ variables: { input: { ...input, invites: undefined }, invites: input.invites } })
             notifications.pushSuccess({ text: 'Event created' })
             await refetch()
             onClose()
@@ -43,6 +45,7 @@ export default function CreateEventModal({ refetch, onClose }) {
             <FormControl type="datetime-local" name="to" label="To" />
           </div>
           <FormControl type="checkbox" name="public" label="Is event public?" />
+          <FormControl Component={MultiInput} name="invites" label="People you want to invite" />
 
           <div className="modal-action">
             <Button onClick={onClose}>Cancel</Button>
@@ -57,8 +60,8 @@ export default function CreateEventModal({ refetch, onClose }) {
 }
 
 const mutation = gql`
-  mutation ($input: EventInput!) {
-    createEvent(input: $input) {
+  mutation ($input: EventInput!, $invites: String) {
+    createEvent(input: $input, invites: $invites) {
       id
     }
   }

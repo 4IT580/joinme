@@ -27,6 +27,6 @@ export default gql`
   }
 
   type Mutation {
-    createEvent(input: EventInput!): Event!
+    createEvent(input: EventInput!, invites: String): Event!
   }
 `
