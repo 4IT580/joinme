@@ -6,6 +6,9 @@ export default gql`
     name: String!
     place: String!
     description: String!
+    from: Date!
+    to: Date!
+    public: Boolean!
     user: User!
   }
 
@@ -13,11 +16,14 @@ export default gql`
     name: String!
     place: String
     description: String
+    from: Date!
+    to: Date!
     public: Boolean
   }
 
   type Query {
     events: [Event!]!
+    event(id: Int!): Event
   }
 
   type Mutation {

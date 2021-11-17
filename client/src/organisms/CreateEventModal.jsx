@@ -19,6 +19,8 @@ export default function CreateEventModal({ refetch, onClose }) {
         initialValues={{
           name: '',
           description: '',
+          from: '',
+          to: '',
           public: false,
         }}
         validationSchema={schema}
@@ -36,6 +38,10 @@ export default function CreateEventModal({ refetch, onClose }) {
         <Form>
           <FormControl name="name" label="Name" />
           <FormControl Component="textarea" className="textarea h-28" name="description" label="Description" />
+          <div className="grid grid-cols-2 gap-4">
+            <FormControl type="datetime-local" name="from" label="From" />
+            <FormControl type="datetime-local" name="to" label="To" />
+          </div>
           <FormControl type="checkbox" name="public" label="Is event public?" />
 
           <div className="modal-action">
@@ -59,5 +65,7 @@ const mutation = gql`
 `
 
 const schema = yup.object({
-  name: yup.string().required('Name of the event is required'),
+  name: yup.string().required('Name is required'),
+  from: yup.string().required('From is required'),
+  to: yup.string().required('To is required'),
 })

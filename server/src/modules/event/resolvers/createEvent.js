@@ -15,5 +15,7 @@ export default async (_, { input }, { auth }) => {
 }
 
 const schema = yup.object({
-  name: yup.string().required('Name of the event is required'),
+  name: yup.string().required('Name is required'),
+  from: yup.string().required('From is required'),
+  to: yup.string().required('To is required'),
 })

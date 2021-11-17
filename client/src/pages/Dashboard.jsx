@@ -1,5 +1,5 @@
-import { gql, useQuery } from '@apollo/client'
 import { useState } from 'react'
+import { gql, useQuery } from '@apollo/client'
 import Button from '../atoms/Button'
 import EventCard from '../molecules/EventCard'
 import PlacesOffersCard from '../molecules/PlacesOffersCard'
@@ -13,6 +13,8 @@ const EVENTY_QUERY = gql`
       name
       place
       description
+      from
+      to
     }
   }
 `
@@ -33,13 +35,7 @@ export default function Dashboard() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             {data?.events.map((event) => (
-              <EventCard
-                key={event.id}
-                title={event.name}
-                venue={event.place}
-                date="17.10 from 10am till 11pm"
-                image="https://picsum.photos/id/1005/400/250"
-              />
+              <EventCard key={event.id} event={event} />
             ))}
           </div>
         </div>

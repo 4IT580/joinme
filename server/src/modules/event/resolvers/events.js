@@ -4,5 +4,5 @@ import { db } from '../../../lib/db.js'
 export default async (_, __, { auth }) => {
   const user = await getUser(auth)
 
-  return await db().select('*').from('events').where('public', true).orWhere('userId', user.id)
+  return await db().select('*').from('events').orderBy('from', 'asc').where('public', true).orWhere('userId', user.id)
 }

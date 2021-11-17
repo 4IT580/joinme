@@ -2,7 +2,7 @@ import { ApolloError } from 'apollo-server'
 import { verify } from './token.js'
 import { db } from './db.js'
 
-class UnauthorizedException extends ApolloError {
+export class UnauthorizedException extends ApolloError {
   constructor(message) {
     super(message, 'UNAUTHORIZED')
   }
