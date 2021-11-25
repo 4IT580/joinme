@@ -1,11 +1,11 @@
 import glob from 'glob'
 import path from 'path'
-import { ApolloServer } from 'apollo-server-express'
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
+import { ApolloServer, gql } from 'apollo-server-express'
+import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core'
 import express from 'express'
 import http from 'http'
-import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core'
 import { migrate } from './lib/db.js'
+import { graphqlUploadExpress } from 'graphql-upload'
 
 const HOST = process.env.SERVER_HOST || 'localhost'
 const PORT = process.env.SERVER_PORT || 8000
@@ -28,6 +28,9 @@ async function startApolloServer() {
 
   // More required logic for integrating with Express
   await server.start()
+
+  app.use(graphqlUploadExpress())
+
   server.applyMiddleware({
     app,
 
