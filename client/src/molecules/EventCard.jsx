@@ -13,12 +13,12 @@ export default function EventCard({ event, className }) {
         </figure>
         <div className="card-body">
           <p>
-            From: <strong>{from}</strong>
+            From: {from}
             <br />
-            To: <strong>{to}</strong>
+            Till: {to}
           </p>
-          <h2 className="card-title">{event.name}</h2>
-          <p>{event.description}</p>
+          <h2 className="card-title mt-1.5 mb-1.5">{event.name}</h2>
+          <p className="">{event.place}</p>
         </div>
       </div>
     </Link>

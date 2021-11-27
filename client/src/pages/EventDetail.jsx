@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import DashboardLayout from '../organisms/DashboardLayout'
 import EventDetailTemplate from '../templates/EventDetailTemplate'
 import { useNotifications } from '../utils/notifications'
+import SimilarEvents from '../organisms/SimilarEvents'
 
 export default function EventDetail() {
   const notifications = useNotifications()
@@ -18,7 +19,13 @@ export default function EventDetail() {
     }
   }, [error])
 
-  return <DashboardLayout>{data?.event && <EventDetailTemplate event={data.event} />}</DashboardLayout>
+  return <DashboardLayout>
+    <div className="grid grid-cols-9 gap-1.5 p-1">
+    <div className="flex flex-col col-span-9 lg:col-span-7 p-2"> {data?.event && <EventDetailTemplate event={data.event} />} </div>
+    <div className="flex flex-col col-span-9 lg:col-span-2"><SimilarEvents/></div>
+    </div>
+    </DashboardLayout>
+
 }
 
 const query = gql`
