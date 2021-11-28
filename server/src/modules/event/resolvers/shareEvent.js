@@ -6,7 +6,11 @@ export default async (_, { eventId, invites }) => {
 
     if (!user) throw new Error(`Unknown user ${invite}`)
 
-    await db().insert({ eventId, userId: user.id }).into('invitations')
+    try {
+      await db().insert({ eventId, userId: user.id }).into('invitations')
+    } catch {
+      throw new Error(`User ${invite} already invited`)
+    }
   }
 
   return true

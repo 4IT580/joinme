@@ -23,9 +23,16 @@ export default gql`
     public: Boolean
   }
 
+  type Invitation {
+    id: Int!
+    accepted: Boolean
+    event: Event!
+  }
+
   type Query {
     events: [Event!]!
     event(id: Int!): Event
+    invitations: [Invitation!]!
   }
 
   type Mutation {
@@ -33,5 +40,7 @@ export default gql`
     joinEvent(eventId: Int!): Boolean!
     updateEvent(eventId: Int!, input: EventInput!): Event!
     shareEvent(eventId: Int!, invites: [String!]!): Boolean!
+    acceptInvitation(invitationId: Int!): Boolean!
+    declineInvitation(invitationId: Int!): Boolean!
   }
 `
