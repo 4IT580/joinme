@@ -68,7 +68,10 @@ export default function EventDetailTemplate({ event, refetch }) {
         </div>
       </div>
 
-      <Chat event={event} />
+      <div className="bg-gray-200 rounded-2xl p-4 mt-4">
+        <Title level={2}>Chat</Title>
+        <Chat event={event} />
+      </div>
 
       {isShareEventModalOpen && <ShareEventModal event={event} onClose={() => setIsShareEventModalOpen(false)} />}
       {isUpdateEventModalOpen && (
