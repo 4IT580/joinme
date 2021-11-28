@@ -6,6 +6,7 @@ import ActivateAccount from './pages/ActivateAccount'
 import Dashboard from './pages/Dashboard'
 import UserProfile from './pages/UserProfile'
 import EventDetail from './pages/EventDetail'
+import Inbox from './pages/Inbox'
 import UserDetail from './pages/UserDetail'
 
 export default function Routes() {
@@ -22,6 +23,11 @@ export default function Routes() {
       {auth.token && (
         <Route path="/profile">
           <UserProfile />
+        </Route>
+      )}
+      {auth.token && (
+        <Route path="/inbox">
+          <Inbox />
         </Route>
       )}
       <Route path="/event/:id">
