@@ -1,80 +1,43 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 
-const LOCAL_STORAGE_AUTH_KEY = 'joinme-auth'
+const LOCAL_STORAGE_TOKEN_KEY = 'joinme-auth'
 
-const initialState = {
-  token: null,
-  user: null,
-}
-
-const AuthContext = createContext(
-  createContextValue({
-    token: initialState.token,
-    user: initialState.user,
-    setState: () => console.error('You are using AuthContext without AuthProvider!'),
-  }),
-)
-
-export function useAuth() {
-  return useContext(AuthContext)
-}
+const AuthContext = createContext()
 
 export function AuthProvider({ children }) {
-  const [state, setState] = usePersistedAuth(initialState)
+  const [token, setToken] = useState(getInitialToken())
 
-  const contextValue = useMemo(() => {
-    const { token, user } = state
-    return createContextValue({ token, user, setState })
-  }, [state, setState])
-
-  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
-}
-
-function createContextValue({ token, user, setState }) {
-  return {
+  const value = {
     token,
-    user,
-    signin: ({ token, user }) => setState({ token, user }),
-    signout: () => setState({ token: null, user: null }),
+    signin: ({ token }) => {
+      localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, token)
+      setToken(token)
+    },
+    signout: () => {
+      localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, null)
+      setToken(null)
+    },
   }
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
-function usePersistedAuth(defaultState) {
-  const [state, setStateRaw] = useState(() => getStorageState(defaultState))
+export const useAuth = () => useContext(AuthContext)
 
-  const setState = useCallback((newState) => {
-    setStateRaw(newState)
-    setStorageState(newState)
-  }, [])
-
-  return [state, setState]
-}
-
-function getStorageState(defaultState) {
-  if (!window.localStorage) {
-    return defaultState
-  }
-
-  const rawData = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY)
-  if (!rawData) {
-    return defaultState
-  }
-
-  try {
-    const { user, token } = JSON.parse(rawData)
-
-    if (token && user) {
-      return { token, user }
+const getInitialToken = () => {
+  if (window.location.search) {
+    const params = new URLSearchParams(window.location.search)
+    const token = params.get('token')
+    if (token) {
+      localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, token)
+      return token
     }
-  } catch {}
-
-  return defaultState
-}
-
-function setStorageState(newState) {
-  if (!window.localStorage) {
-    return
   }
 
-  window.localStorage.setItem(LOCAL_STORAGE_AUTH_KEY, JSON.stringify(newState))
+  const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY)
+  if (token) {
+    return token
+  }
+
+  return null
 }

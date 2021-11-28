@@ -2,7 +2,7 @@ import { ApolloError } from 'apollo-server'
 import { verify } from './token.js'
 import { db } from './db.js'
 
-class UnauthorizedException extends ApolloError {
+export class UnauthorizedException extends ApolloError {
   constructor(message) {
     super(message, 'UNAUTHORIZED')
   }
@@ -22,6 +22,7 @@ export const getUser = async (auth) => {
   try {
     const id = getUserId(auth)
     const user = await db().select('*').from('users').where('id', id).first()
+    if (!user) throw new Error('No such user')
     return user
   } catch (e) {
     throw new UnauthorizedException(e.message)

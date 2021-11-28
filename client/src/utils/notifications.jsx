@@ -8,14 +8,16 @@ export function NotificationsProvider({ children }) {
 
   const getId = () => {
     const _id = id
-    setId(id + 1)
+    setId(id => id + 1)
     return _id
   }
 
-  const pushNotification = (notification) => setNotifications([...notifications, { ...notification, id: getId() }])
+  const pushNotification = (notification) =>
+    setNotifications((notifications) => [...notifications, { ...notification, id: getId() }])
   const pushSuccess = (notification) => pushNotification({ title: 'Success', ...notification, type: 'SUCCESS' })
   const pushError = (notification) => pushNotification({ title: 'Error', ...notification, type: 'ERROR' })
-  const remove = ({ id }) => setNotifications(notifications.filter((notification) => notification.id !== id))
+  const remove = ({ id }) =>
+    setNotifications((notifications) => notifications.filter((notification) => notification.id !== id))
 
   const value = {
     notifications,
