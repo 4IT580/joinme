@@ -26,8 +26,13 @@ export default function Sidebar() {
             )}
           />
         </Link>
-        <Link to="#" className="block p-2 mb-1">
-          <CalendarIcon className="bg-gray-700 rounded-md p-2" />
+        <Link to="/calendar" className="block p-2 mb-1">
+          <CalendarIcon
+            className={classNames(
+              'rounded-md p-2',
+              location.pathname === '/calendar' ? 'bg-gray-200 text-gray-700' : 'bg-gray-700 hover:bg-gray-500',
+            )}
+          />
         </Link>
         <Link to="#" className="block p-2 mb-1">
           <UserGroupIcon className="bg-gray-700 rounded-md p-2" />

@@ -8,6 +8,7 @@ import UserProfile from './pages/UserProfile'
 import EventDetail from './pages/EventDetail'
 import Inbox from './pages/Inbox'
 import UserDetail from './pages/UserDetail'
+import Calendar from './pages/Calendar'
 
 export default function Routes() {
   const auth = useAuth()
@@ -23,6 +24,11 @@ export default function Routes() {
       {auth.token && (
         <Route path="/profile">
           <UserProfile />
+        </Route>
+      )}
+      {auth.token && (
+        <Route path="/calendar">
+          <Calendar />
         </Route>
       )}
       {auth.token && (
