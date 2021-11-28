@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect } from 'react'
 import { useQuery, gql } from '@apollo/client'
 import { useAuth } from './auth'
+import { BACKEND_URL } from '../config.js'
 
 const ME_QUERY = gql`
   query {
