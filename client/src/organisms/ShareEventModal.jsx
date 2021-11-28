@@ -22,7 +22,6 @@ export default function ShareEventModal({ event, onClose }) {
         onSubmit={async (input) => {
           try {
             notifications.pushSuccess({ text: 'Event shared' })
-            await refetch()
             onClose()
           } catch (e) {
             notifications.pushError({ text: e.message })

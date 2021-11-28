@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client'
-import { ArrowLeftIcon } from '@heroicons/react/outline'
+import { ArrowLeftIcon, CogIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useUser } from '../utils/user'
@@ -7,18 +7,21 @@ import Button from '../atoms/Button'
 import Title from '../atoms/Title'
 import EventDescription from '../molecules/EventDescription'
 import EventAttendees from '../molecules/EventAttendees'
-import ShareEventModal from '../organisms/ShareEventModal'
 import JoinEventButton from '../molecules/JoinEventButton'
 import Chat from '../organisms/Chat'
+import ShareEventModal from '../organisms/ShareEventModal'
+import UpdateEventModal from '../organisms/UpdateEventModal'
 
 export default function EventDetailTemplate({ event, refetch }) {
   const user = useUser()
   const history = useHistory()
 
   const [isShareEventModalOpen, setIsShareEventModalOpen] = useState(false)
+  const [isUpdateEventModalOpen, setIsUpdateEventModalOpen] = useState(false)
 
   const from = new Date(event.from).toLocaleString()
   const to = new Date(event.to).toLocaleString()
+  const isOwner = event.user.id === user.profile.id
   const isAttending = !!event.attendees.some((attendee) => attendee.id === user.profile.id)
 
   return (
@@ -26,11 +29,17 @@ export default function EventDetailTemplate({ event, refetch }) {
       <div className="flex flex-col rounded-2xl bg-gray-200 mt-1">
         <div className="flex flex-row">
           <div className="flex flex-col flex-grow justify-between">
-            <div className="flex justify-start p-4">
+            <div className="flex justify-start p-4 gap-4">
               <ArrowLeftIcon
                 className="cursor-pointer p-4 h-16 text-white bg-gray-400 rounded-2xl"
                 onClick={() => history.goBack()}
               />
+              {isOwner && (
+                <CogIcon
+                  className="cursor-pointer p-4 h-16 text-white bg-gray-400 rounded-2xl"
+                  onClick={() => setIsUpdateEventModalOpen(true)}
+                />
+              )}
             </div>
             <div className="flex flex-col p-4">
               <div className="flex flex-row justify-between">
@@ -62,6 +71,9 @@ export default function EventDetailTemplate({ event, refetch }) {
       <Chat event={event} />
 
       {isShareEventModalOpen && <ShareEventModal onClose={() => setIsShareEventModalOpen(false)} />}
+      {isUpdateEventModalOpen && (
+        <UpdateEventModal event={event} refetch={refetch} onClose={() => setIsUpdateEventModalOpen(false)} />
+      )}
     </>
   )
 }
@@ -76,6 +88,9 @@ EventDetailTemplate.fragments = {
       to
       public
       description
+      user {
+        id
+      }
       attendees {
         id
         name

@@ -31,5 +31,6 @@ export default gql`
   type Mutation {
     createEvent(input: EventInput!, invites: String): Event!
     joinEvent(eventId: Int!): Boolean!
+    updateEvent(eventId: Int!, input: EventInput!): Event!
   }
 `

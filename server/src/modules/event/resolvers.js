@@ -1,6 +1,7 @@
 import { db } from '../../lib/db.js'
 import createEvent from './resolvers/createEvent.js'
 import joinEvent from './resolvers/joinEvent.js'
+import updateEvent from './resolvers/updateEvent.js'
 import events from './resolvers/events.js'
 import event from './resolvers/event.js'
 
@@ -12,6 +13,7 @@ export default {
   Mutation: {
     createEvent,
     joinEvent,
+    updateEvent,
   },
   Event: {
     user: async (parent) => {
