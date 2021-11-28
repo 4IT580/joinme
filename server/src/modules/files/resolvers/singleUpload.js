@@ -1,6 +1,6 @@
 import { mkdir, unlink } from 'fs/promises'
 import { createWriteStream } from 'fs'
-import { IMG_FOLDER } from '../../../config.js'
+import { IMG_FOLDER, BACKEND_URL } from '../../../config.js'
 import { randomBytes } from 'crypto'
 import { db } from '../../../lib/db.js'
 import path from 'path'
@@ -54,7 +54,7 @@ export default async (_, { file }, { auth }) => {
 
     await db().table('users').update('photo_id', newPhotoId[0]).where('id', user.id)
 
-    return '/images/' + randPath
+    return BACKEND_URL + '/images/' + randPath
   } catch (e) {
     throw new FileUploadException(e)
   }

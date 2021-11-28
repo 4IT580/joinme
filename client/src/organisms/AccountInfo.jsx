@@ -3,20 +3,47 @@ import { CogIcon } from '@heroicons/react/solid'
 import image from '../assets/user.jpg'
 import UpdateUserProfileModal from './UpdateUserProfileModal'
 import { useUser } from '../utils/user'
-import { makeBELink } from '../utils/user'
+import { gql, useMutation } from '@apollo/client'
+
+const IMAGE_UPLOAD_QUERY = gql`
+  mutation ($file: Upload!) {
+    singleUpload(file: $file)
+  }
+`
 
 export default function AccountInfo() {
   const { profile } = useUser()
   const [isUpdateUserModalOpen, setIsUpdateUserModalOpen] = useState(false)
+  const [uploadImageMutation] = useMutation(IMAGE_UPLOAD_QUERY)
+
+  const onPictureSelected = async ({
+    target: {
+      validity,
+      files: [file],
+    },
+  }) => {
+    if (validity.valid) {
+      const newLink = await uploadImageMutation({ variables: { file } })
+
+      const image = document.getElementById('profile-image')
+      image.src = newLink.data.singleUpload
+    }
+  }
+
+  const onPictureClick = () => {
+    const input = document.getElementById('profile-image-upload')
+    input.click()
+  }
 
   return (
     <div className="flex">
       <div className="rounded-3xl relative flex flex-col justify-center shadow-md bg-white p-6 py-4 mt-4 max-w-md">
         <div className="flex flex-col justify-center items-center">
-          <input id="profile-image-upload" class="hidden" type="file" />
+          <input id="profile-image-upload" onChange={onPictureSelected} className="hidden" type="file" />
           <img
+            onClick={onPictureClick}
             id="profile-image"
-            src={profile.photo ? makeBELink(profile.photo) : image}
+            src={profile.photo ? profile.photo : image}
             alt="user"
             className="w-44 rounded-full"
           />

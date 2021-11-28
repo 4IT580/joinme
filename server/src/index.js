@@ -109,6 +109,7 @@ async function makeConfig({ schema, httpServer }) {
         },
       },
     ],
+    uploads: false,
   }
 
   return config
