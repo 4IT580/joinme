@@ -11,12 +11,14 @@ export default async (_, { input, invites }, { auth }) => {
   const event = await db().transaction(async (t) => {
     const [id] = await t.insert({ ...input, userId: user.id }).into('events')
 
+    await t.insert({ userId: user.id, eventId: id, accepted: true }).into('invitations')
+
     return t.select('*').from('events').where('id', id).first()
   })
 
   for (const invite of invites.split(' ').filter(Boolean)) {
     sentInvitationLinkToEmail(event, invite)
-      .then((user) => db().insert({ eventId: event.id, userId: user.id }).into('eventsUsers'))
+      .then((user) => db().insert({ eventId: event.id, userId: user.id }).into('invitations'))
       .catch(console.error)
   }
 

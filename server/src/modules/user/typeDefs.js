@@ -19,6 +19,7 @@ export default gql`
 
   type Query {
     me: User!
+    user(id: Int!): User
   }
 
   type Mutation {

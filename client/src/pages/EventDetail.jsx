@@ -10,7 +10,7 @@ export default function EventDetail() {
   const notifications = useNotifications()
   const history = useHistory()
   const { id } = useParams()
-  const { data, error } = useQuery(query, { variables: { id: parseInt(id) } })
+  const { data, error, refetch } = useQuery(query, { variables: { id: parseInt(id) } })
 
   useEffect(() => {
     if (error) {
@@ -23,8 +23,7 @@ export default function EventDetail() {
     <DashboardLayout>
       <div className="grid grid-cols-9 gap-1.5 p-1">
         <div className="flex flex-col col-span-9 lg:col-span-7 p-2">
-          {' '}
-          {data?.event && <EventDetailTemplate event={data.event} />}{' '}
+          {data?.event && <EventDetailTemplate event={data.event} refetch={refetch} />}
         </div>
         <div className="flex flex-col col-span-9 lg:col-span-2">
           <SimilarEvents />

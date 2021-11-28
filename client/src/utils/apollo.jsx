@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
-import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, ApolloLink, from } from '@apollo/client'
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, ApolloLink, from, split } from '@apollo/client'
+import { getMainDefinition } from '@apollo/client/utilities'
+import { WebSocketLink } from '@apollo/client/link/ws'
 import { onError } from '@apollo/client/link/error'
 
 import { useAuth } from './auth'
@@ -18,6 +20,13 @@ const hasNetworkStatusCode = (error, code) => {
 
 const httpLink = createHttpLink({
   uri: BACKEND_URL,
+})
+
+const wsLink = new WebSocketLink({
+  uri: BACKEND_URL.replace('http', 'ws'),
+  options: {
+    reconnect: true,
+  },
 })
 
 export function EnhancedApolloProvider({ children }) {
@@ -47,7 +56,14 @@ export function EnhancedApolloProvider({ children }) {
   })
 
   const client = new ApolloClient({
-    link: from([logoutLink, authLink, httpLink]),
+    link: split(
+      ({ query }) => {
+        const definition = getMainDefinition(query)
+        return definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
+      },
+      from([authLink, wsLink]),
+      from([logoutLink, authLink, httpLink]),
+    ),
     cache: new InMemoryCache(),
     defaultOptions: {
       watchQuery: {

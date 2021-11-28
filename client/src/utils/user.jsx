@@ -6,6 +6,7 @@ import { BACKEND_URL } from '../config.js'
 const ME_QUERY = gql`
   query {
     me {
+      id
       name
       username
       city

@@ -1,4 +1,5 @@
 import me from './resolvers/me.js'
+import user from './resolvers/user.js'
 import register from './resolvers/register.js'
 import login from './resolvers/login.js'
 import requestPasswordReset from './resolvers/requestPasswordReset.js'
@@ -10,6 +11,7 @@ import updateProfile from './resolvers/updateProfile.js'
 export default {
   Query: {
     me,
+    user,
   },
   Mutation: {
     register,

@@ -40,6 +40,8 @@ jobs:
             if [ -d "git/$branch" ]; then
               cd git/$branch
               docker-compose down
+              git reset --hard
+              git clean -df
               git pull
             else
               git clone -b $branch git@github.com:4IT580/joinme.git git/$branch

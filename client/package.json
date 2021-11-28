@@ -15,11 +15,12 @@
     "daisyui": "^1.16.0",
     "formik": "^2.2.9",
     "graphql": "^15.6.1",
+    "luxon": "^2.1.1",
     "postcss": "^8.3.10",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-router-dom": "^5.3.0",
-    "stream": "^0.0.2",
+    "subscriptions-transport-ws": "^0.11.0",
     "tailwindcss": "^2.2.17",
     "vite": "^2.6.4",
     "yup": "^0.32.11"
