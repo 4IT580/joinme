@@ -1,27 +1,17 @@
+import { useHistory } from 'react-router-dom'
 import classNames from 'classnames'
-import { gql, useQuery } from '@apollo/client'
 import Dropdown from '../atoms/Dropdown'
 import { useAuth } from '../utils/auth'
-import { useEffect } from 'react'
-
-const ME_QUERY = gql`
-  query {
-    me {
-      id
-    }
-  }
-`
+import { useUser } from '../utils/user'
 
 export default function AccountDropdown({ className }) {
+  const history = useHistory()
   const auth = useAuth()
-  const { data } = useQuery(ME_QUERY)
-
-  useEffect(() => {
-    console.log(data)
-  }, [data])
+  const user = useUser()
 
   return (
-    <Dropdown className={classNames(className)} title={`Hey, ${(auth.user || {}).name}`}>
+    <Dropdown className={classNames(className)} title={`Hey, ${user.profile.name}`}>
+      <Dropdown.Item onClick={() => history.push('/profile')}>Profile</Dropdown.Item>
       <Dropdown.Item onClick={auth.signout}>Logout</Dropdown.Item>
     </Dropdown>
   )

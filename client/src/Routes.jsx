@@ -3,7 +3,8 @@ import { useAuth } from './utils/auth'
 import LandingPage from './pages/LandingPage'
 import ResetPassword from './pages/ResetPassword'
 import ActivateAccount from './pages/ActivateAccount'
-import EmptyDashboard from './pages/EmptyDashboard'
+import Dashboard from './pages/Dashboard'
+import EventDetail from './pages/EventDetail'
 
 export default function Routes() {
   const auth = useAuth()
@@ -16,8 +17,21 @@ export default function Routes() {
       <Route path="/activate-account">
         <ActivateAccount />
       </Route>
-      <Route path="/dashboard"><EmptyDashboard /></Route>
-      <Route path="/">{auth.token ? <EmptyDashboard /> : <LandingPage />}</Route>
+      {auth.token && (
+        <>
+          <Route path="/profile">
+            <Dashboard name={'profile'} />
+          </Route>
+          <Route path="/events">
+            <Dashboard name={'events'} />
+          </Route>
+        </>
+
+      )}
+      <Route path="/event/:id">
+        <EventDetail />
+      </Route>
+      <Route path="/">{auth.token ? <Dashboard name={'main'}/> : <LandingPage />}</Route>
     </Switch>
   )
 }

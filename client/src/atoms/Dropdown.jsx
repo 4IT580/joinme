@@ -12,7 +12,7 @@ function Dropdown({ title, children }) {
 function Item({ onClick, children }) {
   return (
     <li>
-      <a tabIndex="0" href="#" onClick={onClick}>
+      <a tabIndex="0" onClick={onClick}>
         {children}
       </a>
     </li>
