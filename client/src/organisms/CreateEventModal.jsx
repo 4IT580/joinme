@@ -19,6 +19,7 @@ export default function CreateEventModal({ refetch, onClose }) {
       <Formik
         initialValues={{
           name: '',
+          place: '',
           description: '',
           from: '',
           to: '',
@@ -39,6 +40,7 @@ export default function CreateEventModal({ refetch, onClose }) {
       >
         <Form>
           <FormControl name="name" label="Name" />
+          <FormControl name="place" label="Place" />
           <FormControl Component="textarea" className="textarea h-28" name="description" label="Description" />
           <div className="grid grid-cols-2 gap-4">
             <FormControl type="datetime-local" name="from" label="From" />
