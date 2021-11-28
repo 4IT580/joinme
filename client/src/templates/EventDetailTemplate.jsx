@@ -70,7 +70,7 @@ export default function EventDetailTemplate({ event, refetch }) {
 
       <Chat event={event} />
 
-      {isShareEventModalOpen && <ShareEventModal onClose={() => setIsShareEventModalOpen(false)} />}
+      {isShareEventModalOpen && <ShareEventModal event={event} onClose={() => setIsShareEventModalOpen(false)} />}
       {isUpdateEventModalOpen && (
         <UpdateEventModal event={event} refetch={refetch} onClose={() => setIsUpdateEventModalOpen(false)} />
       )}
