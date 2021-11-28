@@ -1,6 +1,10 @@
 import { mkdir, unlink } from 'fs/promises'
 import { createWriteStream } from 'fs'
+<<<<<<< HEAD
 import { IMG_FOLDER, BACKEND_URL } from '../../../config.js'
+=======
+import { IMG_FOLDER } from '../../../config.js'
+>>>>>>> WIP images
 import { randomBytes } from 'crypto'
 import { db } from '../../../lib/db.js'
 import path from 'path'
@@ -23,6 +27,12 @@ export default async (_, { file }, { auth }) => {
 
     const randPath = await MakeUniquePath(fileExtension)
     const fullPath = path.join(IMG_FOLDER, randPath)
+<<<<<<< HEAD
+=======
+
+    console.log('full path ', fullPath)
+    console.log('base path ', path.dirname(fullPath))
+>>>>>>> WIP images
 
     //make sure base path is initialized
     await mkdir(path.dirname(fullPath), { recursive: true })

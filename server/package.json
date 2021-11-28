@@ -22,7 +22,11 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.11",
     "sqlite3": "^5.0.2",
+<<<<<<< HEAD
     "subscriptions-transport-ws": "^0.11.0",
+=======
+    "stream": "^0.0.2",
+>>>>>>> WIP images
     "yup": "^0.32.11"
   },
   "devDependencies": {

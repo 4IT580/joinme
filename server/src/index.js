@@ -15,9 +15,13 @@ const HOST = process.env.SERVER_HOST || 'localhost'
 const PORT = process.env.SERVER_PORT || 8000
 
 const main = async () => {
-  await migrate()
+  try {
+    await migrate()
 
-  await startApolloServer()
+    await startApolloServer()
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 async function startApolloServer() {
