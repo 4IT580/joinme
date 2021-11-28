@@ -24,9 +24,6 @@ export default async (_, { file }, { auth }) => {
     const randPath = await MakeUniquePath(fileExtension)
     const fullPath = path.join(IMG_FOLDER, randPath)
 
-    console.log('full path ', fullPath)
-    console.log('base path ', path.dirname(fullPath))
-
     //make sure base path is initialized
     await mkdir(path.dirname(fullPath), { recursive: true })
 
@@ -49,8 +46,6 @@ export default async (_, { file }, { auth }) => {
     if (user.photoId) {
       DeleteOldPhoto(user.photoId)
     }
-
-    console.log('photoId ', newPhotoId[0])
 
     await db().table('users').update('photo_id', newPhotoId[0]).where('id', user.id)
 
@@ -82,8 +77,6 @@ async function MakeUniquePath(fileExtension) {
       '/' +
       randomBytes(10).toString('hex') +
       fileExtension
-
-    console.log('generating path  ', randPath)
 
     const fileByPath = await db().select('*').from('images').where('path', randPath).first()
 
