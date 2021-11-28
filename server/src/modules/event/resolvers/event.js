@@ -9,14 +9,14 @@ export default async (_, { id }, { auth }) => {
   if (!event) throw new Error('Unknown event')
 
   if (!event.public && event.userId !== user.id) {
-    const record = await db()
+    const ivnited = await db()
       .select('id')
-      .from('eventsUsers')
+      .from('invitations')
       .where('eventId', event.id)
       .where('userId', user.id)
       .first()
 
-    if (!record) throw new UnauthorizedException('Private event')
+    if (!ivnited) throw new UnauthorizedException('Private event')
   }
 
   return event

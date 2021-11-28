@@ -32,5 +32,6 @@ export default gql`
     createEvent(input: EventInput!, invites: String): Event!
     joinEvent(eventId: Int!): Boolean!
     updateEvent(eventId: Int!, input: EventInput!): Event!
+    shareEvent(eventId: Int!, invites: [String!]!): Boolean!
   }
 `

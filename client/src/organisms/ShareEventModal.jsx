@@ -1,5 +1,5 @@
-import * as yup from 'yup'
 import { Form, Formik } from 'formik'
+import { gql, useMutation } from '@apollo/client'
 import Button from '../atoms/Button'
 import Modal from '../atoms/Modal'
 import MultiInput from '../atoms/MultiInput'
@@ -9,6 +9,7 @@ import { useNotifications } from '../utils/notifications'
 
 export default function ShareEventModal({ event, onClose }) {
   const notifications = useNotifications()
+  const [shareEvent] = useMutation(mutation)
 
   return (
     <Modal>
@@ -18,9 +19,10 @@ export default function ShareEventModal({ event, onClose }) {
         initialValues={{
           invites: [],
         }}
-        validationSchema={schema}
         onSubmit={async (input) => {
           try {
+            const invites = input.invites.split(' ').filter(Boolean)
+            await shareEvent({ variables: { eventId: event.id, invites } })
             notifications.pushSuccess({ text: 'Event shared' })
             onClose()
           } catch (e) {
@@ -43,4 +45,8 @@ export default function ShareEventModal({ event, onClose }) {
   )
 }
 
-const schema = yup.object({})
+const mutation = gql`
+  mutation ($eventId: Int!, $invites: [String!]!) {
+    shareEvent(eventId: $eventId, invites: $invites)
+  }
+`
