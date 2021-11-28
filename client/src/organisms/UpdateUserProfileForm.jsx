@@ -5,9 +5,9 @@ import Button from '../atoms/Button'
 import MultiInput from '../atoms/MultiInput'
 
 const updateProfileFormSchema = yup.object().shape({
-  name: yup.string().min(3).max(50),
-  city: yup.string().optional(),
-  description: yup.string().optional(),
+  name: yup.string().min(3).max(50).required(),
+  city: yup.string(),
+  description: yup.string(),
 })
 
 export default function UserProfileForm({ name, city, description, interests, onSubmit, onClose }) {
