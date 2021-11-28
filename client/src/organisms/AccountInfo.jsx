@@ -39,7 +39,13 @@ export default function AccountInfo() {
     <div className="flex">
       <div className="rounded-3xl relative flex flex-col justify-center shadow-md bg-white p-6 py-4 mt-4 max-w-md">
         <div className="flex flex-col justify-center items-center">
-          <input id="profile-image-upload" onChange={onPictureSelected} className="hidden" type="file" />
+          <input
+            id="profile-image-upload"
+            onChange={onPictureSelected}
+            className="hidden"
+            type="file"
+            accept=".jpg,.gif,.svg,.png"
+          />
           <img
             onClick={onPictureClick}
             id="profile-image"
