@@ -5,6 +5,7 @@ import { useAuth } from './auth'
 const ME_QUERY = gql`
   query {
     me {
+      id
       name
       username
       city

@@ -10,6 +10,7 @@ export default gql`
     to: Date!
     public: Boolean!
     user: User!
+    attendees: [User!]!
   }
 
   input EventInput {
@@ -28,5 +29,6 @@ export default gql`
 
   type Mutation {
     createEvent(input: EventInput!, invites: String): Event!
+    joinEvent(eventId: Int!): Boolean!
   }
 `

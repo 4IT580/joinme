@@ -6,6 +6,7 @@ import ActivateAccount from './pages/ActivateAccount'
 import Dashboard from './pages/Dashboard'
 import UserProfile from './pages/UserProfile'
 import EventDetail from './pages/EventDetail'
+import UserDetail from './pages/UserDetail'
 
 export default function Routes() {
   const auth = useAuth()
@@ -25,6 +26,9 @@ export default function Routes() {
       )}
       <Route path="/event/:id">
         <EventDetail />
+      </Route>
+      <Route path="/user/:id">
+        <UserDetail />
       </Route>
       <Route path="/">{auth.token ? <Dashboard /> : <LandingPage />}</Route>
     </Switch>
