@@ -31,6 +31,9 @@ InboxTemplate.fragments = {
         place
         from
         to
+        file{
+          path
+        }
       }
     }
   `,

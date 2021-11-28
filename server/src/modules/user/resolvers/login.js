@@ -3,12 +3,7 @@ import * as token from '../../../lib/token.js'
 import * as argon2 from 'argon2'
 
 export default async (_, params) => {
-  const user = await db()
-    .select('*')
-    .from('users as u')
-    .leftJoin('images as i', 'u.photo_id', '=', 'i.photo_id')
-    .where('email', params.email)
-    .first()
+  const user = await db().select('*').from('users').where('email', params.email).first()
 
   if (!user) {
     //return generic message for login to hide which part is wrong

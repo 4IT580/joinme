@@ -16,6 +16,9 @@ const query = gql`
       description
       from
       to
+      file {
+        path
+      }
     }
   }
 `

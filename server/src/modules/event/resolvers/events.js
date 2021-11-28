@@ -9,10 +9,9 @@ export default async (_, __, { auth }) => {
   const event = await db()
     .select('*')
     .from('events')
-    .leftJoin('images', 'events.photo_id', '=', 'images.photo_id')
     .orderBy('from', 'asc')
     .where('public', true)
-    .orWhereIn('events.id', invitations)
+    .orWhereIn('id', invitations)
 
   return event
 }

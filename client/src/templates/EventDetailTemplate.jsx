@@ -11,7 +11,6 @@ import JoinEventButton from '../molecules/JoinEventButton'
 import Chat from '../organisms/Chat'
 import ShareEventModal from '../organisms/ShareEventModal'
 import UpdateEventModal from '../organisms/UpdateEventModal'
-import { toFullURL } from '../utils/images'
 
 export default function EventDetailTemplate({ event, refetch }) {
   const user = useUser()
@@ -96,7 +95,7 @@ export default function EventDetailTemplate({ event, refetch }) {
               onClick={onPictureClick}
               id="event-image"
               className="rounded-2xl"
-              src={event.path ? toFullURL(event.path) : `https://picsum.photos/600/450?id${event.id}`}
+              src={event.file?.path ? event.file.path : `https://picsum.photos/600/450?id${event.id}`}
             />
           </div>
         </div>
@@ -142,7 +141,9 @@ EventDetailTemplate.fragments = {
         id
         name
       }
-      path
+      file{
+        path
+      }
     }
   `,
 }

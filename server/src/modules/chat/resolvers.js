@@ -22,12 +22,7 @@ export default {
   },
   Message: {
     event: async (parent) => {
-      return await db()
-        .select('*')
-        .from('events')
-        .leftJoin('images', 'events.photo_id', '=', 'images.photo_id')
-        .where('id', parent.eventId)
-        .first()
+      return await db().select('*').from('events').where('id', parent.eventId).first()
     },
     user: async (parent) => {
       return db().select('*').from('users').where('id', parent.userId).first()
