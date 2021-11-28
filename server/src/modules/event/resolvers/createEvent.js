@@ -11,6 +11,8 @@ export default async (_, { input, invites }, { auth }) => {
   const event = await db().transaction(async (t) => {
     const [id] = await t.insert({ ...input, userId: user.id }).into('events')
 
+    await t.insert({ userId: user.id, eventId: id }).into('events_users')
+
     return t.select('*').from('events').where('id', id).first()
   })
 

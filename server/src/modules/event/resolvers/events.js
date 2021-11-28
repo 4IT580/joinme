@@ -11,6 +11,5 @@ export default async (_, __, { auth }) => {
     .from('events')
     .orderBy('from', 'asc')
     .where('public', true)
-    .orWhere('userId', user.id)
     .orWhereIn('id', allowedEvents)
 }

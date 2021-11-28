@@ -27,6 +27,7 @@ export default function FormControl({ Component = 'input', name, label, placehol
             'w-full input input-bordered': type !== 'checkbox',
             'input-error': !!error,
           })}
+          {...(type === 'checkbox' ? { checked: field.value } : {})}
           {...field}
           {...attrs}
         />

@@ -17,6 +17,7 @@ export const up = async (knex) => {
     table.increments('id')
     table.integer('event_id').notNullable().references('id').inTable('events')
     table.integer('user_id').notNullable().references('id').inTable('users')
+    table.unique(['event_id', 'user_id'])
   })
 }
 

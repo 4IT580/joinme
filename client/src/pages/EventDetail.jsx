@@ -4,12 +4,13 @@ import { useParams, useHistory } from 'react-router-dom'
 import DashboardLayout from '../organisms/DashboardLayout'
 import EventDetailTemplate from '../templates/EventDetailTemplate'
 import { useNotifications } from '../utils/notifications'
+import SimilarEvents from '../organisms/SimilarEvents'
 
 export default function EventDetail() {
   const notifications = useNotifications()
   const history = useHistory()
   const { id } = useParams()
-  const { data, error } = useQuery(query, { variables: { id: parseInt(id) } })
+  const { data, error, refetch } = useQuery(query, { variables: { id: parseInt(id) } })
 
   useEffect(() => {
     if (error) {
@@ -18,7 +19,18 @@ export default function EventDetail() {
     }
   }, [error])
 
-  return <DashboardLayout>{data?.event && <EventDetailTemplate event={data.event} />}</DashboardLayout>
+  return (
+    <DashboardLayout>
+      <div className="grid grid-cols-9 gap-1.5 p-1">
+        <div className="flex flex-col col-span-9 lg:col-span-7 p-2">
+          {data?.event && <EventDetailTemplate event={data.event} refetch={refetch} />}
+        </div>
+        <div className="flex flex-col col-span-9 lg:col-span-2">
+          <SimilarEvents />
+        </div>
+      </div>
+    </DashboardLayout>
+  )
 }
 
 const query = gql`
