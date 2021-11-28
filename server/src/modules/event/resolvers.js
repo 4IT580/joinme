@@ -22,5 +22,8 @@ export default {
 
       return await db().select('*').from('users').whereIn('id', userIds)
     },
+    messages: async (parent) => {
+      return await db().select('*').from('messages').where('eventId', parent.id)
+    },
   },
 }

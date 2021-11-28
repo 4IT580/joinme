@@ -11,6 +11,7 @@ export default gql`
     public: Boolean!
     user: User!
     attendees: [User!]!
+    messages: [Message!]!
   }
 
   input EventInput {

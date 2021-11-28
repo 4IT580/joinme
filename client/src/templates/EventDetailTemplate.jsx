@@ -9,6 +9,7 @@ import EventDescription from '../molecules/EventDescription'
 import EventAttendees from '../molecules/EventAttendees'
 import ShareEventModal from '../organisms/ShareEventModal'
 import JoinEventButton from '../molecules/JoinEventButton'
+import Chat from '../organisms/Chat'
 
 export default function EventDetailTemplate({ event, refetch }) {
   const user = useUser()
@@ -57,6 +58,8 @@ export default function EventDetailTemplate({ event, refetch }) {
           <EventAttendees attendees={event.attendees} />
         </div>
       </div>
+
+      <Chat event={event} />
 
       {isShareEventModalOpen && <ShareEventModal onClose={() => setIsShareEventModalOpen(false)} />}
     </>
