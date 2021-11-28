@@ -4,7 +4,12 @@ import { db } from '../../../lib/db.js'
 export default async (_, { id }, { auth }) => {
   const user = await getUser(auth)
 
-  const event = await db().select('*').from('events').where('id', id).first()
+  const event = await db()
+    .select('*')
+    .from('events')
+    .leftJoin('images', 'events.photo_id', '=', 'images.photo_id')
+    .where('events.id', id)
+    .first()
 
   if (!event) throw new Error('Unknown event')
 

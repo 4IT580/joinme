@@ -11,6 +11,7 @@ const EVENTY_QUERY = gql`
       description
       from
       to
+      path
     }
   }
 `

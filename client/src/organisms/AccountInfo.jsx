@@ -7,7 +7,7 @@ import { gql, useMutation } from '@apollo/client'
 
 const IMAGE_UPLOAD_QUERY = gql`
   mutation ($file: Upload!) {
-    singleUpload(file: $file)
+    userImageUpload(file: $file)
   }
 `
 
@@ -26,7 +26,7 @@ export default function AccountInfo() {
       const newLink = await uploadImageMutation({ variables: { file } })
 
       const image = document.getElementById('profile-image')
-      image.src = newLink.data.singleUpload
+      image.src = newLink.data.userImageUpload
     }
   }
 

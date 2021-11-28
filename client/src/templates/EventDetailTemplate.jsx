@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import { ArrowLeftIcon, CogIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -11,6 +11,7 @@ import JoinEventButton from '../molecules/JoinEventButton'
 import Chat from '../organisms/Chat'
 import ShareEventModal from '../organisms/ShareEventModal'
 import UpdateEventModal from '../organisms/UpdateEventModal'
+import { toFullURL } from '../utils/images'
 
 export default function EventDetailTemplate({ event, refetch }) {
   const user = useUser()
@@ -23,6 +24,31 @@ export default function EventDetailTemplate({ event, refetch }) {
   const to = new Date(event.to).toLocaleString()
   const isOwner = event.user.id === user.profile.id
   const isAttending = !!event.attendees.some((attendee) => attendee.id === user.profile.id)
+
+  const [uploadImageMutation] = useMutation(IMAGE_UPLOAD_QUERY)
+
+  const onPictureSelected = async ({
+    target: {
+      validity,
+      files: [file],
+    },
+  }) => {
+    if (validity.valid) {
+      const newLink = await uploadImageMutation({ variables: { file, eventId: event.id } })
+
+      const image = document.getElementById('event-image')
+      image.src = newLink.data.eventImageUpload
+    }
+  }
+
+  const onPictureClick = () => {
+    if (isOwner) {
+      const input = document.getElementById('event-image-upload')
+      input.click()
+    }
+  }
+
+  console.log(event)
 
   return (
     <>
@@ -59,7 +85,19 @@ export default function EventDetailTemplate({ event, refetch }) {
             </div>
           </div>
           <div className="p-4">
-            <img className="rounded-2xl" src={`https://picsum.photos/600/450?id${event.id}`} />
+            <input
+              id="event-image-upload"
+              onChange={onPictureSelected}
+              className="hidden"
+              type="file"
+              accept=".jpg,.gif,.svg,.png"
+            />
+            <img
+              onClick={onPictureClick}
+              id="event-image"
+              className="rounded-2xl"
+              src={event.path ? toFullURL(event.path) : `https://picsum.photos/600/450?id${event.id}`}
+            />
           </div>
         </div>
         <div className="grid grid-cols-5 gap-4 p-4">
@@ -81,6 +119,12 @@ export default function EventDetailTemplate({ event, refetch }) {
   )
 }
 
+const IMAGE_UPLOAD_QUERY = gql`
+  mutation ($file: Upload!, $eventId: Int!) {
+    eventImageUpload(file: $file, eventId: $eventId)
+  }
+`
+
 EventDetailTemplate.fragments = {
   event: (name = 'event') => gql`
     fragment ${name} on Event {
@@ -98,6 +142,7 @@ EventDetailTemplate.fragments = {
         id
         name
       }
+      path
     }
   `,
 }

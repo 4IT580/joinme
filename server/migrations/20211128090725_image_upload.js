@@ -3,7 +3,7 @@
  */
 export const up = async (knex) => {
   await knex.schema.createTable('images', (table) => {
-    table.increments('id')
+    table.increments('photo_id')
     table.string('path').notNullable().unique().index()
     table.string('filename')
     table.string('mimetype')
@@ -12,7 +12,11 @@ export const up = async (knex) => {
 
   await knex.schema.alterTable('users', (table) => {
     table.dropColumn('photo')
-    table.integer('photo_id').references('id').inTable('images')
+    table.integer('photo_id').references('photo_id').inTable('images')
+  })
+
+  await knex.schema.alterTable('events', (table) => {
+    table.integer('photo_id').references('photo_id').inTable('images')
   })
 }
 
@@ -21,7 +25,12 @@ export const up = async (knex) => {
  */
 export const down = async (knex) => {
   await knex.schema.dropTable('images')
-  return knex.schema.alterTable('users', (table) => {
+
+  await knex.schema.alterTable('events', (table) => {
+    table.dropColumn('photo_id')
+  })
+
+  await knex.schema.alterTable('users', (table) => {
     table.dropColumn('photo_id')
     table.binary('photo')
   })

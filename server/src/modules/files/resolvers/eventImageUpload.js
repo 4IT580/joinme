@@ -5,8 +5,8 @@ import { randomBytes } from 'crypto'
 import { db } from '../../../lib/db.js'
 import path from 'path'
 import { finished } from 'stream/promises'
-import { getUser } from '../../../lib/auth.js'
 import { ApolloError } from 'apollo-server'
+import { getUser } from '../../../lib/auth.js'
 
 class FileUploadException extends ApolloError {
   constructor(message) {
@@ -14,9 +14,20 @@ class FileUploadException extends ApolloError {
   }
 }
 
-export default async (_, { file }, { auth }) => {
+export class UnauthorizedException extends ApolloError {
+  constructor(message) {
+    super(message, 'UNAUTHORIZED')
+  }
+}
+
+export default async (_, { eventId, file }, { auth }) => {
   try {
+    const event = await db().select('*').from('events').where('id', eventId).first()
     const user = await getUser(auth)
+
+    if (user.id !== event.userId) {
+      throw new UnauthorizedException('not your event')
+    }
 
     const { createReadStream, filename, mimetype, encoding } = await file
     const fileExtension = path.extname(filename)
@@ -43,11 +54,11 @@ export default async (_, { file }, { auth }) => {
 
     const newPhotoId = await db().insert(image).returning('id').into('images')
 
-    if (user.photoId) {
-      DeleteOldPhoto(user.photoId)
+    if (event.photoId) {
+      DeleteOldPhoto(event.photoId)
     }
 
-    await db().table('users').update('photo_id', newPhotoId[0]).where('id', user.id)
+    await db().table('events').update('photo_id', newPhotoId[0]).where('id', eventId)
 
     return BACKEND_URL + '/images/' + randPath
   } catch (e) {
@@ -56,12 +67,12 @@ export default async (_, { file }, { auth }) => {
 }
 
 async function DeleteOldPhoto(photoId) {
-  const photo = await db().select('*').from('images').where('id', photoId).first()
+  const photo = await db().select('*').from('images').where('photo_id', photoId).first()
 
   if (photo) {
     await unlink(path.join(IMG_FOLDER, photo.path))
 
-    await db().table('images').where('id', photoId).del()
+    await db().table('images').where('photo_id', photoId).del()
   }
 }
 

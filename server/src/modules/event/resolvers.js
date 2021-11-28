@@ -25,7 +25,12 @@ export default {
   },
   Event: {
     user: async (parent) => {
-      return await db().select('*').from('users').where('id', parent.userId).first()
+      return await db()
+        .select('*')
+        .from('users as u')
+        .leftJoin('images as i', 'u.photo_id', '=', 'i.photo_id')
+        .where('u.id', parent.userId)
+        .first()
     },
     attendees: async (parent) => {
       const userIds = await db()
@@ -42,7 +47,12 @@ export default {
   },
   Invitation: {
     event: async (parent) => {
-      return await db().select('*').from('events').where('id', parent.eventId).first()
+      return await db()
+        .select('e.*, i.path as imagePath')
+        .from('events as e')
+        .leftJoin('images as i', 'e.photo_id', '=', 'i.photo_id')
+        .where('e.id', parent.eventId)
+        .first()
     },
   },
 }

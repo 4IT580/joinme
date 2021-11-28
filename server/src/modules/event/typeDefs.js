@@ -12,6 +12,7 @@ export default gql`
     user: User!
     attendees: [User!]!
     messages: [Message!]!
+    path: String
   }
 
   input EventInput {

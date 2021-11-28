@@ -1,9 +1,11 @@
 import { GraphQLUpload } from 'graphql-upload'
-import singleUpload from './resolvers/singleUpload.js'
+import userImageUpload from './resolvers/userImageUpload.js'
+import eventImageUpload from './resolvers/eventImageUpload.js'
 
 export default {
   Upload: GraphQLUpload,
   Mutation: {
-    singleUpload,
+    userImageUpload,
+    eventImageUpload,
   },
 }

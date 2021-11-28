@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
+import { toFullURL } from '../utils/images.js'
 
 export default function EventCard({ event, className }) {
   const from = new Date(event.from).toLocaleString()
@@ -9,7 +10,10 @@ export default function EventCard({ event, className }) {
     <Link to={`/event/${event.id}`}>
       <div className={classNames('card shadow-lg text-sm', className)}>
         <figure>
-          <img className="rounded-t-2xl h-40 object-cover" src={`https://picsum.photos/400/250?id${event.id}`} />
+          <img
+            className="rounded-t-2xl h-40 object-cover"
+            src={event.path ? toFullURL(event.path) : `https://picsum.photos/600/450?id${event.id}`}
+          />
         </figure>
         <div className="card-body">
           <p>

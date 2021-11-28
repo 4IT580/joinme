@@ -6,7 +6,7 @@ export const getUserWithImageById = async (id) => {
   if (!user) throw new Error('No such user')
 
   if (user.photoId) {
-    const photo = await db().select('*').from('images').where('id', user.photoId).first()
+    const photo = await db().select('*').from('images').where('photo_id', user.photoId).first()
 
     if (photo) {
       const userWithPhoto = { ...user, photo: BACKEND_URL + '/images/' + photo.path }

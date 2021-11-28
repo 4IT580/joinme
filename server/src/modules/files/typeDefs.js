@@ -11,6 +11,7 @@ export default gql`
 
   type Mutation {
     # Multiple uploads are supported. See graphql-upload docs for details.
-    singleUpload(file: Upload!): String!
+    userImageUpload(file: Upload!): String!
+    eventImageUpload(eventId: Int!, file: Upload!): String!
   }
 `
