@@ -67,12 +67,12 @@ export default async (_, { eventId, file }, { auth }) => {
 }
 
 async function DeleteOldPhoto(photoId) {
-  const photo = await db().select('*').from('images').where('photo_id', photoId).first()
+  const photo = await db().select('*').from('images').where('id', photoId).first()
 
   if (photo) {
     await unlink(path.join(IMG_FOLDER, photo.path))
 
-    await db().table('images').where('photo_id', photoId).del()
+    await db().table('images').where('id', photoId).del()
   }
 }
 
