@@ -23,7 +23,7 @@ const getUser = async (email) => {
 
   const [id] = await db()
     .insert({
-      username: email,
+      username: email.replace(/@.+$/, ''),
       email: email,
       name: email,
       password: randomBytes(64).toString('base64'),
