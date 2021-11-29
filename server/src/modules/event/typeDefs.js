@@ -38,6 +38,8 @@ export default gql`
     events: [Event!]!
     event(id: Int!): Event
     invitations: [Invitation!]!
+    attending: [Event!]!
+    organizing: [Event!]!
   }
 
   type Mutation {

@@ -8,6 +8,8 @@ import declineInvitation from './resolvers/declineInvitation.js'
 import events from './resolvers/events.js'
 import event from './resolvers/event.js'
 import invitations from './resolvers/invitations.js'
+import attending from './resolvers/attending.js'
+import organizing from './resolvers/organizing.js'
 import { BACKEND_URL } from '../../config.js'
 
 export default {
@@ -15,6 +17,8 @@ export default {
     events,
     event,
     invitations,
+    attending,
+    organizing,
   },
   Mutation: {
     createEvent,
