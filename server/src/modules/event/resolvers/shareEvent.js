@@ -1,8 +1,9 @@
 import { db } from '../../../lib/db.js'
+import fetchOrCreateUser from '../services/fetchOrCreateUser.js'
 
 export default async (_, { eventId, invites }) => {
   for (const invite of invites) {
-    const user = await getUser(invite)
+    const user = await fetchOrCreateUser(invite)
 
     if (!user) throw new Error(`Unknown user ${invite}`)
 
@@ -14,12 +15,4 @@ export default async (_, { eventId, invites }) => {
   }
 
   return true
-}
-
-const getUser = async (invite) => {
-  if (invite.startsWith('@')) {
-    return await db().select('*').from('users').where('username', invite.slice(1)).first()
-  } else {
-    return db().select('*').from('users').where('email', invite).first()
-  }
 }
