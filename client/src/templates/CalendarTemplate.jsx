@@ -43,7 +43,7 @@ export default function CalendarTemplate({ attending, organizing }) {
           />
         ))}
       </div>
-      <div className="flex flex-col bg-gray-200 rounded-2xl p-2 md:w-3/4 lg:w-2/4 overflow-y-auto">
+      <div className="flex flex-col bg-gray-200 rounded-2xl p-2 md:w-3/4 lg:w-2/4 md:overflow-y-auto">
         <Title>Chat</Title>
         {selectedEvent && <Chat event={selectedEvent} />}
       </div>
