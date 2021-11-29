@@ -12,6 +12,7 @@ export default gql`
     user: User!
     attendees: [User!]!
     messages: [Message!]!
+    file: FilePath
   }
 
   input EventInput {
@@ -27,6 +28,10 @@ export default gql`
     id: Int!
     accepted: Boolean
     event: Event!
+  }
+
+  type FilePath {
+    path: String
   }
 
   type Query {

@@ -8,6 +8,9 @@ import { makeExecutableSchema } from '@graphql-tools/schema'
 import { SubscriptionServer } from 'subscriptions-transport-ws'
 import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core'
 import { migrate } from './lib/db.js'
+import { graphqlUploadExpress } from 'graphql-upload'
+import { IMG_FOLDER } from './config.js'
+import cors from 'cors'
 
 const HOST = process.env.SERVER_HOST || 'localhost'
 const PORT = process.env.SERVER_PORT || 8000
@@ -32,6 +35,10 @@ async function startApolloServer() {
   })
 
   await server.start()
+
+  app.use(cors())
+  app.use('/images', express.static(IMG_FOLDER))
+  app.use(graphqlUploadExpress())
 
   server.applyMiddleware({
     app,
@@ -100,6 +107,7 @@ async function makeConfig({ schema, httpServer }) {
         },
       },
     ],
+    uploads: false,
   }
 
   return config

@@ -8,6 +8,7 @@ import declineInvitation from './resolvers/declineInvitation.js'
 import events from './resolvers/events.js'
 import event from './resolvers/event.js'
 import invitations from './resolvers/invitations.js'
+import { BACKEND_URL } from '../../config.js'
 
 export default {
   Query: {
@@ -38,6 +39,17 @@ export default {
     },
     messages: async (parent) => {
       return await db().select('*').from('messages').where('eventId', parent.id)
+    },
+    file: async (parent) => {
+      const file = await db().select('*').from('images').where('id', parent.photoId).first()
+
+      if (!file) {
+        return { path: '' }
+      }
+
+      file.path = BACKEND_URL + '/images/' + file.path
+
+      return file
     },
   },
   Invitation: {

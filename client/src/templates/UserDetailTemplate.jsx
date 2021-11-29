@@ -2,11 +2,14 @@ import { gql } from '@apollo/client'
 import Title from '../atoms/Title'
 import Card from '../atoms/Card'
 import Badge from '../atoms/Badge'
+import image from '../assets/user.jpg'
 
 export default function UserDetailTemplate({ user }) {
   return (
     <div className="flex p-1">
       <Card>
+        <img src={user.photo ? user.photo : image} alt="user" className="mb-4 w-44 rounded-full" />
+
         <div className="text-center">
           <Title>{user.name}</Title>
           <Title level={2}>@{user.username}</Title>

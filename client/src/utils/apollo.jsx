@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, ApolloLink, from, split } from '@apollo/client'
+import createUploadLink from 'apollo-upload-client/public/createUploadLink.js'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { onError } from '@apollo/client/link/error'
@@ -19,6 +20,10 @@ const hasNetworkStatusCode = (error, code) => {
 }
 
 const httpLink = createHttpLink({
+  uri: BACKEND_URL,
+})
+
+const uploadLink = createUploadLink({
   uri: BACKEND_URL,
 })
 
@@ -62,7 +67,7 @@ export function EnhancedApolloProvider({ children }) {
         return definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
       },
       from([authLink, wsLink]),
-      from([logoutLink, authLink, httpLink]),
+      from([logoutLink, authLink, uploadLink]),
     ),
     cache: new InMemoryCache(),
     defaultOptions: {

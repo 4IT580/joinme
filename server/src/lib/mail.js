@@ -12,7 +12,7 @@ export const send = async ({ to, subject, html }) => {
 
   await mail.send({
     to,
-    from: 'mail@adamjedlicka.cz',
+    from: 'mail@joinme.cz',
     subject,
     html,
   })
