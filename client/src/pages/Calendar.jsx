@@ -13,11 +13,19 @@ const query = gql`
     events {
       id
       name
+      place
       description
       from
       to
       file {
         path
+      }
+      user {
+        name
+      }
+      attendees {
+        id
+        name
       }
     }
   }

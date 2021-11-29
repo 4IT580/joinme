@@ -9,7 +9,7 @@ export default function CalendarTemplate({ events }) {
 
   return (
     <div className="flex flex-col md:flex-row p-4 gap-4 h-full">
-      <div className="bg-gray-200 rounded-2xl p-2 md:w-1/4 lg:w-1/4 flex-grow">
+      <div className="flex flex-col bg-gray-200 rounded-2xl p-2 md:w-1/4 lg:w-1/4 flex-grow gap-4">
         <Title>Events</Title>
         {events.map((event) => (
           <EventSmallCard

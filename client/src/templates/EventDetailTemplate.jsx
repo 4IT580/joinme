@@ -94,7 +94,7 @@ export default function EventDetailTemplate({ event, refetch }) {
             <img
               onClick={onPictureClick}
               id="event-image"
-              className="rounded-2xl"
+              className="rounded-2xl max-w-xl float-right"
               src={event.file?.path ? event.file.path : `https://picsum.photos/600/450?id${event.id}`}
             />
           </div>
