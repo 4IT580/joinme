@@ -3,16 +3,56 @@ import { CogIcon } from '@heroicons/react/solid'
 import image from '../assets/user.jpg'
 import UpdateUserProfileModal from './UpdateUserProfileModal'
 import { useUser } from '../utils/user'
+import { gql, useMutation } from '@apollo/client'
+
+const IMAGE_UPLOAD_QUERY = gql`
+  mutation ($file: Upload!) {
+    userImageUpload(file: $file)
+  }
+`
 
 export default function AccountInfo() {
   const { profile } = useUser()
   const [isUpdateUserModalOpen, setIsUpdateUserModalOpen] = useState(false)
+  const [uploadImageMutation] = useMutation(IMAGE_UPLOAD_QUERY)
+
+  const onPictureSelected = async ({
+    target: {
+      validity,
+      files: [file],
+    },
+  }) => {
+    if (validity.valid) {
+      const newLink = await uploadImageMutation({ variables: { file } })
+
+      const image = document.getElementById('profile-image')
+      image.src = newLink.data.userImageUpload
+    }
+  }
+
+  const onPictureClick = () => {
+    const input = document.getElementById('profile-image-upload')
+    input.click()
+  }
 
   return (
     <div className="flex">
       <div className="rounded-3xl relative flex flex-col justify-center shadow-md bg-white p-6 py-4 mt-4 max-w-md">
         <div className="flex flex-col justify-center items-center">
-          <img src={image} alt="user" className="w-44 rounded-full" />
+          <input
+            id="profile-image-upload"
+            onChange={onPictureSelected}
+            className="hidden"
+            type="file"
+            accept=".jpg,.gif,.svg,.png"
+          />
+          <img
+            onClick={onPictureClick}
+            id="profile-image"
+            src={profile.photo ? profile.photo : image}
+            alt="user"
+            className="w-44 rounded-full"
+          />
           <span className="text-xl font-bold">Name</span> <span className="text-lg">{profile.name}</span>
           <span className="text-lg text-gray-500">{profile.city}</span>
         </div>

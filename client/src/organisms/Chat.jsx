@@ -43,20 +43,17 @@ export default function Chat({ event }) {
   }
 
   return (
-    <>
-      <Title level={2} className="mt-4">Chat</Title>
-      <div className="flex flex-col gap-4 bg-gray-200 rounded-2xl p-4">
-        <form className="flex gap-4" onSubmit={onSubmit}>
-          <Input className="flex-grow" value={input} onInput={onInput} />
-          <Button type="submit" className="btn-primary">
-            Send
-          </Button>
-        </form>
-        {data.messages.map((message) => (
-          <ChatMessage key={message.id} message={message} />
-        ))}
-      </div>
-    </>
+    <div className="flex flex-col gap-4">
+      <form className="flex gap-4" onSubmit={onSubmit}>
+        <Input className="flex-grow" value={input} onInput={onInput} />
+        <Button type="submit" className="btn-primary">
+          Send
+        </Button>
+      </form>
+      {data.messages.map((message) => (
+        <ChatMessage key={message.id} message={message} />
+      ))}
+    </div>
   )
 }
 

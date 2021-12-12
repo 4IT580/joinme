@@ -10,7 +10,7 @@ services:
       - SERVER_PORT=3000
       - BACKEND_URL=http://localhost:8000
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - ./client:/app
   server:
@@ -21,9 +21,10 @@ services:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=8000
       - FRONTEND_URL=http://localhost:3000
+      - BACKEND_URL=http://localhost:8000
       - JWT_SECRET=${JWT_SECRET}
       - SENDGRID_API_KEY=${SENDGRID_API_KEY}
     ports:
-      - "8000:8000"
+      - '8000:8000'
     volumes:
       - ./server:/app

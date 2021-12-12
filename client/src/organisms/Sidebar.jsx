@@ -10,27 +10,37 @@ export default function Sidebar() {
   return (
     <div className="h-full flex flex-col w-16">
       <div className="flex flex-col bg-gray-800 rounded-xl shadow-md flex-grow pt-1 text-white  overflow-y-auto">
-        <Link to="#" className="block p-2 mb-1">
-          <InboxIcon className="bg-gray-700 rounded-md p-2" />
+        <Link to="/inbox" className="block p-2 mb-1">
+          <InboxIcon
+            className={classNames(
+              'rounded-md p-2 w-12',
+              location.pathname === '/inbox' ? 'bg-gray-200 text-gray-700' : 'bg-gray-700 hover:bg-gray-500',
+            )}
+          />
         </Link>
         <Link to="/" className="block p-2 mb-1">
           <HomeIcon
             className={classNames(
-              'rounded-md p-2',
+              'rounded-md p-2 w-12',
               location.pathname === '/' ? 'bg-gray-200 text-gray-700' : 'bg-gray-700 hover:bg-gray-500',
             )}
           />
         </Link>
-        <Link to="#" className="block p-2 mb-1">
-          <CalendarIcon className="bg-gray-700 rounded-md p-2" />
+        <Link to="/calendar" className="block p-2 mb-1">
+          <CalendarIcon
+            className={classNames(
+              'rounded-md p-2 w-12',
+              location.pathname === '/calendar' ? 'bg-gray-200 text-gray-700' : 'bg-gray-700 hover:bg-gray-500',
+            )}
+          />
         </Link>
         <Link to="#" className="block p-2 mb-1">
-          <UserGroupIcon className="bg-gray-700 rounded-md p-2" />
+          <UserGroupIcon className="bg-gray-700 rounded-md p-2 w-12" />
         </Link>
         <Link to="/profile" className="block p-2 mb-1">
           <UserIcon
             className={classNames(
-              'rounded-md p-2',
+              'rounded-md p-2 w-12',
               location.pathname === '/profile' ? 'bg-gray-200 text-gray-700' : 'bg-gray-700 hover:bg-gray-500',
             )}
           />
@@ -39,7 +49,7 @@ export default function Sidebar() {
         <div className="flex-grow"></div>
 
         <Link to="/" onClick={auth.signout} className="block p-2 mb-1">
-          <LogoutIcon className="bg-gray-700 rounded-md p-2" />
+          <LogoutIcon className="bg-gray-700 rounded-md p-2 w-12" />
         </Link>
       </div>
     </div>

@@ -11,6 +11,9 @@ const EVENTY_QUERY = gql`
       description
       from
       to
+      file {
+        path
+      }
     }
   }
 `

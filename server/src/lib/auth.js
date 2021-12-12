@@ -1,6 +1,6 @@
 import { ApolloError } from 'apollo-server'
 import { verify } from './token.js'
-import { db } from './db.js'
+import { getUserWithImageById } from './user.js'
 
 export class UnauthorizedException extends ApolloError {
   constructor(message) {
@@ -21,8 +21,9 @@ export const getUserId = (auth) => {
 export const getUser = async (auth) => {
   try {
     const id = getUserId(auth)
-    const user = await db().select('*').from('users').where('id', id).first()
-    if (!user) throw new Error('No such user')
+
+    const user = await getUserWithImageById(id)
+
     return user
   } catch (e) {
     throw new UnauthorizedException(e.message)
