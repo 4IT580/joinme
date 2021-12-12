@@ -4,7 +4,10 @@ import Title from '../atoms/Title'
 export default function EventSmallCard({ event, isSelected, onClick }) {
   return (
     <div
-      className={classNames('flex bg-white border rounded-lg p-2', isSelected ? 'border-black' : 'border-transparent')}
+      className={classNames(
+        'flex bg-white border rounded-lg p-2 cursor-pointer',
+        isSelected ? 'border-black' : 'border-transparent',
+      )}
       onClick={onClick}
     >
       <img src={event.file.path} className="w-24 h-24 mr-2 object-cover" />
