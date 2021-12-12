@@ -35,7 +35,7 @@ export default function CalendarTemplate({ attending, organizing }) {
             Organizing
           </Button>
         </div>
-        <div className="gap-4 py-4">
+        <div className="flex flex-col gap-4 py-4">
           {(type === 'attending' ? attending : organizing).map((event) => (
             <EventSmallCard
               key={event.id}
