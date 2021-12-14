@@ -66,11 +66,31 @@ export default function EditCircle() {
               </Button>
             </form>
             <PeopleMenu>
-              <PeopleMenu.PeopleItem image="https://picsum.photos/id/1005/400/250" name="Jane" username="janesusername"/>
-              <PeopleMenu.PeopleItem image="https://picsum.photos/id/1005/400/250" name="Peter" username="petersusername"/>
-              <PeopleMenu.PeopleItem image="https://picsum.photos/id/1005/400/250" name="Michael" username="michaelsusername"/>
-              <PeopleMenu.PeopleItem image="https://picsum.photos/id/1005/400/250" name="John" username="johnsusername"/>
-              <PeopleMenu.PeopleItem image="https://picsum.photos/id/1005/400/250" name="Jake" username="jakesusername"/>
+              <PeopleMenu.PeopleItem
+                image="https://picsum.photos/id/1005/400/250"
+                name="Jane"
+                username="janesusername"
+              />
+              <PeopleMenu.PeopleItem
+                image="https://picsum.photos/id/1005/400/250"
+                name="Peter"
+                username="petersusername"
+              />
+              <PeopleMenu.PeopleItem
+                image="https://picsum.photos/id/1005/400/250"
+                name="Michael"
+                username="michaelsusername"
+              />
+              <PeopleMenu.PeopleItem
+                image="https://picsum.photos/id/1005/400/250"
+                name="John"
+                username="johnsusername"
+              />
+              <PeopleMenu.PeopleItem
+                image="https://picsum.photos/id/1005/400/250"
+                name="Jake"
+                username="jakesusername"
+              />
             </PeopleMenu>
           </div>
         </div>
