@@ -7,6 +7,7 @@ import * as mail from '../../../lib/mail.js'
 import { FRONTEND_URL } from '../../../config.js'
 
 
+
 export default async (_, params) => {
   return await db().transaction(async (t) => {
     const loginSchema = yup.object({
@@ -49,7 +50,7 @@ export default async (_, params) => {
 
     await mail.send({
       to: params.email,
-      subject: 'Joinme registration',
+      subject: 'Joinme - account activation',
       html: getRegistrationMailContent({
         name: params.name,
         secret: ticket.secret,
