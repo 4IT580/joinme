@@ -34,8 +34,13 @@ export default function Sidebar() {
             )}
           />
         </Link>
-        <Link to="#" className="block p-2 mb-1">
-          <UserGroupIcon className="bg-gray-700 rounded-md p-2 w-12" />
+        <Link to="/circle" className="block p-2 mb-1">
+          <UserGroupIcon
+            className={classNames(
+              'rounded-md p-2 w-12',
+              location.pathname === '/circle' ? 'bg-gray-200 text-gray-700' : 'bg-gray-700 hover:bg-gray-500',
+            )}
+          />
         </Link>
         <Link to="/profile" className="block p-2 mb-1">
           <UserIcon
