@@ -1,9 +1,12 @@
+import * as yup from 'yup'
 import Button from '../atoms/Button'
 import DashboardLayout from '../organisms/DashboardLayout'
 import Input from '../atoms/Input'
-import InlineInput from '../atoms/InlineInput'
 import { XIcon } from '@heroicons/react/outline'
 import { Link } from 'react-router-dom'
+import { Form, Formik } from 'formik'
+import FormControl from '../molecules/FormControl'
+import PeopleMenu from '../molecules/PeopleMenu'
 
 export default function EditCircle() {
   return (
@@ -18,64 +21,36 @@ export default function EditCircle() {
         <div className="bg-white rounded-2xl grid grid-cols-2 gap-2 p-4">
           <div className="flex flex-col col-span-2 lg:col-span-1 gap-y-4 justify-between">
             <img src="https://picsum.photos/id/1005/400/250" alt="user" className="w-44 rounded-full" />
-            <InlineInput placeholder="Circle name" />
-            <InlineInput placeholder="Description" />
-            <Button className="flex">Save changes</Button>
+            <Formik initialValues={{ circleName: '', circleDescription: '' }} validationSchema={schema} onSubmit="">
+              <Form>
+                <FormControl name="circleName" label="Circle name" />
+                <FormControl name="circleDescription" label="Description" />
+                <Button type="submit" className="mt-2">
+                  Save changes
+                </Button>
+              </Form>
+            </Formik>
           </div>
           <div className="flex flex-col col-span-2 lg:col-span-1 gap-2 bg-gray-100 rounded-2xl p-2">
             <div className="flex flex-col sm:flex-row gap-y-2 sm:gap-x-2 rounded-2xl">
               <Input placeholder="Search people..." className="flex flex-grow" />
               <Button className="flex">Add</Button>
             </div>
-            <div className="flex flex-row rounded-2xl">
-              <ul tabIndex="0" className="flex flex-grow menu max-h-80 hover:overflow-y-auto bg-gray-100 rounded-box">
-                <li className="flex flex-col sm:flex-row justify-between items-center bg-white my-1 p-2 rounded-xl">
-                  <div className="grid grid-cols-2 gap-2 sm:gap-8 justify-between items-center">
-                    <img
-                      src="https://picsum.photos/id/1005/400/250"
-                      alt="user"
-                      className="w-24 rounded-full col-span-2 sm:col-span-1"
-                    />
-                    <div className="flex flex-col col-span-2 sm:col-span-1">
-                      <p className="font-bold">Jane</p>
-                      <p>janesusername</p>
-                    </div>
-                  </div>
-                  <Button>Remove from circle</Button>
-                </li>
-                <li className="flex flex-col sm:flex-row justify-between items-center bg-white my-1 p-2 rounded-xl">
-                  <div className="grid grid-cols-2 gap-2 sm:gap-8 justify-between items-center">
-                    <img
-                      src="https://picsum.photos/id/1005/400/250"
-                      alt="user"
-                      className="w-24 rounded-full col-span-2 sm:col-span-1"
-                    />
-                    <div className="flex flex-col col-span-2 sm:col-span-1">
-                      <p className="font-bold">Jane</p>
-                      <p>janesusername</p>
-                    </div>
-                  </div>
-                  <Button>Remove from circle</Button>
-                </li>
-                <li className="flex flex-col sm:flex-row justify-between items-center bg-white my-1 p-2 rounded-xl">
-                  <div className="grid grid-cols-2 gap-2 sm:gap-8 justify-between items-center">
-                    <img
-                      src="https://picsum.photos/id/1005/400/250"
-                      alt="user"
-                      className="w-24 rounded-full col-span-2 sm:col-span-1"
-                    />
-                    <div className="flex flex-col col-span-2 sm:col-span-1">
-                      <p className="font-bold">Jane</p>
-                      <p>janesusername</p>
-                    </div>
-                  </div>
-                  <Button>Remove from circle</Button>
-                </li>
-              </ul>
-            </div>
+              <PeopleMenu>
+                <PeopleMenu.PeopleItem />
+                <PeopleMenu.PeopleItem />
+                <PeopleMenu.PeopleItem />
+                <PeopleMenu.PeopleItem />
+                <PeopleMenu.PeopleItem />
+              </PeopleMenu>
           </div>
         </div>
       </div>
     </DashboardLayout>
   )
 }
+
+const schema = yup.object({
+  circleName: yup.string().required('Circle name is required'),
+  circleDescription: yup.string().required('Circle description is required'),
+})
