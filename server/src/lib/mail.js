@@ -10,9 +10,11 @@ export const send = async ({ to, subject, html }) => {
 
   console.log('Sending email to: %s', to)
 
+
+
   await mail.send({
     to,
-    from: 'mail@joinme.cz',
+    from: 'feelmyoceans@gmail.com',
     subject,
     html,
   })
