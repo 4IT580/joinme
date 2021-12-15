@@ -7,9 +7,9 @@ export default async (_, { circleId, input }, { auth }) => {
 
   const user = await getUser(auth)
 
-  const circle = (await db().select('*').from('circles').where('id', circleId)).first()
+  const circle = await db().select('*').from('circles').where('id', circleId).first()
 
-  if (circle.owner_id === user.id) {
+  if (circle.ownerId === user.id) {
     const updated = db().transaction(async (t) => {
       await t.table('circles').update(input).where('id', circleId)
 

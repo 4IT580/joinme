@@ -9,7 +9,7 @@ import EventDetail from './pages/EventDetail'
 import Inbox from './pages/Inbox'
 import UserDetail from './pages/UserDetail'
 import Calendar from './pages/Calendar'
-import EditCircle from './pages/EditCircle'
+import Circles from './pages/Circles'
 
 export default function Routes() {
   const auth = useAuth()
@@ -38,8 +38,8 @@ export default function Routes() {
         </Route>
       )}
       {auth.token && (
-        <Route path="/circle">
-          <EditCircle />
+        <Route path="/circles">
+          <Circles />
         </Route>
       )}
       <Route path="/event/:id">

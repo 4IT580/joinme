@@ -34,7 +34,7 @@ export default function Sidebar() {
             )}
           />
         </Link>
-        <Link to="/circle" className="block p-2 mb-1">
+        <Link to="/circles" className="block p-2 mb-1">
           <UserGroupIcon
             className={classNames(
               'rounded-md p-2 w-12',
