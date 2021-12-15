@@ -15,8 +15,6 @@ export default function Chat({ event }) {
       document: subscription,
       variables: { eventId: event.id },
       updateQuery: (prev, { subscriptionData }) => {
-        console.log(prev)
-
         if (!subscriptionData.data) return prev
 
         const newMessage = subscriptionData.data.messageSent

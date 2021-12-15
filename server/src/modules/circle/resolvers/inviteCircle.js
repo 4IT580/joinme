@@ -16,9 +16,9 @@ export default async (_, { circleId, eventId }, { auth }) => {
 
   for (const member of members) {
     try {
-      await db().insert({ eventId, userId: member.id }).into('invitations')
-    } catch {
-      // Do nothing
+      await db().insert({ eventId, userId: member.id, accepted: false }).into('invitations')
+    } catch (e) {
+      console.log(e)
     }
   }
 

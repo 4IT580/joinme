@@ -49,8 +49,6 @@ export default function EventDetailTemplate({ event, refetch }) {
     }
   }
 
-  console.log(event)
-
   return (
     <>
       <div className="flex flex-col rounded-2xl bg-gray-200 mt-1">

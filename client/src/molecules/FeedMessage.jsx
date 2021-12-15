@@ -2,7 +2,6 @@ import { gql } from '@apollo/client'
 import classNames from 'classnames'
 
 export default function FeedMessage({ message }) {
-  console.log(message)
   let isToday = message.created_at.toDateString() === new Date().toDateString()
   let timeOrDate = isToday ? message.created_at.getHours().toString().padStart(2, '0') + ':' + message.created_at.getMinutes().toString().padStart(2, '0') : message.created_at.toDateString()
   return (

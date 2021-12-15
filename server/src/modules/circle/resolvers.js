@@ -36,7 +36,7 @@ export default {
         .select(['users.*', 'images.path as photo'])
         .from('users')
         .whereIn('users.id', userIds)
-        .join('images', 'images.id', '=', 'users.photo_id')
+        .leftOuterJoin('images', 'images.id', '=', 'users.photo_id') // Optional join
 
       return users.map((user) => ({ ...user, photo: BACKEND_URL + '/images/' + user.photo }))
     },

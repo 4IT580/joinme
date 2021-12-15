@@ -13,8 +13,8 @@ export default async (_, { circleId, invites }, { auth }) => {
       const user = await db().select('*').from('users').where('email', email).first()
 
       await db().insert({ accepted: false, memberId: user.id, circleId }).into('circle_memberships')
-    } catch {
-      // Do nothing
+    } catch (e) {
+      console.log(e)
     }
   }
 
