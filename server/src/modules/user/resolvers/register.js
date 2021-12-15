@@ -6,6 +6,8 @@ import * as token from '../../../lib/token.js'
 import * as mail from '../../../lib/mail.js'
 import { FRONTEND_URL } from '../../../config.js'
 
+
+
 export default async (_, params) => {
   return await db().transaction(async (t) => {
     const loginSchema = yup.object({
@@ -48,7 +50,7 @@ export default async (_, params) => {
 
     await mail.send({
       to: params.email,
-      subject: 'Joinme registration',
+      subject: 'Joinme - account activation',
       html: getRegistrationMailContent({
         name: params.name,
         secret: ticket.secret,
@@ -66,5 +68,33 @@ const getRegistrationMailContent = ({ name, secret }) => {
   const encodedSecret = encodeURIComponent(secret)
   const link = `${FRONTEND_URL}/activate-account?secret=${encodedSecret}`
 
-  return `<p>Hello, ${name}! Click <a href="${link}">here</a> to activate your account.</p>`
+  return `<div style="flex-wrap: wrap; justify-content: center; text-align: center;">
+  <div style="padding-top: 2rem; padding-bottom: 2rem; background-color: #1A1A1A"><img src="assets/maillogo.png" alt="join.me logo"></div>
+  
+  <div style="padding-top: 2rem; font-size: 1.5rem;
+  line-height: 2rem; font-weight: 700; margin-left: 4rem;
+  margin-right: 4rem;"> <p>We are happy you joined us, ${name}! </p>
+</div>
+
+<div style="font-size: 1rem; line-height: 1.75rem; margin-left: 3rem; margin-right: 3rem; "> 
+<p>To get you started we need to confirm your email address. Please press the button below to activate your account
+</p></div>
+
+<div style="margin-left: 4rem; margin-right: 4rem; padding-top: 1rem; padding-bottom: 4rem; "><a href="${link}" style="background-color: #FB165E;
+border: none;
+border-radius: 12px;
+color: white;
+padding: 12px 20px;
+text-decoration: none;
+font-size: 16px;
+font-weight: 700;
+cursor: pointer;">ACTIVATE ACCOUNT</a>
+</div>
+
+<div style=" padding-top: 1rem; padding-bottom: 2rem; font-size: 1rem;
+line-height: 1.75rem; background-color: #E5E5E5; color: #4D4D4D;">
+ <div>sincerely yours, team joinme ;)</div>
+<a href="https://joinme.cz">joinme.cz</a></div>
+`
+
 }
