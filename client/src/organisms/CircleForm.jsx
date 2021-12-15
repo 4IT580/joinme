@@ -9,7 +9,7 @@ export default function CircleForm({ initialValues, onSubmit, children }) {
       <Form>
         <FormControl name="name" label="Name" />
         <FormControl Component="textarea" className="textarea h-28" name="description" label="Description" />
-        <FormControl name="colour" label="Colour" />
+        <FormControl type="color" name="colour" label="Colour" />
         {initialValues.invites && (
           <FormControl Component={MultiInput} name="invites" label="Emails of people you want to invite" />
         )}
