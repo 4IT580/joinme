@@ -32,7 +32,8 @@ export default gql`
     createCircle(input: CircleInput!, invites: String!): Circle!
     editCircle(circleId: Int!, input: CircleInput!): Circle!
     deleteCircle(circleId: Int!): Boolean!
-    circleInvite(circleId: Int!, invites: String!): Boolean!
+    inviteToCircle(circleId: Int!, invites: String!): Boolean!
+    inviteCircle(circleId: Int!, eventId: Int!): Boolean!
     removeFromCircle(circleId: Int!, userId: Int!): Boolean!
     acceptCircleInvitation(invitationId: Int!): Boolean!
     declineCircleInvitation(invitationId: Int!): Boolean!

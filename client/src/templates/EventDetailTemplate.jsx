@@ -11,6 +11,7 @@ import JoinEventButton from '../molecules/JoinEventButton'
 import Chat from '../organisms/Chat'
 import ShareEventModal from '../organisms/ShareEventModal'
 import UpdateEventModal from '../organisms/UpdateEventModal'
+import InviteCircleModal from '../organisms/InviteCircleModal'
 
 export default function EventDetailTemplate({ event, refetch }) {
   const user = useUser()
@@ -18,6 +19,7 @@ export default function EventDetailTemplate({ event, refetch }) {
 
   const [isShareEventModalOpen, setIsShareEventModalOpen] = useState(false)
   const [isUpdateEventModalOpen, setIsUpdateEventModalOpen] = useState(false)
+  const [isInviteCircleModalOpen, setIsInviteCircleModalOpen] = useState(false)
 
   const from = new Date(event.from).toLocaleString()
   const to = new Date(event.to).toLocaleString()
@@ -81,6 +83,7 @@ export default function EventDetailTemplate({ event, refetch }) {
             <div className="flex flex-row gap-4 p-4">
               {!isAttending && <JoinEventButton event={event} refetch={refetch} />}
               <Button onClick={() => setIsShareEventModalOpen(true)}>Share event</Button>
+              <Button onClick={() => setIsInviteCircleModalOpen(true)}>Invite circle</Button>
             </div>
           </div>
           <div className="p-4">
@@ -113,6 +116,9 @@ export default function EventDetailTemplate({ event, refetch }) {
       {isShareEventModalOpen && <ShareEventModal event={event} onClose={() => setIsShareEventModalOpen(false)} />}
       {isUpdateEventModalOpen && (
         <UpdateEventModal event={event} refetch={refetch} onClose={() => setIsUpdateEventModalOpen(false)} />
+      )}
+      {isInviteCircleModalOpen && (
+        <InviteCircleModal event={event} refetch={refetch} onClose={() => setIsInviteCircleModalOpen(false)} />
       )}
     </>
   )

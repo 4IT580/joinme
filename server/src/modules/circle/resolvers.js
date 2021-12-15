@@ -6,7 +6,8 @@ import myCircles from './resolvers/myCircles.js'
 import createCircle from './resolvers/createCircle.js'
 import editCircle from './resolvers/editCircle.js'
 import deleteCircle from './resolvers/deleteCircle.js'
-import circleInvite from './resolvers/invite.js'
+import inviteToCircle from './resolvers/inviteToCircle.js'
+import inviteCircle from './resolvers/inviteCircle.js'
 import removeFromCircle from './resolvers/removeFromCircle.js'
 import declineCircleInvitation from './resolvers/declineInvitation.js'
 import { BACKEND_URL } from '../../config.js'
@@ -21,7 +22,8 @@ export default {
     createCircle,
     editCircle,
     deleteCircle,
-    circleInvite,
+    inviteToCircle,
+    inviteCircle,
     removeFromCircle,
     acceptCircleInvitation,
     declineCircleInvitation,
