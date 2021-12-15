@@ -25,6 +25,7 @@ const query = gql`
         path
       }
       user {
+        id
         name
       }
       attendees {
@@ -43,6 +44,7 @@ const query = gql`
         path
       }
       user {
+        id
         name
       }
       attendees {

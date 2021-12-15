@@ -6,6 +6,7 @@ export default gql`
     text: String!
     event: Event!
     user: User!
+    createdAt: Date!
   }
 
   input MessageInput {
