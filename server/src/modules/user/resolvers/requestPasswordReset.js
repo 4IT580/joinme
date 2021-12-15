@@ -28,14 +28,14 @@ export default async (_, params) => {
     to: params.email,
     subject: 'Password reset',
     html: `<div style="flex-wrap: wrap; justify-content: center; text-align: center;">
-  <div style="padding-top: 2rem; padding-bottom: 2rem; background-color: #1A1A1A"><img src="assets/maillogo.png" alt="join.me logo"></div>
-  
+  <div style="padding-top: 2rem; padding-bottom: 2rem; background-color: #1A1A1A"><img src="${FRONTEND_URL}/maillogo.png" alt="join.me logo"></div>
+
   <div style="padding-top: 2rem; font-size: 1.5rem;
   line-height: 2rem; font-weight: 700; margin-left: 4rem;
   margin-right: 4rem;"> <p>Password Reset </p>
 </div>
 
-<div style="font-size: 1rem; line-height: 1.75rem; margin-left: 3rem; margin-right: 3rem; "> 
+<div style="font-size: 1rem; line-height: 1.75rem; margin-left: 3rem; margin-right: 3rem; ">
 <p>If you forgot your password or wish to reset it, press the button below to do it</p></div>
 
 <div style="margin-left: 4rem; margin-right: 4rem; padding-top: 1rem; padding-bottom: 4rem; "><a href="${FRONTEND_URL}/reset-password?secret=${encodeURIComponent(
@@ -51,14 +51,14 @@ font-weight: 700;
 cursor: pointer;">RESET PASSWORD</a>
 </div>
 
-<div style="font-size: 0.75rem; line-height: 1.25rem; margin-left: 4rem; margin-right: 4rem; padding-bottom: 1rem; color: #4D4D4D;"> 
+<div style="font-size: 0.75rem; line-height: 1.25rem; margin-left: 4rem; margin-right: 4rem; padding-bottom: 1rem; color: #4D4D4D;">
 <p>If you haven't requested the password reset, you can safely ignore this email. Only a person with access to your email can reset your password.</p></div>
 
 <div style=" padding-top: 1rem; padding-bottom: 2rem; font-size: 1rem;
 line-height: 1.75rem; background-color: #E5E5E5; color: #4D4D4D;">
  <div>sincerely yours, team joinme ;)</div>
 <a href="https://joinme.cz">joinme.cz</a></div>
-    
+
     `,
   })
 

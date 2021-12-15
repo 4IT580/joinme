@@ -20,14 +20,14 @@ const getEmailContent = ({ user, event }) => {
   const link = `${FRONTEND_URL}/event/${event.id}?token=${encodedToken}`
 
   return `<div style="flex-wrap: wrap; justify-content: center; text-align: center;">
-  <div style="padding-top: 2rem; padding-bottom: 2rem; background-color: #1A1A1A"><img src="assets/maillogo.png" alt="join.me logo"></div>
-  
+  <div style="padding-top: 2rem; padding-bottom: 2rem; background-color: #1A1A1A"><img src="${FRONTEND_URL}/maillogo.png" alt="join.me logo"></div>
+
   <div style="padding-top: 2rem; font-size: 1.5rem;
   line-height: 2rem; font-weight: 700; margin-left: 4rem;
   margin-right: 4rem;"> <p>You have been invited to "${event.name}"!</p>
 </div>
 
-<div style="font-size: 1rem; line-height: 1.75rem; margin-left: 3rem; margin-right: 3rem; "> 
+<div style="font-size: 1rem; line-height: 1.75rem; margin-left: 3rem; margin-right: 3rem; ">
 <p>Someone can't wait for you to join them. Press the button below to check the event
 </p></div>
 
