@@ -31,6 +31,7 @@ export default gql`
   type Mutation {
     createCircle(input: CircleInput!, invites: String!): Circle!
     editCircle(circleId: Int!, input: CircleInput!): Circle!
+    deleteCircle(circleId: Int!): Boolean!
     circleInvite(circleId: Int!, invites: String!): Boolean!
     removeFromCircle(circleId: Int!, userId: Int!): Boolean!
     acceptCircleInvitation(invitationId: Int!): Boolean!

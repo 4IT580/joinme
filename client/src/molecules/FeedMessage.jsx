@@ -16,7 +16,7 @@ export default function FeedMessage({ message }) {
 }
 
 FeedMessage.fragments = {
-  message: (name = 'message') => gql`
+  message: (name = 'feedMessage') => gql`
     fragment ${name} on Message {
       id
       text,

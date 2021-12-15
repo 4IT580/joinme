@@ -5,9 +5,11 @@ import circle from './resolvers/circle.js'
 import myCircles from './resolvers/myCircles.js'
 import createCircle from './resolvers/createCircle.js'
 import editCircle from './resolvers/editCircle.js'
+import deleteCircle from './resolvers/deleteCircle.js'
 import circleInvite from './resolvers/invite.js'
 import removeFromCircle from './resolvers/removeFromCircle.js'
 import declineCircleInvitation from './resolvers/declineInvitation.js'
+import { BACKEND_URL } from '../../config.js'
 
 export default {
   Query: {
@@ -18,6 +20,7 @@ export default {
   Mutation: {
     createCircle,
     editCircle,
+    deleteCircle,
     circleInvite,
     removeFromCircle,
     acceptCircleInvitation,
@@ -25,10 +28,15 @@ export default {
   },
   Circle: {
     members: async (parent) => {
-      const userIds = await db().pluck('user_id').from('circle_memberships').where('circle_id', parent.id)
-      //.andWhere('accepted', true)
+      const userIds = await db().pluck('member_id').from('circle_memberships').where('circle_id', parent.id)
 
-      return await db().select('*').from('users').whereIn('id', userIds)
+      const users = await db()
+        .select(['users.*', 'images.path as photo'])
+        .from('users')
+        .whereIn('users.id', userIds)
+        .join('images', 'images.id', '=', 'users.photo_id')
+
+      return users.map((user) => ({ ...user, photo: BACKEND_URL + '/images/' + user.photo }))
     },
   },
 }
