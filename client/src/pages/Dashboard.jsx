@@ -5,10 +5,22 @@ import EventCard from '../molecules/EventCard'
 import PlacesOffersCard from '../molecules/PlacesOffersCard'
 import CreateEventModal from '../organisms/CreateEventModal'
 import DashboardLayout from '../organisms/DashboardLayout'
+import { parsePlace } from '../Utils'
 
 const EVENTY_QUERY = gql`
   query {
     events {
+      id
+      name
+      place
+      description
+      from
+      to
+      file {
+        path
+      }
+    }
+    promotedEvents {
       id
       name
       place
@@ -44,27 +56,12 @@ export default function Dashboard() {
         </div>
         <div className="flex flex-col col-span-6 lg:col-span-2 p-2">
           <div className="flex flex-row items-center mb-4 h-16">
-            <h1 className="px-4 text-2xl font-extrabold">Places & Offers</h1>
+            <h1 className="px-4 text-2xl font-extrabold">Promoted events</h1>
           </div>
           <div className="grid grid-cols-1 gap-4">
-            <PlacesOffersCard
-              title="COFFEE CORNER BAKERY"
-              address="Korunní 96, Vinohrady"
-              description="Ecology is the future - we must look after our planet but at the same time can enjoy great coffee, prepared simply and elegantly in a capsule coffee machine."
-              image="https://picsum.photos/id/1005/400/250"
-            />
-            <PlacesOffersCard
-              title="COFFEE CORNER BAKERY"
-              address="Korunní 96, Vinohrady"
-              description="Ecology is the future - we must look after our planet but at the same time can enjoy great coffee, prepared simply and elegantly in a capsule coffee machine."
-              image="https://picsum.photos/id/1005/400/250"
-            />
-            <PlacesOffersCard
-              title="COFFEE CORNER BAKERY"
-              address="Korunní 96, Vinohrady"
-              description="Ecology is the future - we must look after our planet but at the same time can enjoy great coffee, prepared simply and elegantly in a capsule coffee machine."
-              image="https://picsum.photos/id/1005/400/250"
-            />
+            {data?.promotedEvents.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
           </div>
         </div>
       </div>

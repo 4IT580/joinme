@@ -13,6 +13,7 @@ export default gql`
     attendees: [User!]!
     messages: [Message!]!
     file: FilePath
+    promoted: Boolean!
   }
 
   input EventInput {
@@ -36,6 +37,7 @@ export default gql`
 
   type Query {
     events: [Event!]!
+    promotedEvents: [Event!]!
     event(id: Int!): Event
     invitations: [Invitation!]!
     attending: [Event!]!

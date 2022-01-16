@@ -6,6 +6,7 @@ import shareEvent from './resolvers/shareEvent.js'
 import acceptInvitation from './resolvers/acceptInvitation.js'
 import declineInvitation from './resolvers/declineInvitation.js'
 import events from './resolvers/events.js'
+import promotedEvents from './resolvers/promotedEvents.js'
 import event from './resolvers/event.js'
 import invitations from './resolvers/invitations.js'
 import attending from './resolvers/attending.js'
@@ -15,6 +16,7 @@ import { BACKEND_URL } from '../../config.js'
 export default {
   Query: {
     events,
+    promotedEvents,
     event,
     invitations,
     attending,

@@ -4,7 +4,7 @@ import EventCard from '../molecules/EventCard'
 
 const EVENTY_QUERY = gql`
   query {
-    events {
+    events: promotedEvents {
       id
       name
       place
@@ -22,7 +22,7 @@ export default function SimilarEvents() {
 
   return (
     <div className="flex flex-col col-span-6 lg:col-span-2 p-2">
-      <h1 className="text-2xl font-extrabold pb-2">Similar events</h1>
+      <h1 className="text-2xl font-extrabold pb-2">Promoted events</h1>
       <div className="grid grid-cols-1 gap-4">
         {data?.events.map((event) => (
           <EventCard key={event.id} event={event} />

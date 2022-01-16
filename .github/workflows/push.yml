@@ -18,11 +18,14 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          BRAINTREE_MERCHANT_ID: ${{ secrets.BRAINTREE_MERCHANT_ID }}
+          BRAINTREE_PUBLIC_KEY: ${{ secrets.BRAINTREE_PUBLIC_KEY }}
+          BRAINTREE_PRIVATE_KEY: ${{ secrets.BRAINTREE_PRIVATE_KEY }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          envs: BRANCH,JWT_SECRET,SENDGRID_API_KEY,GOOGLE_API_KEY
+          envs: BRANCH,JWT_SECRET,SENDGRID_API_KEY,GOOGLE_API_KEY,BRAINTREE_MERCHANT_ID,BRAINTREE_PUBLIC_KEY,BRAINTREE_PRIVATE_KEY
           script: |
             cd /var/www
 
@@ -38,6 +41,9 @@ jobs:
             export JWT_SECRET="$JWT_SECRET"
             export SENDGRID_API_KEY="$SENDGRID_API_KEY"
             export GOOGLE_API_KEY="$GOOGLE_API_KEY"
+            export BRAINTREE_MERCHANT_ID="$BRAINTREE_MERCHANT_ID"
+            export BRAINTREE_PUBLIC_KEY="$BRAINTREE_PUBLIC_KEY"
+            export BRAINTREE_PRIVATE_KEY="$BRAINTREE_PRIVATE_KEY"
 
             if [ -d "git/$branch" ]; then
               cd git/$branch

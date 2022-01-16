@@ -15,6 +15,7 @@ import UpdateEventModal from '../organisms/UpdateEventModal'
 import InviteCircleModal from '../organisms/InviteCircleModal'
 import CouponsModal from '../organisms/CouponsModal'
 import CouponsAdminModal from '../organisms/CouponsAdminModal'
+import PromoteEventModal from '../organisms/PromoteEventModal'
 
 const intl = new Intl.DateTimeFormat('cs-CZ', {
   dateStyle: 'medium',
@@ -30,6 +31,7 @@ export default function EventDetailTemplate({ event, refetch }) {
   const [isInviteCircleModalOpen, setIsInviteCircleModalOpen] = useState(false)
   const [isCouponsModalOpen, setIsCouponsModalOpen] = useState(false)
   const [isCouponsAdminModalOpen, setIsCouponsAdminModalOpen] = useState(false)
+  const [isPromoteEventModalOpen, setIsPromoteEventModalOpen] = useState(false)
 
   const place = parsePlace(event.place)
   const from = intl.format(new Date(event.from))
@@ -105,6 +107,9 @@ export default function EventDetailTemplate({ event, refetch }) {
               {!isAttending && <JoinEventButton event={event} refetch={refetch} />}
               <Button onClick={() => setIsShareEventModalOpen(true)}>Share event</Button>
               <Button onClick={() => setIsInviteCircleModalOpen(true)}>Invite circle</Button>
+              {isOwner && !event.promoted && (
+                <Button onClick={() => setIsPromoteEventModalOpen(true)}>Promote event</Button>
+              )}
             </div>
           </div>
           <div className="p-4">
@@ -145,6 +150,9 @@ export default function EventDetailTemplate({ event, refetch }) {
       {isCouponsAdminModalOpen && (
         <CouponsAdminModal event={event} refetch={refetch} onClose={() => setIsCouponsAdminModalOpen(false)} />
       )}
+      {isPromoteEventModalOpen && (
+        <PromoteEventModal event={event} refetch={refetch} onClose={() => setIsPromoteEventModalOpen(false)} />
+      )}
     </>
   )
 }
@@ -165,6 +173,7 @@ EventDetailTemplate.fragments = {
       to
       public
       description
+      promoted
       user {
         id
       }
