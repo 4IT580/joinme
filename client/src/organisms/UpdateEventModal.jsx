@@ -2,6 +2,7 @@ import * as yup from 'yup'
 import { gql, useMutation } from '@apollo/client'
 import { Form, Formik } from 'formik'
 import { useNotifications } from '../utils/notifications'
+import { parsePlace } from '../Utils'
 import Button from '../atoms/Button'
 import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
@@ -19,7 +20,7 @@ export default function UpdateEventModal({ event, refetch, onClose }) {
       <Formik
         initialValues={{
           name: event.name,
-          place: JSON.parse(event.place),
+          place: parsePlace(event.place),
           description: event.description,
           from: new Date(event.from).toISOString().replace(/:\d+\.\d+Z$/, ''),
           to: new Date(event.to).toISOString().replace(/:\d+\.\d+Z$/, ''),
