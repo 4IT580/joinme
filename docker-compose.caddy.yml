@@ -11,6 +11,7 @@ services:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=3000
       - BACKEND_URL=https://backend.${PATHPREFIX}joinme.cz
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
     networks:
       - caddy
     labels:
