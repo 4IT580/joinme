@@ -70,7 +70,10 @@ const mutation = gql`
 `
 
 const schema = yup.object({
-  name: yup.string().required('Name is required'),
-  from: yup.string().required('From is required'),
-  to: yup.string().required('To is required'),
+  name: yup.string().trim().required('Name is required'),
+  from: yup.date().required('Start time is required').min(new Date(), 'Start time cannot be in the past'),
+  to: yup
+    .date()
+    .required('End time is required')
+    .when('from', (from, yup) => yup.min(from, 'End time cannot be before start time')),
 })
