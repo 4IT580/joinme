@@ -16,15 +16,13 @@ export default function CouponVerification({ onClose }) {
     try {
       setIsVerifying(true)
 
-      const ok = await verifyCoupon({ variables: { data } })
-      if (ok) {
-        notifications.pushSuccess({ text: 'Coupon successfully claimed' })
-        onClose()
-      }
+      const coupon = await verifyCoupon({ variables: { data } })
+      notifications.pushSuccess({ text: `Coupon "${coupon.name}" verified` })
     } catch (e) {
       notifications.pushError({ text: e.message })
     } finally {
       setIsVerifying(false)
+      onClose()
     }
   }
 

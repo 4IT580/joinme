@@ -21,6 +21,6 @@ export default gql`
 
   type Mutation {
     createCoupon(input: CouponInput!): Coupon!
-    verifyCoupon(data: String!): Boolean
+    verifyCoupon(data: String!): Coupon!
   }
 `

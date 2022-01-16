@@ -14,5 +14,5 @@ export default async (_, { data }) => {
 
   await db().insert({ couponId: coupon.id, userId: user.id }).into('coupon_user')
 
-  return true
+  return coupon
 }
