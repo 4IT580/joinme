@@ -17,7 +17,7 @@ export default function CouponVerification({ onClose }) {
       setIsVerifying(true)
 
       const response = await verifyCoupon({ variables: { data } })
-      notifications.pushSuccess({ text: `Coupon "${response.verifyCoupon.name}" verified` })
+      notifications.pushSuccess({ text: `Coupon "${response.data.verifyCoupon.name}" verified` })
     } catch (e) {
       notifications.pushError({ text: e.message })
     } finally {
