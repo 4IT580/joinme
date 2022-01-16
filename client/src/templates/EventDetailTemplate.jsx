@@ -1,5 +1,5 @@
 import { gql, useMutation } from '@apollo/client'
-import { ArrowLeftIcon, CogIcon } from '@heroicons/react/outline'
+import { ArrowLeftIcon, CogIcon, GiftIcon, QrcodeIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { parsePlace } from '../Utils'
@@ -13,6 +13,8 @@ import Chat from '../organisms/Chat'
 import ShareEventModal from '../organisms/ShareEventModal'
 import UpdateEventModal from '../organisms/UpdateEventModal'
 import InviteCircleModal from '../organisms/InviteCircleModal'
+import CouponsModal from '../organisms/CouponsModal'
+import CouponsAdminModal from '../organisms/CouponsAdminModal'
 
 const intl = new Intl.DateTimeFormat('cs-CZ', {
   dateStyle: 'medium',
@@ -26,6 +28,8 @@ export default function EventDetailTemplate({ event, refetch }) {
   const [isShareEventModalOpen, setIsShareEventModalOpen] = useState(false)
   const [isUpdateEventModalOpen, setIsUpdateEventModalOpen] = useState(false)
   const [isInviteCircleModalOpen, setIsInviteCircleModalOpen] = useState(false)
+  const [isCouponsModalOpen, setIsCouponsModalOpen] = useState(false)
+  const [isCouponsAdminModalOpen, setIsCouponsAdminModalOpen] = useState(false)
 
   const place = parsePlace(event.place)
   const from = intl.format(new Date(event.from))
@@ -63,13 +67,23 @@ export default function EventDetailTemplate({ event, refetch }) {
           <div className="flex flex-col flex-grow justify-between">
             <div className="flex justify-start p-4 gap-4">
               <ArrowLeftIcon
-                className="cursor-pointer p-4 h-16 text-white bg-gray-400 rounded-2xl"
+                className="cursor-pointer h-12 rounded-lg p-1 md:h-16 md:rounded-2xl md:p-4 text-white bg-gray-400"
                 onClick={() => history.goBack()}
               />
               {isOwner && (
                 <CogIcon
-                  className="cursor-pointer p-4 h-16 text-white bg-gray-400 rounded-2xl"
+                  className="cursor-pointer h-12 rounded-lg p-1 md:h-16 md:rounded-2xl md:p-4 text-white bg-gray-400"
                   onClick={() => setIsUpdateEventModalOpen(true)}
+                />
+              )}
+              <GiftIcon
+                className="cursor-pointer h-12 rounded-lg p-1 md:h-16 md:rounded-2xl md:p-4 text-white bg-gray-400"
+                onClick={() => setIsCouponsModalOpen(true)}
+              />
+              {isOwner && (
+                <QrcodeIcon
+                  className="cursor-pointer h-12 rounded-lg p-1 md:h-16 md:rounded-2xl md:p-4 text-white bg-gray-400"
+                  onClick={() => setIsCouponsAdminModalOpen(true)}
                 />
               )}
             </div>
@@ -127,6 +141,10 @@ export default function EventDetailTemplate({ event, refetch }) {
       {isInviteCircleModalOpen && (
         <InviteCircleModal event={event} refetch={refetch} onClose={() => setIsInviteCircleModalOpen(false)} />
       )}
+      {isCouponsModalOpen && <CouponsModal event={event} onClose={() => setIsCouponsModalOpen(false)} />}
+      {isCouponsAdminModalOpen && (
+        <CouponsAdminModal event={event} refetch={refetch} onClose={() => setIsCouponsAdminModalOpen(false)} />
+      )}
     </>
   )
 }
@@ -156,6 +174,11 @@ EventDetailTemplate.fragments = {
       }
       file{
         path
+      }
+      coupons {
+        id
+        name
+        value
       }
     }
   `,

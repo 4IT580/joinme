@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 
 export default function Modal({ children }) {
   useEffect(() => {
@@ -7,9 +8,10 @@ export default function Modal({ children }) {
     return () => document.body.classList.remove('overflow-hidden')
   })
 
-  return (
+  return createPortal(
     <div className={classNames('modal modal-open')}>
       <div className="modal-box max-h-screen overflow-y-auto">{children}</div>
-    </div>
+    </div>,
+    document.body,
   )
 }
