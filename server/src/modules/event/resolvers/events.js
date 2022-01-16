@@ -12,6 +12,7 @@ export default async (_, __, { auth }) => {
     .orderBy('from', 'asc')
     .where('public', true)
     .orWhereIn('id', invitations)
+    .andWhere('to', '>', new Date())
 
   return event
 }
