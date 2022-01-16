@@ -14,6 +14,11 @@ import ShareEventModal from '../organisms/ShareEventModal'
 import UpdateEventModal from '../organisms/UpdateEventModal'
 import InviteCircleModal from '../organisms/InviteCircleModal'
 
+const intl = new Intl.DateTimeFormat('cs-CZ', {
+  dateStyle: 'medium',
+  timeStyle: 'short',
+})
+
 export default function EventDetailTemplate({ event, refetch }) {
   const user = useUser()
   const history = useHistory()
@@ -23,8 +28,8 @@ export default function EventDetailTemplate({ event, refetch }) {
   const [isInviteCircleModalOpen, setIsInviteCircleModalOpen] = useState(false)
 
   const place = parsePlace(event.place)
-  const from = new Date(event.from).toLocaleString()
-  const to = new Date(event.to).toLocaleString()
+  const from = intl.format(new Date(event.from))
+  const to = intl.format(new Date(event.to))
   const isOwner = event.user.id === user.profile.id
   const isAttending = !!event.attendees.some((attendee) => attendee.id === user.profile.id)
 
@@ -71,7 +76,7 @@ export default function EventDetailTemplate({ event, refetch }) {
             <div className="flex flex-col p-4">
               <div className="flex flex-row justify-between">
                 <p>
-                  From {from} Till {to}
+                  Date: {from} - {to}
                 </p>
                 <div className="badge badge-outline">{event.public ? 'public' : 'private'}</div>
               </div>
