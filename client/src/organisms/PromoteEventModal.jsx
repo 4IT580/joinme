@@ -42,7 +42,7 @@ export default function PromoteEventModal({ event, refetch, onClose }) {
       <div id="dropin" />
       <div className="flex gap-4 justify-center">
         {!isLoading && <Button onClick={onClose}>Cancel</Button>}
-        <Button loading={isLoading} loading={isLoading} className="btn-primary" onClick={onPay}>
+        <Button loading={isLoading} className="btn-primary" onClick={onPay}>
           Pay 10$
         </Button>
       </div>
