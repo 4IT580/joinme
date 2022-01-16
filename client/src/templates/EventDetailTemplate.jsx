@@ -78,7 +78,7 @@ export default function EventDetailTemplate({ event, refetch }) {
               </div>
               <div>{event.place}</div>
             </div>
-            <div className="flex flex-row gap-4 p-4">
+            <div className="flex flex-wrap flex-row gap-4 p-4">
               {!isAttending && <JoinEventButton event={event} refetch={refetch} />}
               <Button onClick={() => setIsShareEventModalOpen(true)}>Share event</Button>
               <Button onClick={() => setIsInviteCircleModalOpen(true)}>Invite circle</Button>

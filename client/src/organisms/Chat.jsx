@@ -1,5 +1,4 @@
 import { gql, useQuery, useMutation } from '@apollo/client'
-import Title from '../atoms/Title'
 import Input from '../atoms/Input'
 import Button from '../atoms/Button'
 import ChatMessage from '../molecules/ChatMessage'
@@ -42,7 +41,7 @@ export default function Chat({ event }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <form className="flex gap-4" onSubmit={onSubmit}>
+      <form className="flex flex-wrap gap-4" onSubmit={onSubmit}>
         <Input className="flex-grow" value={input} onInput={onInput} />
         <Button type="submit" className="btn-primary">
           Send

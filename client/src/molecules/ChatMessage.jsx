@@ -10,9 +10,9 @@ export default function ChatMessage({ message }) {
 
   return (
     <div className={classNames('flex flex-col', isCurrentUser ? 'items-end' : 'items-start')}>
-      <div className="px-2 pb-1">
+      <div className="flex flex-wrap gap-2 px-2 pb-1">
         <strong>{message.user.name}</strong>
-        <Link to={`/user/${message.user.id}`} className="ml-2 hover:underline">
+        <Link to={`/user/${message.user.id}`} className="hover:underline">
           @{message.user.username}
         </Link>
       </div>
