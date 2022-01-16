@@ -38,6 +38,9 @@ export default function CouponVerification({ onClose }) {
 
 const verifyCouponMutation = gql`
   mutation ($data: String!) {
-    verifyCoupon(data: $data)
+    verifyCoupon(data: $data) {
+      id
+      name
+    }
   }
 `
