@@ -27,13 +27,18 @@ export default function PromoteEventModal({ event, refetch, onClose }) {
   }, [])
 
   const onPay = async () => {
-    setIsLoading(true)
-    const { nonce } = await instance.requestPaymentMethod()
-    await promoteEvent({ variables: { eventId: event.id, nonce } })
-    setIsLoading(false)
-    notifications.pushSuccess({ text: 'Event promoted' })
-    onClose()
-    await refetch()
+    try {
+      setIsLoading(true)
+      const { nonce } = await instance.requestPaymentMethod()
+      await promoteEvent({ variables: { eventId: event.id, nonce } })
+      notifications.pushSuccess({ text: 'Event promoted' })
+      await refetch()
+      onClose()
+    } catch (e) {
+      notifications.pushError({ text: e.message })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -42,9 +47,11 @@ export default function PromoteEventModal({ event, refetch, onClose }) {
       <div id="dropin" />
       <div className="flex gap-4 justify-center">
         {!isLoading && <Button onClick={onClose}>Cancel</Button>}
-        <Button loading={isLoading} className="btn-primary" onClick={onPay}>
-          Pay 10$
-        </Button>
+        {instance && (
+          <Button loading={isLoading} className="btn-primary" onClick={onPay}>
+            Pay 10$
+          </Button>
+        )}
       </div>
     </Modal>
   )
