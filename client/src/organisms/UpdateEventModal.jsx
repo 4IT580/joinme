@@ -5,6 +5,7 @@ import { useNotifications } from '../utils/notifications'
 import Button from '../atoms/Button'
 import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
+import PlaceInput from '../atoms/PlaceInput'
 import FormControl from '../molecules/FormControl'
 
 export default function UpdateEventModal({ event, refetch, onClose }) {
@@ -18,7 +19,7 @@ export default function UpdateEventModal({ event, refetch, onClose }) {
       <Formik
         initialValues={{
           name: event.name,
-          place: event.place,
+          place: JSON.parse(event.place),
           description: event.description,
           from: new Date(event.from).toISOString().replace(/:\d+\.\d+Z$/, ''),
           to: new Date(event.to).toISOString().replace(/:\d+\.\d+Z$/, ''),
@@ -27,7 +28,9 @@ export default function UpdateEventModal({ event, refetch, onClose }) {
         validationSchema={schema}
         onSubmit={async (input) => {
           try {
-            await updateEvent({ variables: { eventId: event.id, input } })
+            await updateEvent({
+              variables: { eventId: event.id, input: { ...input, place: JSON.stringify(input.place) } },
+            })
             notifications.pushSuccess({ text: 'Event uupdated' })
             await refetch()
             onClose()
@@ -38,7 +41,7 @@ export default function UpdateEventModal({ event, refetch, onClose }) {
       >
         <Form>
           <FormControl name="name" label="Name" />
-          <FormControl name="place" label="Place" />
+          <FormControl Component={PlaceInput} name="place" label="Place" />
           <FormControl Component="textarea" className="textarea h-28" name="description" label="Description" />
           <div className="grid grid-cols-2 gap-4">
             <FormControl type="datetime-local" name="from" label="From" />
@@ -67,7 +70,11 @@ const mutation = gql`
 `
 
 const schema = yup.object({
-  name: yup.string().required('Name is required'),
-  from: yup.string().required('From is required'),
-  to: yup.string().required('To is required'),
+  name: yup.string().trim().required('Name is required'),
+  from: yup.date().required('Start time is required').min(new Date(), 'Start time cannot be in the past'),
+  place: yup.object().typeError('Place has to be selected from the dropdown').required('Place is required'),
+  to: yup
+    .date()
+    .required('End time is required')
+    .when('from', (from, yup) => from && yup.min(from, 'End time cannot be before start time')),
 })

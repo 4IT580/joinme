@@ -2,6 +2,7 @@ import { gql, useMutation } from '@apollo/client'
 import classNames from 'classnames'
 import { useNotifications } from '../utils/notifications'
 import Button from '../atoms/Button'
+import { parsePlace } from '../Utils'
 
 export default function InvitationCard({ invitation, refetch, className }) {
   const notifications = useNotifications()
@@ -30,7 +31,7 @@ export default function InvitationCard({ invitation, refetch, className }) {
         <div className="flex flex-grow flex-col">
           <p className="flex px-4 pt-4">{invitation.event.from}</p>
           <h2 className="flex font-bold text-xl px-4">{invitation.event.name}</h2>
-          <p className="flex px-4">{invitation.event.place}</p>
+          <p className="flex px-4">{parsePlace(invitation.event.place).name}</p>
         </div>
       </div>
       <div className="flex flex-row justify-between p-4 gap-4">

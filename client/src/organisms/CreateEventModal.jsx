@@ -7,6 +7,7 @@ import Modal from '../atoms/Modal'
 import Title from '../atoms/Title'
 import FormControl from '../molecules/FormControl'
 import MultiInput from '../atoms/MultiInput'
+import PlaceInput from '../atoms/PlaceInput'
 
 export default function CreateEventModal({ refetch, onClose }) {
   const notifications = useNotifications()
@@ -29,7 +30,12 @@ export default function CreateEventModal({ refetch, onClose }) {
         validationSchema={schema}
         onSubmit={async (input) => {
           try {
-            await createEvent({ variables: { input: { ...input, invites: undefined }, invites: input.invites } })
+            await createEvent({
+              variables: {
+                input: { ...input, place: JSON.stringify(input.place), invites: undefined },
+                invites: input.invites,
+              },
+            })
             notifications.pushSuccess({ text: 'Event created' })
             await refetch()
             onClose()
@@ -40,7 +46,7 @@ export default function CreateEventModal({ refetch, onClose }) {
       >
         <Form>
           <FormControl name="name" label="Name" />
-          <FormControl name="place" label="Place" />
+          <FormControl Component={PlaceInput} name="place" label="Place" />
           <FormControl Component="textarea" className="textarea h-28" name="description" label="Description" />
           <div className="grid grid-cols-2 gap-4">
             <FormControl type="datetime-local" name="from" label="From" />
@@ -72,8 +78,9 @@ const mutation = gql`
 const schema = yup.object({
   name: yup.string().trim().required('Name is required'),
   from: yup.date().required('Start time is required').min(new Date(), 'Start time cannot be in the past'),
+  place: yup.object().typeError('Place has to be selected from the dropdown').required('Place is required'),
   to: yup
     .date()
     .required('End time is required')
-    .when('from', (from, yup) => yup.min(from, 'End time cannot be before start time')),
+    .when('from', (from, yup) => from && yup.min(from, 'End time cannot be before start time')),
 })

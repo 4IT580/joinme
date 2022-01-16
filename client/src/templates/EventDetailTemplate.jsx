@@ -2,6 +2,7 @@ import { gql, useMutation } from '@apollo/client'
 import { ArrowLeftIcon, CogIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { parsePlace } from '../Utils'
 import { useUser } from '../utils/user'
 import Button from '../atoms/Button'
 import Title from '../atoms/Title'
@@ -21,6 +22,7 @@ export default function EventDetailTemplate({ event, refetch }) {
   const [isUpdateEventModalOpen, setIsUpdateEventModalOpen] = useState(false)
   const [isInviteCircleModalOpen, setIsInviteCircleModalOpen] = useState(false)
 
+  const place = parsePlace(event.place)
   const from = new Date(event.from).toLocaleString()
   const to = new Date(event.to).toLocaleString()
   const isOwner = event.user.id === user.profile.id
@@ -76,7 +78,9 @@ export default function EventDetailTemplate({ event, refetch }) {
               <div className="pb-2 pt-2">
                 <Title>{event.name}</Title>
               </div>
-              <div>{event.place}</div>
+              <a href={place.url} className="text-primary hover:underline" target="_blank">
+                {place.name}
+              </a>
             </div>
             <div className="flex flex-wrap flex-row gap-4 p-4">
               {!isAttending && <JoinEventButton event={event} refetch={refetch} />}

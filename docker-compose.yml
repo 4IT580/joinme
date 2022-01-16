@@ -9,6 +9,7 @@ services:
       - SERVER_HOST=0.0.0.0
       - SERVER_PORT=3000
       - BACKEND_URL=http://localhost:8000
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
     ports:
       - '3000:3000'
     volumes:

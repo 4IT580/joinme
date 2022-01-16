@@ -1,7 +1,9 @@
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
+import { parsePlace } from '../Utils'
 
 export default function EventCard({ event, className }) {
+  const place = parsePlace(event.place)
   const from = new Date(event.from).toLocaleString()
   const to = new Date(event.to).toLocaleString()
 
@@ -21,7 +23,7 @@ export default function EventCard({ event, className }) {
             Till: {to}
           </p>
           <h2 className="card-title mt-1.5 mb-1.5">{event.name}</h2>
-          <p className="">{event.place}</p>
+          <p className="">{place.name}</p>
         </div>
       </div>
     </Link>

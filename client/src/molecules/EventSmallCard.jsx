@@ -1,7 +1,10 @@
 import classNames from 'classnames'
 import Title from '../atoms/Title'
+import { parsePlace } from '../Utils'
 
 export default function EventSmallCard({ event, isSelected, onClick }) {
+  const place = parsePlace(event.place)
+
   return (
     <div
       className={classNames(
@@ -14,7 +17,7 @@ export default function EventSmallCard({ event, isSelected, onClick }) {
       <div>
         <Title level={2}>{event.name}</Title>
         <div>
-          {new Date(event.from).toLocaleDateString()} at {event.place}
+          {new Date(event.from).toLocaleDateString()} at {place.name}
         </div>
         <div>Organizer: {event.user.name}</div>
       </div>

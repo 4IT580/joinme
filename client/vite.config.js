@@ -10,5 +10,6 @@ export default defineConfig({
   },
   define: {
     'process.env.BACKEND_URL': JSON.stringify(process.env.BACKEND_URL),
+    'process.env.GOOGLE_API_KEY': JSON.stringify(process.env.GOOGLE_API_KEY),
   },
 })
