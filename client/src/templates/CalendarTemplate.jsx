@@ -12,10 +12,10 @@ export default function CalendarTemplate({ attending, organizing }) {
   const [type, setType] = useState('attending')
   const [tab, setTab] = useState('chat')
   return (
-    <div className="flex flex-col md:flex-row p-4 gap-4 h-full">
-      <div className="flex flex-col bg-gray-200 rounded-2xl p-2 md:w-1/4 lg:w-1/4 flex-grow">
+    <div className="flex flex-col lg:flex-row p-4 gap-4 h-full">
+      <div className="flex flex-col bg-gray-200 rounded-2xl p-2 lg:w-1/4 flex-grow">
         <Title className="text-3xl pt-2 px-2">Events</Title>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button
             className={classNames('flex-grow', { 'btn-primary': type === 'attending' })}
             onClick={() => {
@@ -46,7 +46,7 @@ export default function CalendarTemplate({ attending, organizing }) {
           ))}
         </div>
       </div>
-      <div className="flex flex-col bg-gray-200 rounded-2xl p-2 md:w-3/4 lg:w-2/4 md:overflow-y-auto">
+      <div className="flex flex-col bg-gray-200 rounded-2xl p-2 lg:w-2/4">
         <div className="flex gap-2">
           <Button
             className={classNames('flex-grow', { 'btn-primary': tab === 'chat' })}
@@ -70,7 +70,7 @@ export default function CalendarTemplate({ attending, organizing }) {
           {selectedEvent && tab === 'feed' && <Feed event={selectedEvent} />}
         </div>
       </div>
-      <div className="flex md:hidden lg:flex flex-col bg-gray-200 rounded-2xl p-2 lg:w-1/4">
+      <div className="flex flex-col bg-gray-200 rounded-2xl p-2 lg:w-1/4">
         <Title className="text-3xl pt-2 px-2">Details</Title>
         {selectedEvent && <EventDetailsCard event={selectedEvent} />}
       </div>
