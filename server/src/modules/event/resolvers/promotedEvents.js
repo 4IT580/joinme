@@ -6,14 +6,13 @@ export default async (_, __, { auth }) => {
 
   const invitations = await db().pluck('event_id').from('invitations').where('user_id', user.id)
 
-  const event = await db()
+  const events = await db()
     .select('*')
     .from('events')
     .orderBy('from', 'asc')
     .where('public', true)
     .orWhereIn('id', invitations)
     .andWhere('to', '>', new Date())
-    .andWhere('promoted', true)
 
-  return event
+  return events.filter((event) => event.promoted)
 }
