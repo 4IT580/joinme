@@ -6,5 +6,5 @@ export default async (_, __, { auth }) => {
 
   const invitations = await db().select('*').from('invitations').where('user_id', user.id)
 
-  return invitations.filter((invitation) => !invitations.accepted)
+  return invitations.filter((invitation) => !invitation.accepted)
 }
