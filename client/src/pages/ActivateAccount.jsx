@@ -1,6 +1,8 @@
 import { gql, useMutation } from '@apollo/client'
 import { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useRouteQuery } from '../Hooks'
+import { useNotifications } from '../utils/notifications'
 
 const ACTIVATE_ACCOUNT_MUTATION = gql`
   mutation ($secret: String!) {
@@ -9,6 +11,8 @@ const ACTIVATE_ACCOUNT_MUTATION = gql`
 `
 
 export default function ActivateAccount() {
+  const history = useHistory()
+  const notifications = useNotifications()
   const { secret } = useRouteQuery()
   const [activateAccount, activateAccountState] = useMutation(ACTIVATE_ACCOUNT_MUTATION)
 
@@ -19,8 +23,11 @@ export default function ActivateAccount() {
       },
     })
 
-    if (ok) alert('Account activated')
+    if (ok) {
+      notifications.pushSuccess({ body: 'Account activated' })
+      history.push('/')
+    }
   }, [])
 
-  return <div>Activate account</div>
+  return <div></div>
 }
