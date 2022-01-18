@@ -7,7 +7,6 @@ export default function InboxTemplate({ invitations, refetch }) {
     <div className="grid grid-cols-5 gap-2 p-4">
       <div className="flex flex-col gap-y-2 col-span-5 md:col-span-1">
         <Button className="flex">Invitations</Button>
-        <Button className="flex">Requests</Button>
       </div>
       <div className="col-span-5 md:col-span-4 bg-gray-100 rounded-2xl p-4">
         <h1 className="text-xl font-bold mb-4">October, 2021</h1>
