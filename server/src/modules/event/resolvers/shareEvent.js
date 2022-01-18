@@ -8,7 +8,7 @@ export default async (_, { eventId, invites }) => {
 
     if (!user) throw new Error(`Unknown user ${invite}`)
 
-    const event = await db().select('*').from('events').where('id', eventId)
+    const event = await db().select('*').from('events').where('id', eventId).first()
 
     if (!event) throw new Error(`Unknown event with ID ${eventId}`)
 
