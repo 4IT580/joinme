@@ -26,7 +26,11 @@ export default function InvitationCard({ invitation, refetch, className }) {
       <div className="flex flex-col md:flex-row lg:flex-col xl:flex-row">
         <img
           className="rounded-2xl h-36 w-36 m-4 object-cover"
-          src={`https://picsum.photos/400/250?id${invitation.id}`}
+          src={
+            invitation.event.file?.path
+              ? invitation.event.file.path
+              : `https://picsum.photos/600/450?id${invitation.event.id}`
+          }
         />
         <div className="flex flex-grow flex-col">
           <p className="flex px-4 pt-4">{invitation.event.from}</p>
